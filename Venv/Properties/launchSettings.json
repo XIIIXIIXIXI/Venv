@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Venv (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Venv (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
