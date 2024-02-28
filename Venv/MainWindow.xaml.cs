@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -30,7 +31,15 @@ namespace Venv
 
         private void myButton_Click(object sender, RoutedEventArgs e)
         {
-            myButton.Content = "Clicked";
+            Application.Current.Resources.MergedDictionaries.Clear();
+            var newThemeUri = new Uri(ThemePaths.DayColors);
+            var newTheme = new ResourceDictionary { Source = newThemeUri };
+            Application.Current.Resources.MergedDictionaries.Add(newTheme);
+
+            if (Application.Current.Resources.TryGetValue("WindBack", out var newBackground))
+            {
+                myGrid.Background = (Brush)newBackground; 
+            }
         }
     }
 }

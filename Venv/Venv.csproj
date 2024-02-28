@@ -11,6 +11,14 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\DayColors.xaml" />
+    <None Remove="Resources\DuskColors.xaml" />
+    <None Remove="Resources\NightColors.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Resources\DayColors.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -20,6 +28,10 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Resources\DayColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +52,18 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\DockerHandler\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\NightColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\DuskColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
