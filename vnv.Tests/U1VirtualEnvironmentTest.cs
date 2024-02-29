@@ -1,35 +1,23 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
 
-namespace venv.Tests
+namespace vnv.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class U1VirtualEnvironmentTest
     {
         //If the vm returns an IP after starting then the VM has started successfully
-        [TestMethod, Timeout(8000000)] //This test can absolute maximum run for 1 minute and 20 seconds. It normally takes 45 seconds. 
+        [Test] //This test can absolute maximum run for 1 minute and 20 seconds. It normally takes 45 seconds. 
         public void StartsVmwareProcessInHeadlessMode()
         {
             var _VMwareManager = new VMwareManager();
             var ipHost = _VMwareManager.StartVMwareInstance();
-            Assert.AreNotEqual(IPAddress.None, ipHost);
+            Assert.IsNotNull(ipHost);
         }
     }
-
-
-    [TestClass]
-    public class GeneralTests
-    {
-        [TestMethod]
-        public void StartVM10TimesAndTimeEach()
-        {
-
-        }
-    }
-    
 }

@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="TrendAxisColor">#FF3F3F3F</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="AncAlarmBlueCrossFill" StartPoint="0.5,0.25" EndPoint="0.5,0.75">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="0.7" Color="#FF372E00" />
+        <GradientStop Offset="1" Color="#FF322D00" />
+    </LinearGradientBrush>
+
+    <!--  Normal background in standard frames and Mimic Diagrams  -->
+    <LinearGradientBrush x:Key="AncNormalLinearBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Offset="0.0" Color="#FF000000" />
+                <GradientStop Offset="0.75" Color="#FF000000" />
+                <GradientStop Offset="1.0" Color="#FF000000" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--  Dashed line  -->
+
+
+    <!--  Arrowhead  -->
+
+
+    <!--  Double Arrowhead  -->
+
+
+    <!--  Set point triangle, yellow popinting left  -->
+
+
+    <!--  Yellow dot  -->
+
+    <!--  SpeedIndicator  -->
+
+    <!--  Button background, HMI ver.2  -->
+    <LinearGradientBrush x:Key="AncKeypadButtonBackground" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF505050" />
+        <GradientStop Offset="1" Color="#FF151515" />
+        <GradientStop Offset="0.467" Color="#FF252525" />
+        <GradientStop Offset="0.569" Color="#FF252525" />
+    </LinearGradientBrush>
+
+    <!--  Button text disable mode, HMI ver.2  -->
+    <SolidColorBrush x:Key="DynTextDisabled">#FF333333</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="Sunken" Opacity="1.0" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FF000000" />
+        <GradientStop Offset="0.1" Color="#FF000000" />
+        <GradientStop Offset="1" Color="#FF303030" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="WindBack" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF191919" />
+        <GradientStop Offset="0.5" Color="#FF0D0D0D" />
+        <GradientStop Offset="1" Color="#FF0D0D0D" />
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="ConningRadialBackc" GradientOrigin="0.25,0.25">
+        <GradientStop Offset="0.0" Color="#FF3E3E3E" />
+        <GradientStop Offset="0.3" Color="#FF3C3C3C" />
+        <GradientStop Offset="1.0" Color="#FF2D2D2D" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="ConningAnnulusBackTop" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF303030" />
+        <GradientStop Offset="0.9" Color="#FF2D2D2D" />
+        <GradientStop Offset="0.963" Color="#FF3C3C3C" />
+        <GradientStop Offset="0.983" Color="#FF3C3C3C" />
+        <GradientStop Offset="1.0" Color="#FF2D2D2D" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="ConningAnnulusTopBlue" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF0F141A" />
+        <GradientStop Offset="0.70" Color="#FF0F141A" />
+        <GradientStop Offset="0.97" Color="#FF1C222A" />
+        <GradientStop Offset="0.985" Color="#FF282C32" />
+        <GradientStop Offset="0.997" Color="#FF141A23" />
+        <GradientStop Offset="1.0" Color="#FF141A23" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="ConningAnnulusTopGreen" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF0F1A14" />
+        <GradientStop Offset="0.70" Color="#FF0F1A14" />
+        <GradientStop Offset="0.97" Color="#FF1C2D1E" />
+        <GradientStop Offset="0.985" Color="#FF253728" />
+        <GradientStop Offset="0.997" Color="#FF14231A" />
+        <GradientStop Offset="1.0" Color="#FF14231A" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="ConningAnnulusTopRed" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF300F14" />
+        <GradientStop Offset="0.70" Color="#FF300F14" />
+        <GradientStop Offset="0.97" Color="#FF3A0D12" />
+        <GradientStop Offset="0.985" Color="#FF3E2828" />
+        <GradientStop Offset="0.997" Color="#FF2D0F14" />
+        <GradientStop Offset="1.0" Color="#FF2D0F14" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="ConningAnnulusBackBottom" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF303030" />
+        <GradientStop Offset="0.8" Color="#FF2D2D2D" />
+        <GradientStop Offset="0.84" Color="#FF3C3C3C" />
+        <GradientStop Offset="0.855" Color="#FF3C3C3C" />
+        <GradientStop Offset="1.0" Color="#FF2D2D2D" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="ConningAnnulusBottom" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF0F141A" />
+        <GradientStop Offset="0.60" Color="#FF0F141A" />
+        <GradientStop Offset="0.8" Color="#FF1C222A" />
+        <GradientStop Offset="0.84" Color="#FF282C32" />
+        <GradientStop Offset="0.885" Color="#FF141A23" />
+        <GradientStop Offset="1.0" Color="#FF0F141A" />
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="ConningVBar" Opacity="0.9" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF161C25" />
+        <GradientStop Offset="0.3" Color="#FF2F243A" />
+        <GradientStop Offset="1.0" Color="#FF141A22" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ConningVBarBack" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF303030" />
+        <GradientStop Offset="0.3" Color="#FF3E3E3E" />
+        <GradientStop Offset="1.0" Color="#FF2D2D2D" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ConningHBar" Opacity="0.9" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF161C25" />
+        <GradientStop Offset="0.3" Color="#FF2F243A" />
+        <GradientStop Offset="1.0" Color="#FF141A22" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ConningHBarBack" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF303030" />
+        <GradientStop Offset="0.3" Color="#FF3E3E3E" />
+        <GradientStop Offset="1.0" Color="#FF2D2D2D" />
+    </LinearGradientBrush>
+
+
+
+    <LinearGradientBrush x:Key="AlarmPrio1" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="1" Color="#FF370A0A" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmPrio2" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3300" />
+        <GradientStop Offset="1" Color="#FF3F3200" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmPrio3" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="1" Color="#FF3D3300" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmPrio4" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF003700" />
+        <GradientStop Offset="1" Color="#FF142811" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmCutOut" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="0.7" Color="#FF372E00" />
+        <GradientStop Offset="1" Color="#FF322D00" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmDeviceFail" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="0.7" Color="#FF370A0A" />
+        <GradientStop Offset="1" Color="#FF340B0B" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmSensorFail" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="0.7" Color="#FF370A0A" />
+        <GradientStop Offset="1" Color="#FF340B0B" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AlarmManSet" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="0.7" Color="#FF372E00" />
+        <GradientStop Offset="1" Color="#FF322D00" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="SymbolPassive">#FF370037</SolidColorBrush>
+    <SolidColorBrush x:Key="SymbolActive">#FF003F00</SolidColorBrush>
+    <LinearGradientBrush x:Key="SymbolDeviceFail" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="0.7" Color="#FF370A0A" />
+        <GradientStop Offset="1" Color="#FF340B0B" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="SymbolSensorFail" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="0.7" Color="#FF370A0A" />
+        <GradientStop Offset="1" Color="#FF340B0B" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="SymbolManSet" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="0.7" Color="#FF372E00" />
+        <GradientStop Offset="1" Color="#FF322D00" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ExpanderHead" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF1D1D1D" />
+        <GradientStop Offset="0.5" Color="#FF1E1E1E" />
+        <GradientStop Offset="0.5" Color="#FF1B1B1B" />
+        <GradientStop Offset="1" Color="#FF141414" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ExpanderContent">#FF191919</SolidColorBrush>
+    <SolidColorBrush x:Key="ExpanderTabBack">#FF121212</SolidColorBrush>
+    <LinearGradientBrush x:Key="ExpanderTab" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF232323" />
+        <GradientStop Offset="1" Color="#FF191919" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="FindBack">#FF252525</SolidColorBrush>
+    <SolidColorBrush x:Key="ListItemDark">#FF151515</SolidColorBrush>
+    <SolidColorBrush x:Key="ListItemLight">#FF252525</SolidColorBrush>
+    <LinearGradientBrush x:Key="ListItemSelected" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF263050" />
+        <GradientStop Offset="1" Color="#FF233243" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ListItemSelTool">#FF1A2028</SolidColorBrush>
+    <SolidColorBrush x:Key="ListVertcalLines">#FF262626</SolidColorBrush>
+    <SolidColorBrush x:Key="SliderBack">#FF141414</SolidColorBrush>
+    <LinearGradientBrush x:Key="Slider" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF1D1D1D" />
+        <GradientStop Offset="0.5" Color="#FF1E1E1E" />
+        <GradientStop Offset="0.5" Color="#FF1B1B1B" />
+        <GradientStop Offset="1" Color="#FF141414" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ESD_Red" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F0000" />
+        <GradientStop Offset="1" Color="#FF370A0A" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ESD_Green" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF003700" />
+        <GradientStop Offset="1" Color="#FF142811" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ESD_Yellow" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF3F3F00" />
+        <GradientStop Offset="1" Color="#FF3D3300" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ESD_Blue" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF021B3F" />
+        <GradientStop Offset="1" Color="#FF0C1438" />
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="PIDback" GradientOrigin="0.25,0.50">
+        <GradientStop Offset="0.0" Color="#FF161E2C" />
+        <GradientStop Offset="0.3" Color="#FF141C28" />
+        <GradientStop Offset="1.0" Color="#FF101820" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="RadialGreen" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF003F00" />
+        <GradientStop Offset="1.0" Color="#FF002A00" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="RadialRed" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF3F0000" />
+        <GradientStop Offset="1.0" Color="#FFA28000" />
+    </RadialGradientBrush>
+
+    <SolidColorBrush x:Key="WaterBlue">#FF021B3F</SolidColorBrush>
+    <SolidColorBrush x:Key="EngineGreen">#FF03201E</SolidColorBrush>
+    <SolidColorBrush x:Key="GreenSB">#FF0F2214</SolidColorBrush>
+    <SolidColorBrush x:Key="RedPS">#FF300C12</SolidColorBrush>
+
+    <SolidColorBrush x:Key="GraphColor1">#FF3F3400</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor2">#FF003F00</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor3">#FF00003F</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor4">#FF3F003F</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor5">#FF3F3F00</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor6">#FF3F281E</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor7">#FF3F0000</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor8">#FF003F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor9">#FF3C3923</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor10">#FF3F2300</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor11">#FF000020</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor12">#FF3E3E34</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor13">#FF19253B</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor14">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor15">#FF220022</SolidColorBrush>
+    <SolidColorBrush x:Key="GraphColor16">#FF290A0A</SolidColorBrush>
+
+    <!--  Colors for FFDC objects  -->
+    <SolidColorBrush x:Key="Fire">#FF3F1100</SolidColorBrush>
+    <SolidColorBrush x:Key="Smoke">#FF082C2A</SolidColorBrush>
+    <SolidColorBrush x:Key="ToxicGas">#FF250034</SolidColorBrush>
+    <SolidColorBrush x:Key="Flooding">#FF021B3F</SolidColorBrush>
+    <SolidColorBrush x:Key="Shoring">#FF200000</SolidColorBrush>
+    <SolidColorBrush x:Key="PersonCasualty">#FF3F2300</SolidColorBrush>
+
+    <!--  MCS platinum Mimic Colors  -->
+    <LinearGradientBrush x:Key="Background" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0.0" Color="#FF0F0F0F" />
+        <GradientStop Offset="0.75" Color="#FF090909" />
+        <GradientStop Offset="1.0" Color="#FF030303" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DefaultDrawingColor">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultNameColor">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultValueColor">#FF3F3F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultScaleColor">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="SfbDynTextColor">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="HyperLinkForeground">#FF404040</SolidColorBrush>
+
+    <SolidColorBrush x:Key="MimicStaticText">#FF283237</SolidColorBrush>
+    <SolidColorBrush x:Key="Waste">#FF161616</SolidColorBrush>
+    <SolidColorBrush x:Key="FreshWater">#FF002437</SolidColorBrush>
+    <SolidColorBrush x:Key="SeaWater">#FF032F00</SolidColorBrush>
+    <SolidColorBrush x:Key="HeavyFuel">#FF281400</SolidColorBrush>
+    <SolidColorBrush x:Key="DieselOil">#FF3F3300</SolidColorBrush>
+    <SolidColorBrush x:Key="Oil">#FF371A04</SolidColorBrush>
+    <SolidColorBrush x:Key="GassNonFlameble">#FF212326</SolidColorBrush>
+    <SolidColorBrush x:Key="Steam">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="FireFight">#FF34090C</SolidColorBrush>
+    <SolidColorBrush x:Key="AcidsAlkalis">#FF34042E</SolidColorBrush>
+    <SolidColorBrush x:Key="AirVentilation">#FF3F3F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="SoundingPipes">#FF250000</SolidColorBrush>
+
+    <SolidColorBrush x:Key="Gray_20">#FF050505</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_30">#FF070707</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_40">#FF0A0A0A</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_52">#FF0D0D0D</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_64">#FF101010</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_80">#FF141414</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_90">#FF161616</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_100">#FF191919</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_110">#FF1B1B1B</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_128">#FF131313</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_160">#FF282828</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_192">#FF303030</SolidColorBrush>
+    <SolidColorBrush x:Key="Gray_211">#FF343434</SolidColorBrush>
+    <SolidColorBrush x:Key="Green_255">#FF006400</SolidColorBrush>
+    <SolidColorBrush x:Key="GrayBlue">#FF16191E</SolidColorBrush>
+    <SolidColorBrush x:Key="FloralWhite">#FF3F3E3C</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkViolet">#FF250034</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="MediumSpringGreen">#FF003E26</SolidColorBrush> -->
+    <SolidColorBrush x:Key="White">#FF3F3F3F</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="LightYellow">#FF3F3F38</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="OldLace">#FF3F3D39</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="PaleVioletRed">#FF361C24</SolidColorBrush> -->
+    <SolidColorBrush x:Key="LightGoldenrodYellow">#FF3E3E34</SolidColorBrush>
+    <SolidColorBrush x:Key="Orchid">#FF361C35</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="WhiteSmoke">#FF3D3D3D</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SandyBrown">#FF3D2918</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Gainsboro">#FF373737</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DarkMagenta">#FF220022</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Lavender">#FF39393E</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SpringGreen">#FF003F1F</SolidColorBrush>
+    <SolidColorBrush x:Key="RoyalBlue">#FF101A38</SolidColorBrush>
+    <SolidColorBrush x:Key="GreenYellow">#FF2B3F0B</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkOrchid">#FF260C33</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="MediumOrchid">#FF2E1534</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DimGray">#FF1A1A1A</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkSalmon">#FF3A251E</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DarkGray">#FF2A2A2A</SolidColorBrush>
+    <SolidColorBrush x:Key="Gold">#FF3F3500</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="LightSlateGray">#FF1D2226</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Yellow">#FF3F3F00</SolidColorBrush>
+    <SolidColorBrush x:Key="Red">#FF3F0000</SolidColorBrush>
+    <SolidColorBrush x:Key="MediumPurple">#FF241C36</SolidColorBrush>
+    <SolidColorBrush x:Key="Chocolate">#FF341A07</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkOrange">#FF3F2300</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Azure">#FF3C3F3F</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="LightGreen">#FF243B24</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DeepPink">#FF3F0524</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="LightPink">#FF3F2D30</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="BlanchedAlmond">#FF3F3A33</SolidColorBrush> -->
+    <SolidColorBrush x:Key="MediumBlue">#FF000033</SolidColorBrush>
+    <SolidColorBrush x:Key="Turquoise">#FF103834</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="PaleGreen">#FF263E26</SolidColorBrush> -->
+    <SolidColorBrush x:Key="LightSkyBlue">#FF21333E</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Plum">#FF372837</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Indigo">#FF120020</SolidColorBrush>
+    <SolidColorBrush x:Key="NavajoWhite">#FF3F372B</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkBlue">#FF000022</SolidColorBrush>
+    <SolidColorBrush x:Key="OrangeRed">#FF3F1100</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Firebrick">#FF2C0808</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="Salmon">#FF3E201C</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Coral">#FF3F1F14</SolidColorBrush>
+    <SolidColorBrush x:Key="DeepSkyBlue">#FF002F3F</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="MidnightBlue">#FF06061C</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="PaleGoldenrod">#FF3B3A2A</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DodgerBlue">#FF07243F</SolidColorBrush>
+    <SolidColorBrush x:Key="BurlyWood">#FF372E21</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="MediumTurquoise">#FF123433</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="MediumSlateBlue">#FF1E1A3B</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="PaleTurquoise">#FF2B3B3B</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Aqua">#FF003F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="Khaki">#FF3C3923</SolidColorBrush>
+    <SolidColorBrush x:Key="Navy">#FF000020</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="LightCoral">#FF3C2020</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="LavenderBlush">#FF3F3C3D</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Tan">#FF342D23</SolidColorBrush>
+    <SolidColorBrush x:Key="Goldenrod">#FF362908</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="AntiqueWhite">#FF3E3A35</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DarkSlateGray">#FF0B1313</SolidColorBrush>
+    <SolidColorBrush x:Key="CornflowerBlue">#FF19253B</SolidColorBrush>
+    <SolidColorBrush x:Key="Violet">#FF3B203B</SolidColorBrush>
+    <SolidColorBrush x:Key="Lime">#FF003F00</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="GhostWhite">#FF3E3E3F</SolidColorBrush> -->
+    <SolidColorBrush x:Key="MediumSeaGreen">#FF0F2C1C</SolidColorBrush>
+    <SolidColorBrush x:Key="Blue">#FF00003F</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Linen">#FF3E3C39</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="SeaShell">#FF3F3D3B</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Fuchsia">#FF3F003F</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkTurquoise">#FF003334</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkCyan">#FF002222</SolidColorBrush>
+    <SolidColorBrush x:Key="BlueViolet">#FF220A38</SolidColorBrush>
+    <SolidColorBrush x:Key="ForestGreen">#FF082208</SolidColorBrush>
+    <SolidColorBrush x:Key="Brown">#FF290A0A</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Beige">#FF3D3D37</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="PapayaWhip">#FF3F3B35</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Wheat">#FF3D372C</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Aquamarine">#FF1F3F35</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DarkKhaki">#FF2F2D1A</SolidColorBrush>
+    <SolidColorBrush x:Key="RosyBrown">#FF2F2323</SolidColorBrush>
+    <SolidColorBrush x:Key="Cyan">#FF003F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="DarkGreen">#FF001900</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Chartreuse">#FF1F3F00</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkSeaGreen">#FF232F23</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Magenta">#FF3F003F</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Tomato">#FF3F1811</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="MintCream">#FF3D3F3E</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Orange">#FF3F2900</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="AliceBlue">#FF3C3E3F</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SlateGray">#FF1C2024</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="SeaGreen">#FF0B2215</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Transparent">#003F3F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="Black">#FF000000</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Snow">#FF3F3E3E</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="Cornsilk">#FF3F3E37</SolidColorBrush> -->
+    <SolidColorBrush x:Key="LightSalmon">#FF3F281E</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Bisque">#FF3F3931</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Purple">#FF200020</SolidColorBrush>
+    <SolidColorBrush x:Key="Olive">#FF202000</SolidColorBrush>
+    <SolidColorBrush x:Key="Maroon">#FF200000</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="MistyRose">#FF3F3938</SolidColorBrush> -->
+    <SolidColorBrush x:Key="LawnGreen">#FF1F3F00</SolidColorBrush>
+    <SolidColorBrush x:Key="Sienna">#FF28140B</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Moccasin">#FF3F392D</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SkyBlue">#FF21333A</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Peru">#FF33210F</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SteelBlue">#FF11202D</SolidColorBrush>
+    <SolidColorBrush x:Key="LimeGreen">#FF0C330C</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="YellowGreen">#FF26330C</SolidColorBrush> -->
+    <SolidColorBrush x:Key="PeachPuff">#FF3F362E</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Pink">#FF3F3032</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="LightBlue">#FF2B3639</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="MediumAquamarine">#FF19332A</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="OliveDrab">#FF1A2308</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="LightCyan">#FF383F3F</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkSlateBlue">#FF120F22</SolidColorBrush> -->
+    <SolidColorBrush x:Key="Gray">#FF202020</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="LemonChiffon">#FF3F3E33</SolidColorBrush> -->
+    <SolidColorBrush x:Key="LightSeaGreen">#FF082C2A</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="CadetBlue">#FF172728</SolidColorBrush> -->
+    <SolidColorBrush x:Key="HotPink">#FF3F1A2D</SolidColorBrush>
+    <SolidColorBrush x:Key="Teal">#FF002020</SolidColorBrush>
+    <SolidColorBrush x:Key="SaddleBrown">#FF221104</SolidColorBrush>
+    <SolidColorBrush x:Key="Green">#FF002000</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="PowderBlue">#FF2C3839</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="Honeydew">#FF3C3F3C</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="IndianRed">#FF331717</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="LightSteelBlue">#FF2C3137</SolidColorBrush> -->
+    <SolidColorBrush x:Key="MediumVioletRed">#FF310521</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Thistle">#FF362F36</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkGoldenrod">#FF2E2102</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkOliveGreen">#FF151A0B</SolidColorBrush> -->
+    <!-- <SolidColorBrush x:Key="DarkRed">#FF220000</SolidColorBrush> -->
+    <SolidColorBrush x:Key="SlateBlue">#FF1A1633</SolidColorBrush>
+    <SolidColorBrush x:Key="Ivory">#FF3F3F3C</SolidColorBrush>
+    <SolidColorBrush x:Key="Silver">#FF303030</SolidColorBrush>
+    <!-- <SolidColorBrush x:Key="Crimson">#FF37050F</SolidColorBrush> -->
+    <SolidColorBrush x:Key="DynTextFail">#FF003F3F</SolidColorBrush>
+
+
+    <!--  ANC Conning and NDD Colors Dusk/Night Begin  05.04.2012  -->
+
+    <SolidColorBrush x:Key="AncCnNormalBackground" Color="#FF151515" />
+    <SolidColorBrush x:Key="AncCnInactiveBackground" Color="#FF0E0E0E" />
+    <SolidColorBrush x:Key="AncCnShipShape" Color="#FF282828" />
+    <SolidColorBrush x:Key="AncCnShipShapeShadow" Color="#80282828" />
+    <SolidColorBrush x:Key="AncCnSeparator" Color="#FF555555" />
+
+    <!--  GroupBox  -->
+    <SolidColorBrush x:Key="AncCnGroupBoxBorder" Color="#FF303030" />
+    <SolidColorBrush x:Key="AncCnGroupBoxBackground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="AncCnGroupBoxLabelBackground" Color="#FF1E1E1E" />
+
+    <!--  Label color  -->
+    <SolidColorBrush x:Key="AncCnLabelForeground" Color="#FF555555" />
+    <SolidColorBrush x:Key="AncCnNameForeground" Color="#FF333333" />
+    <!--  Text colors  -->
+    <SolidColorBrush x:Key="AncCnTextForeground" Color="#FF777777" />
+    <SolidColorBrush x:Key="AncCnTextDimmedForeground" Color="#FF606060" />
+    <SolidColorBrush x:Key="AncCnDisabledTextForeground" Color="#FF555555" />
+
+    <SolidColorBrush x:Key="AncCnSelectorForeground" Color="#FF757575" />
+
+    <SolidColorBrush x:Key="AncCnScaleForeground" Color="#FF606060" />
+    <SolidColorBrush x:Key="AncCnScaleBackground" Color="#FF2A2A2A" />
+
+    <!--  Rudder  -->
+    <SolidColorBrush x:Key="AncCnRudderHiding" Color="#FF050505" />
+    <SolidColorBrush x:Key="AncCnRudderLimits" Color="#FF601824" />
+    <SolidColorBrush x:Key="AncCnRudderLimitsB" Color="#FF800080" />
+    <SolidColorBrush x:Key="AncCnRudderOrder" Color="#FF7F3000" />
+
+    <SolidColorBrush x:Key="AncCnRedPS" Color="#FF601824" />
+    <SolidColorBrush x:Key="AncCnGreenSB" Color="#FF1E4528" />
+    <SolidColorBrush x:Key="AncCnYellowPointer" Color="#FF7F7F00" />
+    <SolidColorBrush x:Key="AncCnDefaultDrawingColor" Color="#FF606060" />
+    <SolidColorBrush x:Key="AncCnWarningYellow" Color="#FF787346" />
+    <SolidColorBrush x:Key="AncCnWarningRed" Color="#FF781824" />
+
+    <!--  Wind/Current Vectors  -->
+    <SolidColorBrush x:Key="AncCnWindVector" Color="#FF824800" />
+    <SolidColorBrush x:Key="AncCnWindBarbs" Color="#FF824800" />
+    <SolidColorBrush x:Key="AncCnCurrentVector" Color="#FF3273C0" />
+
+    <!--  SpeedVector is defined by "Dashes" and "ArrowDouble" with Color="#FF7F7F7F"  -->
+    <SolidColorBrush x:Key="AncCnSpeedCircle" Color="#FF777777" />
+
+    <LinearGradientBrush x:Key="AncCnInstrumentBackground" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF323232" />
+        <GradientStop Offset="0.5" Color="#FF141414" />
+        <GradientStop Offset="1" Color="#FF141414" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="AncCnInstrumentBorderMain" Color="#FF141414" />
+    <LinearGradientBrush x:Key="AncCnInstrumentBorderShadow" Opacity="1.0" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FF000000" />
+        <GradientStop Offset="0.1" Color="#FF0F0F0F" />
+        <GradientStop Offset="1" Color="#FF454545" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="AncCnInstrumentCross" Color="#FF7F4000" />
+
+    <LinearGradientBrush x:Key="AncCnPowerbarBackground" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF263050" />
+        <GradientStop Offset="1" Color="#FF233243" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="AncCnAzipodBackground" Color="#FF2D323C" />
+
+    <!--  Bar colors  -->
+    <LinearGradientBrush x:Key="ConningVBarYellow" Opacity="0.9" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF787346" />
+        <GradientStop Offset="0.3" Color="#FF807B4E" />
+        <GradientStop Offset="1.0" Color="#FF706B3E" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="AncCnVBar" Opacity="0.9" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF455166" />
+        <GradientStop Offset="0.3" Color="#FF778192" />
+        <GradientStop Offset="1.0" Color="#FF404C62" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnVBarBack" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF202020" />
+        <GradientStop Offset="0.3" Color="#FF3D3D3D" />
+        <GradientStop Offset="1.0" Color="#FF1A1A1A" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnHBar" Opacity="0.9" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF455166" />
+        <GradientStop Offset="0.3" Color="#FF778192" />
+        <GradientStop Offset="1.0" Color="#FF404C62" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnHBarBack" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF606060" />
+        <GradientStop Offset="0.3" Color="#FF7D7D7D" />
+        <GradientStop Offset="1.0" Color="#FF5A5A5A" />
+    </LinearGradientBrush>
+    <!--  Power Bar colors  -->
+    <LinearGradientBrush x:Key="AncCnHPwrBackRed" Opacity="1.0" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF711010" />
+        <GradientStop Offset="0.7" Color="#FF912020" />
+        <GradientStop Offset="1.0" Color="#FF600808" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnVPwrBackRed" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF711010" />
+        <GradientStop Offset="0.3" Color="#FF912020" />
+        <GradientStop Offset="1.0" Color="#FF600808" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnBarGray" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF707070" />
+        <GradientStop Offset="0.3" Color="#FF8D8D8D" />
+        <GradientStop Offset="1.0" Color="#FF5A5A5A" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnBarGreen" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF1E3528" />
+        <GradientStop Offset="0.3" Color="#FF4B6E50" />
+        <GradientStop Offset="1.0" Color="#FF294635" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnBarDarkGreen" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF0E2518" />
+        <GradientStop Offset="0.3" Color="#FF3B5E40" />
+        <GradientStop Offset="1.0" Color="#FF193625" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnBarRed" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF711010" />
+        <GradientStop Offset="0.3" Color="#FF912020" />
+        <GradientStop Offset="1.0" Color="#FF600808" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AncCnBarOrange" Opacity="1.0" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF715030" />
+        <GradientStop Offset="0.3" Color="#FF916040" />
+        <GradientStop Offset="1.0" Color="#FF603818" />
+    </LinearGradientBrush>
+
+    <!--  Rate of Turn ROT colors  -->
+    <RadialGradientBrush x:Key="AncCnROT_Back" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF202020" />
+        <GradientStop Offset="0.9" Color="#FF1A1A1A" />
+        <GradientStop Offset="0.963" Color="#FF3D3D3D" />
+        <GradientStop Offset="0.983" Color="#FF3D3D3D" />
+        <GradientStop Offset="1.0" Color="#FF1A1A1A" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="AncCnROT_Blue" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF1F2835" />
+        <GradientStop Offset="0.70" Color="#FF1F2835" />
+        <GradientStop Offset="0.97" Color="#FF394554" />
+        <GradientStop Offset="0.985" Color="#FF505865" />
+        <GradientStop Offset="0.997" Color="#FF293546" />
+        <GradientStop Offset="1.0" Color="#FF293546" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="AncCnROT_Green" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF1E3528" />
+        <GradientStop Offset="0.70" Color="#FF1E3528" />
+        <GradientStop Offset="0.97" Color="#FF395A3C" />
+        <GradientStop Offset="0.985" Color="#FF4B6E50" />
+        <GradientStop Offset="0.997" Color="#FF294635" />
+        <GradientStop Offset="1.0" Color="#FF294635" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="AncCnROT_Red" GradientOrigin="0.50,0.50">
+        <GradientStop Offset="0.0" Color="#FF601E28" />
+        <GradientStop Offset="0.70" Color="#FF601E28" />
+        <GradientStop Offset="0.97" Color="#FF751A24" />
+        <GradientStop Offset="0.985" Color="#FF7D5050" />
+        <GradientStop Offset="0.997" Color="#FF5A1E28" />
+        <GradientStop Offset="1.0" Color="#FF5A1E28" />
+    </RadialGradientBrush>
+
+    <!--  ANC Conning and NDD ConningNonPerm area  -->
+    <!--  Label colors  -->
+    <SolidColorBrush x:Key="AncCpLabelForeground" Color="#FF555555" />
+    <SolidColorBrush x:Key="AncCpNameForeground" Color="#FF333333" />
+    <!--  Text colors  -->
+    <SolidColorBrush x:Key="AncCpTextForeground" Color="#FF777777" />
+    <!--  GroupBox  -->
+    <SolidColorBrush x:Key="AncCpGroupBoxBorder" Color="#FF303030" />
+    <SolidColorBrush x:Key="AncCpGroupBoxLabelBackground" Color="#FF151515" />
+    <!--  Wind/Current Vectors  -->
+    <SolidColorBrush x:Key="AncCpWindVector" Color="#FF7F4000" />
+    <SolidColorBrush x:Key="AncCpCurrentVector" Color="#FF00007F" />
+
+    <!--  ANC Conning and NDD Colors Dusk/Night End  -->
+
+</ResourceDictionary>
