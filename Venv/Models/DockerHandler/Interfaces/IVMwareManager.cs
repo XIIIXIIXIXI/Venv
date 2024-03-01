@@ -13,7 +13,7 @@ namespace Venv.Models.DockerHandler.Interfaces
         public IPAddress StartVMwareInstance();
 
         // Stops the VMware instance
-        Task StopVMwareInstanceAsync();
+        public void StopVMwareInstance();
 
         // Executes a command on the VMware instance
         Task ExecuteVMwareCommandAsync(string command);
