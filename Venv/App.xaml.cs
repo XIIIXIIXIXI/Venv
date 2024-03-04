@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Services;
+using Venv.ViewModels.Windows;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -44,7 +46,8 @@ namespace Venv
                 {
                     //services, windows and view models
                     services.AddSingleton<MainWindow>();
-
+                    services.AddSingleton<MainWindowViewModel>();
+                    services.AddSingleton<INavigationService, NavigationService>();
                     //host services
                 }).Build();
         }
@@ -57,9 +60,12 @@ namespace Venv
         {
             await _host.StartAsync();
 
-            m_window = _host.Services.GetRequiredService<MainWindow>();
-            m_window.Title = "Venv";
-            m_window.Activate();
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            var navigationService = _host.Services.GetRequiredService<INavigationService>();
+
+            mainWindow.InitializeNavigationService(navigationService);
+
+            mainWindow.Activate();
         }
     }
 }

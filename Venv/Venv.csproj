@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
 		<RootNamespace>Venv</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -15,6 +15,7 @@
 		<None Remove="Resources\DayColors.xaml" />
 		<None Remove="Resources\DuskColors.xaml" />
 		<None Remove="Resources\NightColors.xaml" />
+		<None Remove="Views\Pages\VirtualPage.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Remove="Resources\DayColors.xaml" />
@@ -53,7 +54,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Models\DockerHandler\" />
-		<Folder Include="Services\" />
+		<Folder Include="Views\Windows\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\Pages\VirtualPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Resources\NightColors.xaml">

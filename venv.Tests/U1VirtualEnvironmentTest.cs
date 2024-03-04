@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
-using Venv.Resources;
+
 
 namespace venv.Tests
 {
@@ -14,7 +11,7 @@ namespace venv.Tests
     public class U1VirtualEnvironmentTest
     {
         //If the vm returns an IP after starting then the VM has started successfully
-        [TestMethod, Timeout(8000000)] //This test can absolute maximum run for 1 minute and 20 seconds. It normally takes 45 seconds. 
+        [TestMethod, Timeout(8000000)] //This test can absolute maximum run for 2 minutes. It normally takes 1 minute and 30 seconds. 
         public void StartsVmwareProcessInHeadlessMode()
         {
             var _VMwareManager = new VMwareManager();
@@ -30,7 +27,7 @@ namespace venv.Tests
             _VMwareManager.StartHeartBeat();
             Assert.IsFalse(_VMwareManager.IsVMwareInstanceRunning);
             _VMwareManager.StartVMwareInstance();
-            await Task.Delay(_VMwareManager.HeartbeatInterval + 1000); // to make sure the output is from the hearbeat and not from starting the vmwareInstance.
+            await Task.Delay(_VMwareManager.HeartbeatInterval + 1000); // to make sure the output is from the heartbeat and not from starting the vmwareInstance.
             Assert.IsTrue(_VMwareManager.IsVMwareInstanceRunning);
         }
 
