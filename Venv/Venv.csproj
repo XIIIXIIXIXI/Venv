@@ -40,7 +40,8 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+		<PackageReference Include="Syncfusion.Grid.WinUI" Version="24.2.8" />
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
@@ -54,7 +55,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Models\DockerHandler\" />
-		<Folder Include="Views\Windows\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\Pages\VirtualPage.xaml">

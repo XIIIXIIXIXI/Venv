@@ -10,7 +10,7 @@ namespace Venv.Services
     public interface INavigationService
     {
         void Initialize(Frame frame);
-        bool NavigateTo(Type pageType, object parameter = null);
+        bool NavigateTo(Type viewModelType, object parameter = null);
         void GoBack();
     }
 }

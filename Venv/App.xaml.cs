@@ -14,7 +14,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Venv.Services;
+using Venv.ViewModels.Pages;
 using Venv.ViewModels.Windows;
+using Venv.Views.Pages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -32,12 +34,7 @@ namespace Venv
     public partial class App : Application
     {
         private readonly IHost _host;
-        private Window m_window;
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        /// 
+
         public App()
         {
             this.InitializeComponent();
@@ -47,15 +44,15 @@ namespace Venv
                     //services, windows and view models
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainWindowViewModel>();
-                    services.AddSingleton<INavigationService, NavigationService>();
+                    services.AddSingleton<INavigationService>((IServiceProvider serviceProvider) =>
+                new NavigationService(serviceProvider));
+
+                    services.AddSingleton<VirtualPage>();
+                    services.AddSingleton<VirtualViewModel>();
                     //host services
                 }).Build();
         }
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             await _host.StartAsync();

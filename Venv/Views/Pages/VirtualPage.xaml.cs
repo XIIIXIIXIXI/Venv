@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Services;
+using Venv.ViewModels.Pages;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -21,11 +23,13 @@ namespace Venv.Views.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class VirtualPage : Page
+    public partial class VirtualPage : Page
     {
+        public VirtualViewModel ViewModel => DataContext as VirtualViewModel;
         public VirtualPage()
         {
             this.InitializeComponent();
         }
+
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Venv.Resources;
 using Venv.Services;
 using Venv.Views.Pages;
+using Venv.ViewModels.Pages;
 
 namespace Venv.ViewModels.Windows
 {
@@ -23,7 +24,7 @@ namespace Venv.ViewModels.Windows
         [RelayCommand]
         private void NavigateButton()
         {
-            _navigationService.NavigateTo(typeof(VirtualPage));
+            _navigationService.NavigateTo(typeof(VirtualViewModel));
         }
   
     }
