@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using Syncfusion.Licensing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,7 @@ namespace Venv
 
         public App()
         {
+            SyncfusionLicenseProvider.RegisterLicense("MzE0MTk5OUAzMjM0MmUzMDJlMzBpdlh3UWJYSVgrZXM5dXZPZ2g3Z2R0VWRueUxLd2kxZll1MDhEd1ovQWJRPQ==");
             var services = new ServiceCollection();
             ConfigureServices(services);
             _serviceProvider = services.BuildServiceProvider();
@@ -55,6 +57,8 @@ namespace Venv
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddTransient<VirtualPage>();
             services.AddTransient<VirtualViewModel>();
+            services.AddSingleton<SelectConfigurationPage>();
+            services.AddSingleton<SelectConfigurationViewModel>();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -62,7 +66,7 @@ namespace Venv
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Activate();
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<VirtualPage>();
+            navigationService.NavigateTo<SelectConfigurationPage>();
         }
     }
 }

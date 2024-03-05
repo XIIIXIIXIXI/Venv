@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="Venv.Views.Pages.SelectConfigurationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Venv.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource AncNormalLinearBackground}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="CustomTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Comic Sans MS" />
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Foreground" Value="{ThemeResource AncCnHBarBack}" />
+        </Style>
+        <Style x:Key="IBM" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="IBM Plex Mono" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource AncCnTextForeground}" />
+        </Style>
+        <Style x:Key="ButtonText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="IBM Plex Mono" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource AncCpTextForeground}" />
+        </Style>
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource AncKeypadButtonBackground}"/>
+
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="48"
+            Style="{StaticResource CustomTextBlockStyle}"
+            Text="Virtual Environment"
+            TextWrapping="Wrap" />
+        <TextBlock 
+            Grid.Row="2"
+            Grid.Column="0"
+            Text="Recently used configurations"
+            HorizontalAlignment="left"
+            VerticalAlignment="Top"
+            Margin="10,10,0,0"
+            FontSize="24"
+            Style="{StaticResource IBM}"/>
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="Last Opened"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,20,4,0"
+            Style="{StaticResource IBM}"
+            FontSize="12"
+            />
+        <Border Grid.Row="2"
+                Grid.Column="2"
+                Background="White"
+                Width="1"
+                VerticalAlignment="Stretch"
+                Grid.RowSpan="3"/>
+        <TextBlock Grid.Row="2"
+                   Grid.Column="3"
+                   Text="Get Started"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="10,10,0,0"
+                   Style="{StaticResource IBM}"
+                   FontSize="20" />
+        <Button Grid.Row="3" 
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                Margin="10, 20, 8, 0"
+                Style="{StaticResource Button}"
+                BorderThickness="1"
+                MinHeight="50"
+                VerticalAlignment="Top">
+            <StackPanel>
+            <TextBlock Text="Select Configuration"
+                       Style="{StaticResource ButtonText}"
+                       TextAlignment="Center"/>
+            <TextBlock Text="Locate configuration in a local database"
+                               FontSize="10"
+                       Margin="10, 10, 0 ,0"
+                       Foreground="{ThemeResource ConningHBarBack}"
+                       TextWrapping="Wrap"
+                               TextAlignment="Center" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</Page>

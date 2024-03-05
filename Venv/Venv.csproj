@@ -15,6 +15,7 @@
 		<None Remove="Resources\DayColors.xaml" />
 		<None Remove="Resources\DuskColors.xaml" />
 		<None Remove="Resources\NightColors.xaml" />
+		<None Remove="Views\Pages\SelectConfigurationPage.xaml" />
 		<None Remove="Views\Pages\SettingsPage.xaml" />
 		<None Remove="Views\Pages\VirtualPage.xaml" />
 	</ItemGroup>
@@ -58,6 +59,11 @@
 		<Folder Include="Common\Helper\" />
 		<Folder Include="Models\DockerHandler\" />
 		<Folder Include="ViewModels\Windows\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\Pages\SelectConfigurationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\Pages\SettingsPage.xaml">
