@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Resources;
 using Venv.Services;
 using Venv.ViewModels.Pages;
 using Windows.Foundation;
@@ -25,10 +26,12 @@ namespace Venv.Views.Pages
     /// </summary>
     public partial class VirtualPage : Page
     {
-        public VirtualViewModel ViewModel => DataContext as VirtualViewModel;
-        public VirtualPage()
+        public VirtualViewModel ViewModel { get; }
+        public VirtualPage(VirtualViewModel viewModel)
         {
+            ViewModel = viewModel;
             this.InitializeComponent();
+            this.DataContext = ViewModel;
         }
 
     }

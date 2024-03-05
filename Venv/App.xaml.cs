@@ -15,12 +15,12 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Venv.Services;
 using Venv.ViewModels.Pages;
-using Venv.ViewModels.Windows;
 using Venv.Views.Pages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -33,36 +33,36 @@ namespace Venv
     /// </summary>
     public partial class App : Application
     {
-        private readonly IHost _host;
+        private IServiceProvider _serviceProvider;
 
         public App()
         {
-            this.InitializeComponent();
-            _host = Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
-                {
-                    //services, windows and view models
-                    services.AddSingleton<MainWindow>();
-                    services.AddSingleton<MainWindowViewModel>();
-                    services.AddSingleton<INavigationService>((IServiceProvider serviceProvider) =>
-                new NavigationService(serviceProvider));
-
-                    services.AddSingleton<VirtualPage>();
-                    services.AddSingleton<VirtualViewModel>();
-                    //host services
-                }).Build();
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            _serviceProvider = services.BuildServiceProvider();
         }
 
-        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        private void ConfigureServices(IServiceCollection services)
         {
-            await _host.StartAsync();
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<Frame>(sp =>
+            {
+                var mainWindow = sp.GetRequiredService<MainWindow>();
+                var frame = new Frame();
+                mainWindow.Content = frame;
+                return frame;
+            });
+            services.AddSingleton<INavigationService, NavigationService>();
+            services.AddTransient<VirtualPage>();
+            services.AddTransient<VirtualViewModel>();
+        }
 
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            var navigationService = _host.Services.GetRequiredService<INavigationService>();
-
-            mainWindow.InitializeNavigationService(navigationService);
-
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Activate();
+            var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
+            navigationService.NavigateTo<VirtualPage>();
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Venv.Services
 {
     public interface INavigationService
     {
-        void Initialize(Frame frame);
-        bool NavigateTo(Type viewModelType, object parameter = null);
-        void GoBack();
+        void NavigateTo<TPage>() where TPage : Page;
     }
 }
