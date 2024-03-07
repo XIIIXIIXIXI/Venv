@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,11 @@ namespace Venv.Services
 
         public ShipDataService Create()
         {
+            if (!_dataExtractor.ValidateConfigurationFolder())
+            {
+                Debug.WriteLine("Xml file doesen't exist, make sure you choosed the right configuration");
+                return null;
+            }
             var dpus = _dataExtractor.ExtractDpus();
             var databaseVersion = _dataExtractor.GetDatabaseVersion();
             var dpuVersion = _dataExtractor.GetDPU2010Version();

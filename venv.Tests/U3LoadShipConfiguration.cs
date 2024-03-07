@@ -17,7 +17,7 @@ namespace venv.Tests
         public void Setup()
         {
             _dataExtractor = new XmlDataExtractor();
-            string folderPath = @"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV\XML";
+            string folderPath = @"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV";
             _dataExtractor.SetFolderPath(folderPath);
         }
         [TestMethod]
@@ -76,7 +76,7 @@ namespace venv.Tests
         [TestMethod]
         public void CreateShipData()
         {
-            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV\XML");
+            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
             ShipDataService shipData = factory.Create();
             Assert.AreEqual("2161v2", shipData.DatabaseVersion);
             Assert.AreEqual("2.1.16.04", shipData.DPUVersion);

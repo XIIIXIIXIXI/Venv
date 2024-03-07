@@ -12,6 +12,7 @@ namespace Venv.Models
     {
         private string _folderPath;
         private XmlDocument _xmlDocument;
+        private string _xmlFolderPath;
 
         public XmlDataExtractor()
         {
@@ -25,12 +26,18 @@ namespace Venv.Models
         public void SetFolderPath(string filePath)
         {
             _folderPath = filePath;
+            _xmlFolderPath = Path.Combine(_folderPath, "XML");
+        }
+        public bool ValidateConfigurationFolder()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            return File.Exists(xmlFilePath);
         }
 
         public List<DPU> ExtractDpus()
         {
             List<DPU> plcNumbers = new List<DPU>();
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNodeList plcNodes = _xmlDocument.GetElementsByTagName("PlcList");
             foreach(XmlNode plcListNode in plcNodes )
@@ -50,14 +57,14 @@ namespace Venv.Models
         }
         public string GetDatabaseVersion()
         {
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNode node = _xmlDocument.SelectSingleNode("//DatabaseVersion");
             return node?.InnerText ?? string.Empty;
         }
         public string GetDPU2010Version() 
         {
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNode node = _xmlDocument.SelectSingleNode("//Dpu2010Version");
             return node?.InnerText ?? string.Empty;
@@ -74,7 +81,7 @@ namespace Venv.Models
         }*/
         public int GetMFDsAmount()
         {
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNode node = _xmlDocument.SelectSingleNode("//Number_MFD");
             if (node != null && int.TryParse(node.InnerText, out int amount))
@@ -85,7 +92,7 @@ namespace Venv.Models
         }
         public string GetVesselName()
         {
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNode node = _xmlDocument.SelectSingleNode("//ShipName");
             return node?.InnerText ?? string.Empty;
@@ -93,7 +100,7 @@ namespace Venv.Models
 
         public string GetIMONumber()
         {
-            string xmlFilePath = Path.Combine(_folderPath, "ConfigIfSystem.xml");
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             LoadXml(xmlFilePath);
             XmlNode node = _xmlDocument.SelectSingleNode("//ImoNumber");
             return node?.InnerText ?? string.Empty;
