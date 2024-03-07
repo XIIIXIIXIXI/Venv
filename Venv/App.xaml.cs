@@ -46,6 +46,7 @@ namespace Venv
 
         private void ConfigureServices(IServiceCollection services)
         {
+
             services.AddSingleton<MainWindow>();
             services.AddSingleton<Frame>(sp =>
             {
@@ -58,13 +59,28 @@ namespace Venv
             services.AddTransient<VirtualPage>();
             services.AddTransient<VirtualViewModel>();
             services.AddSingleton<SelectConfigurationPage>();
+            
+            //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
+
+            // Register WindowHandleProvider as a singleton in the DI container. Throws exception if invoked before being initialized in the OnLaunched methode.
+            services.AddSingleton<IWindowHandleProvider, WindowHandleProvider>((sp) =>
+            new WindowHandleProvider(() => throw new InvalidOperationException("Window handle not initialized yet.")));
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            //activate main window
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Activate();
+
+            // Retrieve the window handle from the activated MainWindow (pointer)
+            IntPtr mainWindowHandle = mainWindow.GetWindowHandle();
+
+
+            var windowHandleProvider = (WindowHandleProvider)_serviceProvider.GetRequiredService<IWindowHandleProvider>();
+            windowHandleProvider.SetWindowHandle(() => mainWindowHandle);
+
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.NavigateTo<SelectConfigurationPage>();
         }

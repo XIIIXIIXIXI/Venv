@@ -87,7 +87,8 @@
                    Margin="10,10,0,0"
                    Style="{StaticResource IBM}"
                    FontSize="20" />
-        <Button Grid.Row="3" 
+        <Button Command="{x:Bind ViewModel.SelectFolderCommand}"
+                Grid.Row="3" 
                 Grid.Column="3"
                 HorizontalAlignment="Center"
                 Margin="10, 20, 8, 0"

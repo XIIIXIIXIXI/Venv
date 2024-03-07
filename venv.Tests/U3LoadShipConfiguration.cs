@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Venv.Models;
 using Newtonsoft.Json;
+using Venv.Services;
 
 namespace venv.Tests
 {
@@ -71,6 +72,17 @@ namespace venv.Tests
         {
             var result = _dataExtractor.GetIMONumber();
             Assert.AreEqual("123456", result);
+        }
+        [TestMethod]
+        public void CreateShipData()
+        {
+            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV\XML");
+            ShipDataService shipData = factory.Create();
+            Assert.AreEqual("2161v2", shipData.DatabaseVersion);
+            Assert.AreEqual("2.1.16.04", shipData.DPUVersion);
+            Assert.AreEqual(4, shipData.NumberOfMFD);
+            Assert.AreEqual("Demo System", shipData.VesselName);
+            Assert.AreEqual("123456", shipData.IMO);
         }
     }
 }

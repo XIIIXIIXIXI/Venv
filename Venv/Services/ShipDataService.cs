@@ -57,7 +57,6 @@ namespace Venv.Services
             var vesselName = _dataExtractor.GetVesselName();
             var imo = _dataExtractor.GetIMONumber();
 
-            // Create and return a new ShipDataService instance with the extracted data
             return new ShipDataService(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus);
         }
     }
