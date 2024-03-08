@@ -223,6 +223,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Style="{StaticResource Button}"
+            Command="{x:Bind ViewModel.NavigateToShell}"
             Visibility="{x:Bind ViewModel.IsConfigurationSelected, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
             <TextBlock
                 Style="{StaticResource ButtonText}"

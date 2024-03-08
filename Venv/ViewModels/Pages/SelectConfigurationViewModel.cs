@@ -17,7 +17,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Venv.Models;
 using Microsoft.UI.Xaml.Controls;
-using Venv.Views.Windows;
+using Venv.Views.Pages;
 
 namespace Venv.ViewModels.Pages
 {
@@ -29,7 +29,7 @@ namespace Venv.ViewModels.Pages
         {
             _navigationService = navigationService;
             SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
-            //NavigateToNavigationFrame = new RelayCommand(NavigateToNewFrame);
+            NavigateToShell = new RelayCommand(NavigateToNewFrame);
             _windowHandleProvider = windowHandleProvider;
             Task.Run(LoadRecentConfigurationsAsync);
         }
@@ -49,12 +49,12 @@ namespace Venv.ViewModels.Pages
         private ObservableCollection<ConfigurationModel> recentConfigurations = new();
 
         public IAsyncRelayCommand SelectFolderCommand { get; }
-        //public IRelayCommand NavigateToNavigationFrame { get; }
+        public IRelayCommand NavigateToShell { get; }
 
-        /*private void NavigateToNewFrame()
+        private void NavigateToNewFrame()
         {
-            _navigationService.NavigateTo(NavigationFrame);
-        }*/
+            _navigationService.NavigateTo<VirtualPage>();
+        }
         private async Task SelectFolderAsync()
         {
             var picker = new FolderPicker();

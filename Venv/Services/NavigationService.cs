@@ -1,5 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
+using Venv.Views.Pages;
 
 
 namespace Venv.Services
@@ -21,5 +23,6 @@ namespace Venv.Services
             var page = _serviceProvider.GetService(pageType) as Page;
             _frame.Content = page;
         }
+        
     }
 }
