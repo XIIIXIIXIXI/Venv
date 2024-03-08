@@ -26,10 +26,17 @@
             <Setter Property="FontStyle" Value="Normal" />
             <Setter Property="Foreground" Value="{ThemeResource AncCpTextForeground}" />
         </Style>
+        <Style x:Key="DisabledButtonText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="IBM Plex Mono" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource DynTextDisabled}" />
+        </Style>
         <Style x:Key="Button" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource AncKeypadButtonBackground}" />
         </Style>
         <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <local:BoolToButtonTextConverter x:Key="BoolToButtonTextConverter" />
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -72,9 +79,10 @@
             Margin="0,20,4,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            FontSize="12"
+            FontSize="14"
             Style="{StaticResource IBM}"
             Text="Last Opened" />
+
         <ListView
             Grid.Row="3"
             Grid.Column="0"
@@ -89,19 +97,30 @@
             </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local2:ConfigurationModel">
-                    <StackPanel Margin="5">
+                    <Grid Margin="5" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock
+                                FontWeight="Bold"
+                                Style="{StaticResource IBM}"
+                                Text="{x:Bind VesselName}" />
+                            <TextBlock
+                                Foreground="Gray"
+                                Style="{StaticResource IBM}"
+                                Text="{x:Bind FilePath}" />
+                        </StackPanel>
                         <TextBlock
-                            FontWeight="Bold"
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
                             Style="{StaticResource IBM}"
-                            Text="{x:Bind VesselName}" />
-                        <TextBlock
-                            Foreground="Gray"
-                            Style="{StaticResource IBM}"
-                            Text="{x:Bind FilePath}" />
-                    </StackPanel>
+                            Text="{x:Bind LastUsed, Converter={StaticResource DateTimeToStringConverter}, Mode=OneWay}" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
         <Border
             Grid.Row="2"
@@ -195,16 +214,35 @@
                 <Run Text="{x:Bind ViewModel.ShipData.IMO, Mode=OneWay}" />
             </TextBlock>
         </StackPanel>
+        <Button
+            Grid.Row="5"
+            Grid.Column="3"
+            MinWidth="100"
+            MinHeight="20"
+            Margin="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Style="{StaticResource Button}"
+            Visibility="{x:Bind ViewModel.IsConfigurationSelected, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <TextBlock
+                Style="{StaticResource ButtonText}"
+                Text="Use Configuration"
+                TextAlignment="Center" />
+        </Button>
         <InfoBar
+            Grid.Column="0"
             x:Name="SelectionInfoBar"
             Title="Configuration Selection"
-            Grid.Row="4"
-            Margin="12"
+            Grid.Row="5"
+            Margin="30"
+            
             HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
             IsClosable="False"
             IsIconVisible="True"
             IsOpen="{x:Bind ViewModel.IsInfoBarOpen, Mode=OneWay}"
             Message="{x:Bind ViewModel.InfoBarMessage, Mode=OneWay}"
-            Severity="Error" />
+            Severity="Error">
+        </InfoBar>
     </Grid>
 </Page>

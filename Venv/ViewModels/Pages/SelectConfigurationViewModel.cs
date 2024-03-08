@@ -16,15 +16,20 @@ using Microsoft.Extensions.Primitives;
 using System.IO;
 using System.Collections.ObjectModel;
 using Venv.Models;
+using Microsoft.UI.Xaml.Controls;
+using Venv.Views.Windows;
 
 namespace Venv.ViewModels.Pages
 {
     public partial class SelectConfigurationViewModel : ObservableObject
     {
         private readonly IWindowHandleProvider _windowHandleProvider;
-        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider)
+        private readonly INavigationService _navigationService;
+        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService)
         {
+            _navigationService = navigationService;
             SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
+            //NavigateToNavigationFrame = new RelayCommand(NavigateToNewFrame);
             _windowHandleProvider = windowHandleProvider;
             Task.Run(LoadRecentConfigurationsAsync);
         }
@@ -37,16 +42,19 @@ namespace Venv.ViewModels.Pages
         [ObservableProperty]
         private bool isInfoBarOpen;
         [ObservableProperty]
-        private bool isConfigurationSelected;
+        private bool isConfigurationSelected = false;
+        [ObservableProperty] //only used to update the listview when selecting from file explorer
+        private ConfigurationModel selectedConfiguration;
         [ObservableProperty]
         private ObservableCollection<ConfigurationModel> recentConfigurations = new();
 
-
-
-
         public IAsyncRelayCommand SelectFolderCommand { get; }
-        public IAsyncRelayCommand SelectedConfiguration {  get; }
+        //public IRelayCommand NavigateToNavigationFrame { get; }
 
+        /*private void NavigateToNewFrame()
+        {
+            _navigationService.NavigateTo(NavigationFrame);
+        }*/
         private async Task SelectFolderAsync()
         {
             var picker = new FolderPicker();
@@ -68,6 +76,7 @@ namespace Venv.ViewModels.Pages
                 ShipData = service;
                 IsConfigurationSelected = true;
                 await SaveConfigurationAsync(service.VesselName, folder.Path);
+                SelectedConfiguration = RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(folder.Path, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -88,18 +97,27 @@ namespace Venv.ViewModels.Pages
 
         private async Task SaveConfigurationAsync(string vesselName, string filePath)
         {
-            if (!RecentConfigurations.Any(c => c.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)))
-            {
-                var configDetails = $"{vesselName}|{filePath}\n";
-                var file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RecentConfigurations.txt");
+            var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+            var configDetails = $"{vesselName}|{filePath}|{currentDate}";
 
-                await File.AppendAllTextAsync(file, configDetails);
-                RecentConfigurations.Add(new ConfigurationModel
-                {
-                    VesselName = vesselName,
-                    FilePath = filePath
-                });
+            var existingConfigIndex = RecentConfigurations.IndexOf(RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)));
+            if (existingConfigIndex != -1)
+            {
+                RecentConfigurations.RemoveAt(existingConfigIndex);
             }
+
+            RecentConfigurations.Insert(0, new ConfigurationModel
+            {
+                VesselName = vesselName,
+                FilePath = filePath,
+                LastUsed = DateTime.ParseExact(currentDate, "dd/MM/yyyy", null)
+            });
+
+            var updatedFileContent = RecentConfigurations.Select(c => $"{c.VesselName}|{c.FilePath}|{c.LastUsed:dd/MM/yyyy}").ToList();
+            var file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RecentConfigurations.txt");
+
+            await File.WriteAllLinesAsync(file, updatedFileContent);
+
             
         }
 
@@ -110,15 +128,16 @@ namespace Venv.ViewModels.Pages
             if (File.Exists(file))
             {
                 var lines = await File.ReadAllLinesAsync(file);
-                foreach (var line in lines)
+                foreach (var line in lines.Reverse())
                 {
                     var parts = line.Split('|');
-                    if (parts.Length == 2)
+                    if (parts.Length == 3)
                     {
                         RecentConfigurations.Add(new ConfigurationModel
                         {
                             VesselName = parts[0],
-                            FilePath = parts[1]
+                            FilePath = parts[1],
+                            LastUsed = DateTime.ParseExact(parts[2], "dd/MM/yyyy", null)
                         });
                     }
                 }
@@ -130,7 +149,7 @@ namespace Venv.ViewModels.Pages
             InfoBarMessage = message;
             IsInfoBarOpen = true;
 
-            await Task.Delay(3000);
+            await Task.Delay(30000);
             IsInfoBarOpen = false;
         }
 

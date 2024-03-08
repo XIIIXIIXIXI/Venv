@@ -10,5 +10,7 @@ namespace Venv.Models
     {
         public string VesselName { get; set; }
         public string FilePath { get; set; }
+
+        public DateTime LastUsed {  get; set; }
     }
 }
