@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -21,6 +23,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Input.Inking;
 using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
 
 
@@ -68,10 +71,11 @@ namespace Venv
             new WindowHandleProvider(() => throw new InvalidOperationException("Window handle not initialized yet.")));
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             //activate main window
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+
             mainWindow.Activate();
 
             // Retrieve the window handle from the activated MainWindow (pointer)
@@ -83,6 +87,31 @@ namespace Venv
 
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.NavigateTo<SelectConfigurationPage>();
+
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(mainWindowHandle);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            ChangeWindowSize(mainWindowHandle, 1450, 850);
+        }
+
+        private void ChangeWindowSize(IntPtr windowHandle, int width, int height)
+        {
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            //resize
+            var newSize = new Windows.Graphics.SizeInt32 { Width = width, Height = height };
+            appWindow.Resize(newSize);
+
+            //Center
+            var displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+            var screenBounds = displayArea.WorkArea;
+
+            var xPosition = screenBounds.X + ((screenBounds.Width - width) / 2);
+            var yPosition = screenBounds.Y + ((screenBounds.Height - height) / 2);
+
+            var newPosition = new Windows.Graphics.PointInt32(xPosition, yPosition);
+            appWindow.Move(newPosition);
         }
     }
 }

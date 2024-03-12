@@ -1,4 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -17,6 +19,7 @@ using Venv.ViewModels.Pages;
 using Venv.Views.Pages;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics;
 using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,10 +32,12 @@ namespace Venv
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             this.InitializeComponent();
         }
+        
         public IntPtr GetWindowHandle()
         {
             return WindowNative.GetWindowHandle(this);
