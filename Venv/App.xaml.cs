@@ -62,7 +62,8 @@ namespace Venv
             services.AddTransient<VirtualPage>();
             services.AddTransient<VirtualViewModel>();
             services.AddSingleton<SelectConfigurationPage>();
-            
+            services.AddTransient<NavigationViewPage>();
+
             //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
 

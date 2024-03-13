@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Venv.Views.Pages.NavigationViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Venv.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <NavigationView x:Name="NavigationView" PaneDisplayMode="LeftCompact" Background="{ThemeResource WindBack}">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Page 1" Tag="Page1" Background="{ThemeResource ListItemLight}">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE7C1;" Foreground="{ThemeResource SystemAccentColor}" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Page 2" Tag="Page2">
+                <NavigationViewItem.Icon>
+                    <SymbolIcon Symbol="OtherUser" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <NavigationView.Content>
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView.Content>
+    </NavigationView>
+</Page>

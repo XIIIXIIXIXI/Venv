@@ -53,7 +53,7 @@ namespace Venv.ViewModels.Pages
 
         private void NavigateToNewFrame()
         {
-            _navigationService.NavigateTo<VirtualPage>();
+            _navigationService.NavigateTo<NavigationViewPage>();
         }
         private async Task SelectFolderAsync()
         {

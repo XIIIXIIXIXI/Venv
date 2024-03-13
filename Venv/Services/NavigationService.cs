@@ -8,7 +8,7 @@ namespace Venv.Services
 {
     public class NavigationService : INavigationService
     {
-        private readonly Frame _frame;
+        private Frame _frame;
         private readonly IServiceProvider _serviceProvider;
 
         public NavigationService(Frame frame, IServiceProvider serviceProvider)
@@ -24,5 +24,10 @@ namespace Venv.Services
             _frame.Content = page;
         }
         
+        public void SetFrame(Frame frame)
+        {
+            _frame = frame;
+        }
+
     }
 }
