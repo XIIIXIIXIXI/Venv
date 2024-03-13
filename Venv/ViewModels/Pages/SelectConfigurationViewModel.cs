@@ -25,9 +25,11 @@ namespace Venv.ViewModels.Pages
     {
         private readonly IWindowHandleProvider _windowHandleProvider;
         private readonly INavigationService _navigationService;
-        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService)
+        private readonly ShipDataService _shipDataService;
+        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService, ShipDataService shipDataService)
         {
             _navigationService = navigationService;
+            _shipDataService = shipDataService;
             SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
             NavigateToShell = new RelayCommand(NavigateToNewFrame);
             _windowHandleProvider = windowHandleProvider;
@@ -53,6 +55,7 @@ namespace Venv.ViewModels.Pages
 
         private void NavigateToNewFrame()
         {
+            _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus());
             _navigationService.NavigateTo<NavigationViewPage>();
         }
         private async Task SelectFolderAsync()

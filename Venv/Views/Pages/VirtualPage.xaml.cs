@@ -33,6 +33,5 @@ namespace Venv.Views.Pages
             this.InitializeComponent();
             this.DataContext = ViewModel;
         }
-
     }
 }

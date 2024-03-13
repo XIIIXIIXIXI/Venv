@@ -10,7 +10,7 @@ namespace Venv.Services
 {
     public class ShipDataService
     {
-        public List<DPU> DPUs { get; private set; }
+        public List<DPU> _DPUs;
         public string DatabaseVersion { get; private set; }
         public string DPUVersion { get; private set; }
         public int NumberOfMFD { get; private set; }
@@ -18,24 +18,33 @@ namespace Venv.Services
         public string IMO { get; private set; }
         public event Action DataUpdated;
 
-        public ShipDataService(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus)
+        public ShipDataService()
+        {
+
+        }
+
+        public void  UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus)
         {
             DatabaseVersion = databaseVersion;
             DPUVersion = dpuVersion;
             NumberOfMFD = numberOfMfd;
             VesselName = vesselName;
             IMO = imo;
-            DPUs = dpus;
+            _DPUs = dpus;
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
         {
-            var dpu = DPUs.Find(d => d.Number == dpuNumber);
+            var dpu = _DPUs.Find(d => d.Number == dpuNumber);
             if (dpu != null)
             {
                 dpu.Status = status;
                 DataUpdated?.Invoke();
             }
+        }
+        public List<DPU> GetDpus()
+        {
+            return _DPUs;
         }
     }
 
@@ -63,7 +72,9 @@ namespace Venv.Services
             var vesselName = _dataExtractor.GetVesselName();
             var imo = _dataExtractor.GetIMONumber();
 
-            return new ShipDataService(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus);
+            var shipDataService = new ShipDataService();
+            shipDataService.UpdateShipData(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus);
+            return shipDataService;
         }
     }
 }

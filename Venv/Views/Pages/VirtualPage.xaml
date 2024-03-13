@@ -5,15 +5,103 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Venv.Views.Pages"
+    xmlns:local2="using:Venv.Common.Converters"
+    xmlns:local3="using:Venv.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource AncNormalLinearBackground}"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.DataGrid"
+    Background="{ThemeResource AncNormalLinearBackground}"
     mc:Ignorable="d">
 
-    <Grid
-        x:Name="grid"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Background="{ThemeResource ButtonBackgroundThemeBrush}">
+    <Page.Resources>
+        <SolidColorBrush x:Key="VmRunningBrush" Color="Green" />
+        <SolidColorBrush x:Key="VmStoppedBrush" Color="Red" />
+        <local2:BoolToBrushConverter
+            x:Key="BoolToBrushConverter"
+            FalseBrush="{StaticResource VmStoppedBrush}"
+            TrueBrush="{StaticResource VmRunningBrush}" />
+        <local2:DpuStatusToBrushConverter
+            x:Key="DpuStatusToBrushConverter"
+            OffBrush="{StaticResource VmStoppedBrush}"
+            OnBrush="{StaticResource VmRunningBrush}" />
+        <local2:IsSelectedToOpacityConverter x:Key="IsSelectedToOpacityConverter" />
+        <Style x:Key="IBM" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="IBM Plex Mono" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource AncCnTextForeground}" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GridView Grid.Column="0" Grid.Row="0"
+            IsItemClickEnabled="True"
+            ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}"
+            SelectionMode="None">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                    <Setter Property="Margin" Value="0, 8, 10, 0"/>
+                    <Setter Property="MinWidth" Value="100" />
+                </Style>
+            </GridView.ItemContainerStyle>
+
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Style="{StaticResource IBM}">
+                            <Run Text="DPU"/>
+                            <Run Text="{Binding Number, Mode=OneWay}" />
+                            <Run Text=""/>
+                        </TextBlock>
+                        <Ellipse
+                            Grid.Column="1"
+                            Width="7"
+                            Height="7"
+                            Margin="5,0,0,0"
+                            Fill="{Binding Status, Converter={StaticResource DpuStatusToBrushConverter}, Mode=OneWay}" />
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="2" 
+                           Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Style="{StaticResource IBM}"
+                Text="VM status:" />
+            <Ellipse
+                Grid.Column="1"
+                Width="10"
+                Height="10"
+                Fill="{x:Bind ViewModel.IsVMRunning, Converter={StaticResource BoolToBrushConverter}, Mode=OneWay}" />
+        </Grid>
     </Grid>
+
 </Page>
+
+

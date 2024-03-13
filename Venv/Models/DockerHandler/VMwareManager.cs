@@ -11,6 +11,7 @@ namespace Venv.Models.DockerHandler
     public class VMwareManager : IVMwareManager
     {
         private bool _isVMwareInstanceRunning { get; set; }
+        public event EventHandler<bool> VMStatusChanged;
         public bool IsVMwareInstanceRunning => _isVMwareInstanceRunning;
         public readonly int HeartbeatInterval = 5000; //5 seconds 
 
@@ -78,6 +79,7 @@ namespace Venv.Models.DockerHandler
                     else if (IPAddress.TryParse(output.Trim(), out var ip))
                     {
                         _isVMwareInstanceRunning = true;
+                        VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
                         return ip;
                     }
                 }
@@ -95,6 +97,7 @@ namespace Venv.Models.DockerHandler
             {
                 while (!token.IsCancellationRequested)
                 {
+                    var previousStatus = _isVMwareInstanceRunning;
                     ProcessStartInfo startInfo = new ProcessStartInfo
                     {
                         FileName = VMPaths.vmrunPath,
@@ -116,6 +119,10 @@ namespace Venv.Models.DockerHandler
                         {
                             _isVMwareInstanceRunning = false;
                         }
+                    }
+                    if (_isVMwareInstanceRunning != previousStatus)
+                    {
+                        VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
                     }
                     try
                     {

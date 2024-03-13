@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Models.DockerHandler;
 using Venv.Services;
 using Venv.ViewModels.Pages;
 using Venv.Views.Pages;
@@ -41,7 +43,6 @@ namespace Venv
 
         public App()
         {
-            SyncfusionLicenseProvider.RegisterLicense("MzE0MTk5OUAzMjM0MmUzMDJlMzBpdlh3UWJYSVgrZXM5dXZPZ2g3Z2R0VWRueUxLd2kxZll1MDhEd1ovQWJRPQ==");
             var services = new ServiceCollection();
             ConfigureServices(services);
             _serviceProvider = services.BuildServiceProvider();
@@ -49,6 +50,7 @@ namespace Venv
 
         private void ConfigureServices(IServiceCollection services)
         {
+
 
             services.AddSingleton<MainWindow>();
             services.AddSingleton<Frame>(sp =>
@@ -64,8 +66,11 @@ namespace Venv
             services.AddSingleton<SelectConfigurationPage>();
             services.AddTransient<NavigationViewPage>();
 
+            services.AddSingleton<VMwareManager>();
+
             //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
+            services.AddSingleton<ShipDataService>();
 
             // Register WindowHandleProvider as a singleton in the DI container. Throws exception if invoked before being initialized in the OnLaunched methode.
             services.AddSingleton<IWindowHandleProvider, WindowHandleProvider>((sp) =>

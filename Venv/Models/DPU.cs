@@ -13,7 +13,7 @@ namespace Venv.Models
         private int _number;
 
         [ObservableProperty]
-        private string _status = "Off";
+        private string _status = "On";
 
         [ObservableProperty]
         private bool _isSelected = true;
