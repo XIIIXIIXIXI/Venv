@@ -30,11 +30,15 @@
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="Foreground" Value="{ThemeResource AncCnTextForeground}" />
         </Style>
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource AncKeypadButtonBackground}" />
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -80,7 +84,17 @@
             </GridView.ItemsPanel>
         </GridView>
         <Grid
-            Grid.Row="1"
+        Grid.Row="2" 
+            Grid.ColumnSpan="2"
+
+            HorizontalAlignment="Center"
+        VerticalAlignment="Bottom"
+        Margin="50">
+            <Button Content="Run virtualization" HorizontalAlignment="Center" Style="{StaticResource Button}"/>
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
             Grid.Column="1"
             Margin="10"
             HorizontalAlignment="Right"

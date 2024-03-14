@@ -58,7 +58,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Common\Helper\" />
-		<Folder Include="Models\DockerHandler\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\Pages\NavigationViewPage.xaml">
