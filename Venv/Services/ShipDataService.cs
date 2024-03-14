@@ -46,6 +46,20 @@ namespace Venv.Services
         {
             return _DPUs;
         }
+        public bool IsDpuInFinalState(DPU singleDpu)
+        {
+            return singleDpu.Status == "Running" || singleDpu.Status == "Removed" || singleDpu.Status == "Started" || singleDpu.Status == "Stopped";
+        }
+        public List<DPU> GetSelectedDpus()
+        {
+            return _DPUs.Where(x => x.IsSelected).ToList();
+        }
+        public bool AreAllDpusInFinalState()
+        {
+            return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
+            //return _dpus.All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
+        }
+
     }
 
     public class ShipConfigurationFactory

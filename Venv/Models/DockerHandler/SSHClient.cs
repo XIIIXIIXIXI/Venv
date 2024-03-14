@@ -6,10 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Venv.Models.DockerHandler.Interfaces;
 
 namespace Venv.Models.DockerHandler
 {
-    public class SSHClient
+    public class SSHClient : ISSHClient
     {
         private readonly IPAddress _host;
         private readonly string _username;

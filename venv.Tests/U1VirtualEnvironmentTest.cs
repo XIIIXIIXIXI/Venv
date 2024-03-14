@@ -15,8 +15,8 @@ namespace venv.Tests
         public void StartsVmwareProcessInHeadlessMode()
         {
             var _VMwareManager = new VMwareManager();
-            var ipHost = _VMwareManager.StartVMwareInstance();
-            Assert.AreNotEqual(IPAddress.None, ipHost);
+            _VMwareManager.StartVMwareInstance();
+            Assert.AreNotEqual(IPAddress.None, _VMwareManager.IP);
         }
 
         [TestMethod]

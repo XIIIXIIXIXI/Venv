@@ -12,6 +12,7 @@ namespace Venv.Models.DockerHandler
     {
         private bool _isVMwareInstanceRunning { get; set; }
         public event EventHandler<bool> VMStatusChanged;
+        public IPAddress IP { get; set; }
         public bool IsVMwareInstanceRunning => _isVMwareInstanceRunning;
         public readonly int HeartbeatInterval = 5000; //5 seconds 
 
@@ -27,7 +28,7 @@ namespace Venv.Models.DockerHandler
             throw new NotImplementedException();
         }
 
-        public IPAddress StartVMwareInstance()
+        public void StartVMwareInstance()
         {
 
             if (!_isVMwareInstanceRunning)
@@ -42,7 +43,8 @@ namespace Venv.Models.DockerHandler
                 };
 
                 Process.Start(startInfo);
-                return WaitingForVMToBeTurnedOn();
+                WaitingForVMToBeTurnedOn();
+                return;
             }
             else
             {
@@ -50,7 +52,7 @@ namespace Venv.Models.DockerHandler
             }
         }
 
-        private IPAddress WaitingForVMToBeTurnedOn()
+        private void WaitingForVMToBeTurnedOn()
         {
             const int maxRetries = 600; // Maximum number of retries
             int retryCount = 0;
@@ -80,11 +82,12 @@ namespace Venv.Models.DockerHandler
                     {
                         _isVMwareInstanceRunning = true;
                         VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
-                        return ip;
+                        IP = ip;
+                        return;
                     }
                 }
             }
-            return IPAddress.None;
+            return;
         }
 
         public void StartHeartBeat()

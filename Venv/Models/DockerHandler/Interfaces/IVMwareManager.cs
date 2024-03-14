@@ -6,7 +6,7 @@ namespace Venv.Models.DockerHandler.Interfaces
     public interface IVMwareManager
     {
         // Starts the VMware instance
-        public IPAddress StartVMwareInstance();
+        public void StartVMwareInstance();
 
         // Stops the VMware instance
         public void StopVMwareInstance();
@@ -15,5 +15,8 @@ namespace Venv.Models.DockerHandler.Interfaces
         Task ExecuteVMwareCommandAsync(string command);
 
         bool IsVMwareInstanceRunning { get; }
+
+        public IPAddress IP { get; set; }
+
     }
 }
