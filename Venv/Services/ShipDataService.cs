@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,10 +18,12 @@ namespace Venv.Services
         public string VesselName { get; private set; }
         public string IMO { get; private set; }
         public event Action DataUpdated;
+        private readonly DispatcherQueue _dispatcherQueue;
+        public bool IsVirtualizationStopping { get; set; }
 
         public ShipDataService()
         {
-
+            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         }
 
         public void  UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus)
@@ -38,8 +41,12 @@ namespace Venv.Services
             var dpu = _DPUs.Find(d => d.Number == dpuNumber);
             if (dpu != null)
             {
-                dpu.Status = status;
-                DataUpdated?.Invoke();
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    dpu.Status = status;
+                    DataUpdated?.Invoke();
+                });
+                
             }
         }
         public List<DPU> GetDpus()
@@ -56,8 +63,20 @@ namespace Venv.Services
         }
         public bool AreAllDpusInFinalState()
         {
-            return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
+            if (IsVirtualizationStopping)
+            {
+                return GetSelectedDpus().All(dpu => dpu.Status == "Removed");
+            }
+            else
+            {
+                return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Started");
+            }
+            
             //return _dpus.All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
+        }
+        public bool AnyDpuInState(string status)
+        {
+            return GetSelectedDpus().Any(dpu => dpu.Status == status);
         }
 
     }

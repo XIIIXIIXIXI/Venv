@@ -15,14 +15,17 @@
     <Page.Resources>
         <SolidColorBrush x:Key="VmRunningBrush" Color="Green" />
         <SolidColorBrush x:Key="VmStoppedBrush" Color="Red" />
+        <SolidColorBrush x:Key="DpuRunningBrush" Color="Green" />
+        <SolidColorBrush x:Key="DpuStoppedBrush" Color="Red" />
         <local2:BoolToBrushConverter
             x:Key="BoolToBrushConverter"
             FalseBrush="{StaticResource VmStoppedBrush}"
             TrueBrush="{StaticResource VmRunningBrush}" />
+        <local2:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter" />
         <local2:DpuStatusToBrushConverter
             x:Key="DpuStatusToBrushConverter"
-            OffBrush="{StaticResource VmStoppedBrush}"
-            OnBrush="{StaticResource VmRunningBrush}" />
+            FalseBrush="{StaticResource VmStoppedBrush}"
+            TrueBrush="{StaticResource VmRunningBrush}" />
         <local2:IsSelectedToOpacityConverter x:Key="IsSelectedToOpacityConverter" />
         <Style x:Key="IBM" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="IBM Plex Mono" />
@@ -44,13 +47,15 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <GridView Grid.Column="0" Grid.Row="0"
+        <GridView
+            Grid.Row="0"
+            Grid.Column="0"
             IsItemClickEnabled="True"
             ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}"
             SelectionMode="None">
             <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">
-                    <Setter Property="Margin" Value="0, 8, 10, 0"/>
+                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0,8,10,0" />
                     <Setter Property="MinWidth" Value="100" />
                 </Style>
             </GridView.ItemContainerStyle>
@@ -63,34 +68,47 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Style="{StaticResource IBM}">
-                            <Run Text="DPU"/>
+                            <Run Text="DPU" />
                             <Run Text="{Binding Number, Mode=OneWay}" />
-                            <Run Text=""/>
+                            <Run Text="" />
                         </TextBlock>
+                        <!--<TextBlock Text="{Binding Status, Mode=OneWay}" /> -->
                         <Ellipse
                             Grid.Column="1"
                             Width="7"
                             Height="7"
                             Margin="5,0,0,0"
-                            Fill="{Binding Status, Converter={StaticResource DpuStatusToBrushConverter}, Mode=OneWay}" />
+                            Fill="{Binding Status, Converter={StaticResource DpuStatusToBrushConverter}, Mode=OneWay}"
+                            Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, Mode=OneWay}" />
+
+                        <ProgressRing
+                            Grid.Column="1"
+                            Width="10"
+                            Height="10"
+                            IsActive="True"
+                            Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, ConverterParameter='invert', Mode=OneWay}" />
+                        
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="2" 
-                           Orientation="Horizontal"/>
+                    <ItemsWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
         <Grid
-        Grid.Row="2" 
+            Grid.Row="2"
             Grid.ColumnSpan="2"
-
+            Margin="50"
             HorizontalAlignment="Center"
-        VerticalAlignment="Bottom"
-        Margin="50">
-            <Button Content="Run virtualization" HorizontalAlignment="Center" Style="{StaticResource Button}"/>
+            VerticalAlignment="Bottom">
+            <Button
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.StartStopVirtualizationCommand}"
+                Content="{x:Bind ViewModel.ButtonText, Mode=OneWay}"
+                IsEnabled="{x:Bind ViewModel.IsButtonEnabled, Mode=OneWay}"
+                Style="{StaticResource Button}" />
         </Grid>
 
         <Grid

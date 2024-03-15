@@ -65,6 +65,7 @@ namespace Venv
             services.AddTransient<VirtualViewModel>();
             services.AddSingleton<SelectConfigurationPage>();
             services.AddTransient<NavigationViewPage>();
+            services.AddSingleton<Mediator>();
 
             services.AddSingleton<VMwareManager>();
 

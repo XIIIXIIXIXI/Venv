@@ -18,6 +18,8 @@ using System.Collections.ObjectModel;
 using Venv.Models;
 using Microsoft.UI.Xaml.Controls;
 using Venv.Views.Pages;
+using Venv.Models.DockerHandler.Interfaces;
+using Venv.Models.DockerHandler;
 
 namespace Venv.ViewModels.Pages
 {
@@ -26,10 +28,13 @@ namespace Venv.ViewModels.Pages
         private readonly IWindowHandleProvider _windowHandleProvider;
         private readonly INavigationService _navigationService;
         private readonly ShipDataService _shipDataService;
-        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService, ShipDataService shipDataService)
+        private readonly IVMwareManager _vmwareManager;
+        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService, ShipDataService shipDataService, VMwareManager vMwareManager)
         {
             _navigationService = navigationService;
             _shipDataService = shipDataService;
+            _vmwareManager = vMwareManager;
+            _ = StartVMasync();
             SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
             NavigateToShell = new RelayCommand(NavigateToNewFrame);
             _windowHandleProvider = windowHandleProvider;
@@ -145,6 +150,13 @@ namespace Venv.ViewModels.Pages
                     }
                 }
             }
+        }
+        private async Task StartVMasync()
+        {
+            await Task.Run(() =>
+            {
+                _vmwareManager.StartVMwareInstance();
+            });
         }
 
         private async void ShowInfoBar(string message)

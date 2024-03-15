@@ -48,7 +48,7 @@ namespace Venv.Models
                     {
                         var dpu = new DPU();
                         dpu.Number = plcNumber;
-                        dpu.Status = "Off";
+                        dpu.Status = "Stopped";
                         plcNumbers.Add(dpu);
                     }
                 }

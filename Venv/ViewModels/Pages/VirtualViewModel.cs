@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,20 +20,26 @@ namespace Venv.ViewModels.Pages
 
         private readonly VMwareManager _vmwareManager;
         private readonly ShipDataService _shipDataService;
-        public VirtualViewModel(VMwareManager vmwareManager, ShipDataService shipDataService)
+        private readonly Mediator _mediator;
+        public VirtualViewModel(VMwareManager vmwareManager, ShipDataService shipDataService, Mediator mediator)
         {
             _shipDataService = shipDataService;
             _vmwareManager = vmwareManager;
+            _mediator = mediator;
             _shipDataService.DataUpdated += OnDataUpdated;
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
-            //_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
+            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;
             //_ = StartVMasync();
-            //_vmwareManager.StartHeartBeat();
+            _vmwareManager.StartHeartBeat();
         }
 
         [ObservableProperty]
         private bool isVMRunning;
+        [ObservableProperty]
+        private string _buttonText = "Start Virtualization";
+        [ObservableProperty]
+        private bool isButtonEnabled = true;
 
         public List<DPU> DpuList => _shipDataService.GetDpus();
 
@@ -48,12 +55,45 @@ namespace Venv.ViewModels.Pages
                 IsVMRunning = isRunning;
             });         
         }
-        private async Task StartVMasync()
+        
+        [RelayCommand]
+        public async Task OnStartStopVirtualization()
         {
-            await Task.Run(() =>
+            IsButtonEnabled = false;
+            
+            try
             {
-                _vmwareManager.StartVMwareInstance();
-            });
+                if (ButtonText == "Start Virtualization")
+                {
+                    ButtonText = "Starting Containers..";
+                    _shipDataService.IsVirtualizationStopping = false;
+                    await _mediator.StartDockerContainersAsync();
+                }
+                else if (ButtonText == "Stop Virtualization")
+                {
+                    ButtonText = "Stopping Containers..";
+                    _shipDataService.IsVirtualizationStopping = true;
+                    await _mediator.StopDockerContainersAsync();
+                }
+            }
+            catch
+            {
+                //ignore
+            }
+            UpdateButtonState();
+        }
+        private void UpdateButtonState()
+        {
+            if (_shipDataService.AreAllDpusInFinalState())
+            {
+                ButtonText = _shipDataService.AnyDpuInState("Removed") ? "Start Virtualization" : "Stop Virtualization";
+                IsButtonEnabled = true;
+            }
+            else
+            {
+                ButtonText = "Loading";
+                IsButtonEnabled = false;
+            }
         }
     }
 }

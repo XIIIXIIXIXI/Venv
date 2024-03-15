@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Venv.Models.DockerHandler.Interfaces;
 using Venv.Services;
 
 namespace Venv.Models.DockerHandler
 {
     public class ContainerManager
     {
-        private SSHClient _sshClient;
+        private ISSHClient _sshClient;
         private ShipDataService _shipDataService;
         public List<string> failedEvents = new List<string>();
 
-        public ContainerManager(SSHClient sshClient, ShipDataService shipDataService)
+        public ContainerManager(ISSHClient ssh, ShipDataService shipDataService)
         {
-            _sshClient = sshClient;
+            _sshClient = ssh;
             _shipDataService = shipDataService;
         }
 
