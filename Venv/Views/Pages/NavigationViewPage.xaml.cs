@@ -44,7 +44,7 @@ namespace Venv.Views.Pages
                     _navigationService.NavigateTo<VirtualPage>();
                     break;
                 case "Page2":
-                    ContentFrame.Navigate(typeof(VirtualPage));
+                    _navigationService.NavigateTo<DpuSelectionPage>();
                     break;
                 default:
                     break;

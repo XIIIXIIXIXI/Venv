@@ -64,6 +64,8 @@ namespace Venv
             services.AddTransient<VirtualPage>();
             services.AddTransient<VirtualViewModel>();
             services.AddSingleton<SelectConfigurationPage>();
+            services.AddSingleton<DpuSelectionPage>();
+            services.AddSingleton<DpuSelectionViewModel>();
             services.AddTransient<NavigationViewPage>();
             services.AddSingleton<Mediator>();
 
