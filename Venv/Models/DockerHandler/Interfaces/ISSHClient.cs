@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Venv.Models.DockerHandler.Interfaces
 {
-    public interface ISSHClient
+    public interface ISshClient
     {
         // Establishes an SSH connection
         public void Connect();

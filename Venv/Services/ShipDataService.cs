@@ -11,7 +11,7 @@ namespace Venv.Services
 {
     public class ShipDataService
     {
-        public List<DPU> _DPUs;
+        public List<DPU> DPUs;
         public string DatabaseVersion { get; private set; }
         public string DPUVersion { get; private set; }
         public int NumberOfMFD { get; private set; }
@@ -33,12 +33,12 @@ namespace Venv.Services
             NumberOfMFD = numberOfMfd;
             VesselName = vesselName;
             IMO = imo;
-            _DPUs = dpus;
+            DPUs = dpus;
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
         {
-            var dpu = _DPUs.Find(d => d.Number == dpuNumber);
+            var dpu = DPUs.Find(d => d.Number == dpuNumber);
             if (dpu != null)
             {
                 _dispatcherQueue.TryEnqueue(() =>
@@ -51,7 +51,7 @@ namespace Venv.Services
         }
         public List<DPU> GetDpus()
         {
-            return _DPUs;
+            return DPUs;
         }
         public bool IsDpuInFinalState(DPU singleDpu)
         {
@@ -59,24 +59,24 @@ namespace Venv.Services
         }
         public List<DPU> GetSelectedDpus()
         {
-            return _DPUs.Where(x => x.IsSelected).ToList();
+            return DPUs.Where(x => x.IsSelected).ToList();
         }
         public bool AreAllDpusInFinalState()
         {
             if (IsVirtualizationStopping)
             {
-                return GetSelectedDpus().All(dpu => dpu.Status == "Removed");
+                return GetSelectedDpus().TrueForAll(dpu => dpu.Status == "Removed");
             }
             else
             {
-                return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Started");
+                return GetSelectedDpus().TrueForAll(dpu => dpu.Status == "Running" || dpu.Status == "Started");
             }
             
             //return _dpus.All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
         }
         public bool AnyDpuInState(string status)
         {
-            return GetSelectedDpus().Any(dpu => dpu.Status == status);
+            return GetSelectedDpus().Exists(dpu => dpu.Status == status);
         }
 
     }

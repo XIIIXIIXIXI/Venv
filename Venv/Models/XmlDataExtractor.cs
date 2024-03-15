@@ -10,8 +10,8 @@ namespace Venv.Models
 {
     public class XmlDataExtractor
     {
-        private string _folderPath;
-        private XmlDocument _xmlDocument;
+        //private string _folderPath;
+        private readonly XmlDocument _xmlDocument;
         private string _xmlFolderPath;
 
         public XmlDataExtractor()
@@ -25,7 +25,7 @@ namespace Venv.Models
         }
         public void SetFolderPath(string filePath)
         {
-            _folderPath = filePath;
+            var _folderPath = filePath;
             _xmlFolderPath = Path.Combine(_folderPath, "XML");
         }
         public bool ValidateConfigurationFolder()

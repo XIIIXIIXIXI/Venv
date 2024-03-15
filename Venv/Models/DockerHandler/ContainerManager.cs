@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,11 @@ namespace Venv.Models.DockerHandler
 {
     public class ContainerManager
     {
-        private ISSHClient _sshClient;
-        private ShipDataService _shipDataService;
-        public List<string> failedEvents = new List<string>();
+        private readonly ISshClient _sshClient;
+        private readonly ShipDataService _shipDataService;
+        private readonly List<string> failedEvents = new List<string>();
 
-        public ContainerManager(ISSHClient ssh, ShipDataService shipDataService)
+        public ContainerManager(ISshClient ssh, ShipDataService shipDataService)
         {
             _sshClient = ssh;
             _shipDataService = shipDataService;
@@ -33,7 +34,7 @@ namespace Venv.Models.DockerHandler
                 _shipDataService.UpdateDpuStatus(singleDpu.Number, "Receiving Command");
                 while (!_shipDataService.IsDpuInFinalState(singleDpu))
                 {
-                    string eventMessage = ReadNextEvent();
+                    string? eventMessage = ReadNextEvent();
                     if (!string.IsNullOrEmpty(eventMessage))
                     {
                         HandleEvent(eventMessage);
@@ -49,7 +50,7 @@ namespace Venv.Models.DockerHandler
                 }
                 while (!_shipDataService.AreAllDpusInFinalState())
                 {
-                    string eventMessage = ReadNextEvent();
+                    string? eventMessage = ReadNextEvent();
                     if (!string.IsNullOrEmpty(eventMessage))
                     {
                         HandleEvent(eventMessage);
@@ -58,12 +59,12 @@ namespace Venv.Models.DockerHandler
             }
 
         }
-        private string ReadNextEvent()
+        private string? ReadNextEvent()
         {
             var reader = _sshClient.GetStandardOutput();
             if (reader != null)
             {
-                string line = reader.ReadLine();
+                string? line = reader.ReadLine();
                 return line;
             }
             return null;

@@ -10,14 +10,14 @@ using Venv.Models.DockerHandler.Interfaces;
 
 namespace Venv.Models.DockerHandler
 {
-    public class SSHClient : ISSHClient
+    public class SshClient : ISshClient
     {
         private readonly IPAddress _host;
         private readonly string _username;
         private Process _sshProcess;
         private bool _isConnected;
 
-        public SSHClient(IPAddress host, string username)
+        public SshClient(IPAddress host, string username)
         {
             _host = host;
             _username = username;

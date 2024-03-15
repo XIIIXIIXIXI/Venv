@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +13,7 @@ namespace Venv.Models.DockerHandler
     public class Mediator
     {
         private readonly IVMwareManager _vmwareManager;
-        private ISSHClient _sshClient;
+        private ISshClient _sshClient;
         private readonly ShipDataService _shipDataService;
         ContainerManager _containerManager;
 
@@ -34,7 +35,7 @@ namespace Venv.Models.DockerHandler
                 }
                 if (_vmwareManager.IsVMwareInstanceRunning)
                 {
-                    _sshClient = new SSHClient(_vmwareManager.IP, "vdpu");
+                    _sshClient = new SshClient(_vmwareManager.IP, "vdpu");
                     _containerManager = new ContainerManager(_sshClient, _shipDataService);
                     _sshClient.Connect();
                 }

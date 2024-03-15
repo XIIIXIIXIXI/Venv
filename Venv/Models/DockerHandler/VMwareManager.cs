@@ -44,7 +44,6 @@ namespace Venv.Models.DockerHandler
 
                 Process.Start(startInfo);
                 WaitingForVMToBeTurnedOn();
-                return;
             }
             else
             {
@@ -87,7 +86,6 @@ namespace Venv.Models.DockerHandler
                     }
                 }
             }
-            return;
         }
 
         public void StartHeartBeat()

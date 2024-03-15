@@ -78,7 +78,7 @@ namespace Venv
             new WindowHandleProvider(() => throw new InvalidOperationException("Window handle not initialized yet.")));
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             //activate main window
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
@@ -94,9 +94,6 @@ namespace Venv
 
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.NavigateTo<SelectConfigurationPage>();
-
-            WindowId windowId = Win32Interop.GetWindowIdFromWindow(mainWindowHandle);
-            var appWindow = AppWindow.GetFromWindowId(windowId);
 
             ChangeWindowSize(mainWindowHandle, 1450, 850);
         }
