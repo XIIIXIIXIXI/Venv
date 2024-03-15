@@ -20,6 +20,7 @@ using Microsoft.UI.Xaml.Controls;
 using Venv.Views.Pages;
 using Venv.Models.DockerHandler.Interfaces;
 using Venv.Models.DockerHandler;
+using System.Globalization;
 
 namespace Venv.ViewModels.Pages
 {
@@ -29,6 +30,7 @@ namespace Venv.ViewModels.Pages
         private readonly INavigationService _navigationService;
         private readonly ShipDataService _shipDataService;
         private readonly IVMwareManager _vmwareManager;
+        private string _folderPath;
         public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService, ShipDataService shipDataService, VMwareManager vMwareManager)
         {
             _navigationService = navigationService;
@@ -60,6 +62,7 @@ namespace Venv.ViewModels.Pages
 
         private void NavigateToNewFrame()
         {
+            _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
             _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus());
             _navigationService.NavigateTo<NavigationViewPage>();
         }
@@ -78,11 +81,12 @@ namespace Venv.ViewModels.Pages
                 var service = factory.Create();
                 if (service == null)
                 {
-                    ShowInfoBar("The selected folder is incorrect. Please choose a valid configuration");
+                    _ = ShowInfoBar("The selected folder is incorrect. Please choose a valid configuration");
                     return;
                 }
                 ShipData = service;
                 IsConfigurationSelected = true;
+                _folderPath = folder.Path;
                 await SaveConfigurationAsync(service.VesselName, folder.Path);
                 SelectedConfiguration = RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(folder.Path, StringComparison.OrdinalIgnoreCase));
             }
@@ -97,6 +101,7 @@ namespace Venv.ViewModels.Pages
                 var service = factory.Create();
                 if (service != null)
                 {
+                    _folderPath = configuration.FilePath;
                     ShipData = service;
                     IsConfigurationSelected = true;
                 }
@@ -105,8 +110,7 @@ namespace Venv.ViewModels.Pages
 
         private async Task SaveConfigurationAsync(string vesselName, string filePath)
         {
-            var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-            var configDetails = $"{vesselName}|{filePath}|{currentDate}";
+            var currentDate = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             var existingConfigIndex = RecentConfigurations.IndexOf(RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)));
             if (existingConfigIndex != -1)
@@ -118,15 +122,13 @@ namespace Venv.ViewModels.Pages
             {
                 VesselName = vesselName,
                 FilePath = filePath,
-                LastUsed = DateTime.ParseExact(currentDate, "dd/MM/yyyy", null)
+                LastUsed = DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
             });
 
             var updatedFileContent = RecentConfigurations.Select(c => $"{c.VesselName}|{c.FilePath}|{c.LastUsed:dd/MM/yyyy}").ToList();
             var file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RecentConfigurations.txt");
 
-            await File.WriteAllLinesAsync(file, updatedFileContent);
-
-            
+            await File.WriteAllLinesAsync(file, updatedFileContent);   
         }
 
         private async Task LoadRecentConfigurationsAsync()
@@ -136,7 +138,7 @@ namespace Venv.ViewModels.Pages
             if (File.Exists(file))
             {
                 var lines = await File.ReadAllLinesAsync(file);
-                foreach (var line in lines.Reverse())
+                foreach (var line in lines)
                 {
                     var parts = line.Split('|');
                     if (parts.Length == 3)
@@ -145,7 +147,7 @@ namespace Venv.ViewModels.Pages
                         {
                             VesselName = parts[0],
                             FilePath = parts[1],
-                            LastUsed = DateTime.ParseExact(parts[2], "dd/MM/yyyy", null)
+                            LastUsed = DateTime.ParseExact(parts[2], "dd.MM.yyyy", CultureInfo.InvariantCulture)
                         });
                     }
                 }
@@ -159,7 +161,7 @@ namespace Venv.ViewModels.Pages
             });
         }
 
-        private async void ShowInfoBar(string message)
+        private async Task ShowInfoBar(string message)
         {
             InfoBarMessage = message;
             IsInfoBarOpen = true;
