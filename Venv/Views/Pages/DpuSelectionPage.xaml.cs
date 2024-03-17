@@ -12,6 +12,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Venv.ViewModels.Pages;
+using Venv.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,9 +25,20 @@ namespace Venv.Views.Pages
     /// </summary>
     public sealed partial class DpuSelectionPage : Page
     {
-        public DpuSelectionPage()
+        public DpuSelectionViewModel ViewModel { get; }
+        public DpuSelectionPage(DpuSelectionViewModel viewModel)
         {
+            ViewModel = viewModel;
             this.InitializeComponent();
+            this.DataContext = ViewModel;
+        }
+        private void MachineryGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is GridView gridView)
+            {
+                var selectedGroups = gridView.SelectedItems.Cast<MachineryGroup>().ToList();
+                ViewModel.UpdateDpuSelectionBasedOnGroups(selectedGroups);
+            }
         }
     }
 }
