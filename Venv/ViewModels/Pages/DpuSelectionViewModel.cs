@@ -18,6 +18,15 @@ namespace Venv.ViewModels.Pages
         private readonly ShipDataService _shipDataService;
         [ObservableProperty]
         private IEnumerable<MachineryGroup> _machineryGroups;
+
+        public DpuSelectionViewModel(ShipDataService shipDataService)
+        {
+            _shipDataService = shipDataService;
+            MachineryGroups = _shipDataService.MachineryGroup;
+        }
+
+
+        /*
         public DpuSelectionViewModel(ShipDataService shipDataService)
         {
             
@@ -83,17 +92,17 @@ namespace Venv.ViewModels.Pages
             };
             List<MachineryGroup> testMachineryGroupList = new List<MachineryGroup>
             {
-                new MachineryGroup {Number = 1, Name = "Power", DPUs = group1},
-                new MachineryGroup { Number = 2, Name = "Water", DPUs = group2 },
-                new MachineryGroup {Number = 3, Name = "RPM", DPUs = group3},
-                new MachineryGroup { Number = 4, Name = "Sonar Electricity", DPUs = group4 },
-                new MachineryGroup {Number = 5, Name = "Water water with water", DPUs = group5},
-                new MachineryGroup { Number = 6, Name = "Ship boat ship", DPUs = group6 },
-                new MachineryGroup { Number = 7, Name = "ding dong ding", DPUs = group7 }
+                new MachineryGroup {Number = 1, Name = "Not used", DPUs = group1},
+                new MachineryGroup { Number = 2, Name = "ECR", DPUs = group2 },
+                new MachineryGroup {Number = 3, Name = "Cargo", DPUs = group3},
+                new MachineryGroup { Number = 4, Name = "PMS", DPUs = group4 },
+                new MachineryGroup {Number = 5, Name = "Cooling Sea Water", DPUs = group5},
+                new MachineryGroup { Number = 6, Name = "EPS", DPUs = group6 },
+                new MachineryGroup { Number = 7, Name = "Chinese Spy Equipment", DPUs = group7 }
             };
             MachineryGroups = testMachineryGroupList;
 
-        }
+        }*/
         public List<DPU> DpuList => _shipDataService.GetDpus();
 
         public void UpdateDpuSelectionBasedOnGroups(List<MachineryGroup> selectedGroups)

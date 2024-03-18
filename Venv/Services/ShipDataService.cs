@@ -21,12 +21,15 @@ namespace Venv.Services
         private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
 
+        public List<MachineryGroup> MachineryGroup;
+
         public ShipDataService()
         {
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         }
 
-        public void  UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus)
+
+        public void  UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus, List<MachineryGroup> machineryGroups)
         {
             DatabaseVersion = databaseVersion;
             DPUVersion = dpuVersion;
@@ -34,6 +37,7 @@ namespace Venv.Services
             VesselName = vesselName;
             IMO = imo;
             DPUs = dpus;
+            MachineryGroup = machineryGroups;
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
@@ -98,7 +102,7 @@ namespace Venv.Services
                 Debug.WriteLine("Xml file doesen't exist, make sure you choosed the right configuration");
                 return null;
             }
-            var dpus = _dataExtractor.ExtractDpus();
+            (var dpus, var machineryGroups) = _dataExtractor.AssociateDpusWithMachineryGorups();
             var databaseVersion = _dataExtractor.GetDatabaseVersion();
             var dpuVersion = _dataExtractor.GetDPU2010Version();
             var numberOfMFD = _dataExtractor.GetMFDsAmount();
@@ -106,7 +110,7 @@ namespace Venv.Services
             var imo = _dataExtractor.GetIMONumber();
 
             var shipDataService = new ShipDataService();
-            shipDataService.UpdateShipData(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus);
+            shipDataService.UpdateShipData(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus, machineryGroups);
             return shipDataService;
         }
     }

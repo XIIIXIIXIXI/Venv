@@ -63,7 +63,7 @@ namespace Venv.ViewModels.Pages
         private void NavigateToNewFrame()
         {
             _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
-            _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus());
+            _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup);
             _navigationService.NavigateTo<NavigationViewPage>();
         }
         private async Task SelectFolderAsync()
