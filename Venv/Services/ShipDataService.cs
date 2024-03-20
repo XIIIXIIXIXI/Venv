@@ -75,7 +75,7 @@ namespace Venv.Services
             {
                 return GetSelectedDpus().TrueForAll(dpu => dpu.Status == "Running" || dpu.Status == "Started");
             }
-            
+            //return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
             //return _dpus.All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
         }
         public bool AnyDpuInState(string status)

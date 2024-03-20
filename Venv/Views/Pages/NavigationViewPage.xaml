@@ -9,16 +9,16 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView x:Name="NavigationView" PaneDisplayMode="LeftCompact" Background="{ThemeResource WindBack}">
+    <NavigationView x:Name="NavigationView" PaneDisplayMode="LeftCompact" >
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Page 1" Tag="Page1" Background="{ThemeResource ListItemLight}">
+            <NavigationViewItem Content="Vírtualization" Tag="Page1" >
                 <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE7C1;" Foreground="{ThemeResource SystemAccentColor}" />
+                    <FontIcon Glyph="&#xE7E3;"  />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Page 2" Tag="Page2">
+            <NavigationViewItem Content="Hardware Selection" Tag="Page2">
                 <NavigationViewItem.Icon>
-                    <SymbolIcon Symbol="OtherUser" />
+                    <FontIcon Glyph="&#xE764;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
         </NavigationView.MenuItems>

@@ -26,6 +26,7 @@ namespace Venv.Common.Converters
                     return TrueBrush;
                 case "Removed":
                 case "Stopped":
+                case "Off":
                     return FalseBrush;
                 default:
                     return DependencyProperty.UnsetValue;

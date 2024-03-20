@@ -64,8 +64,17 @@ namespace Venv.Models.DockerHandler
             var reader = _sshClient.GetStandardOutput();
             if (reader != null)
             {
-                string? line = reader.ReadLine();
-                return line;
+                Task<string?> readLineTask = Task.Run(() => reader.ReadLine());
+                bool completed = readLineTask.Wait(TimeSpan.FromSeconds(1)); // 5-second timeout
+                if (completed && readLineTask.Result != null )
+                {
+                    return readLineTask.Result;
+                }
+                else
+                {
+                    // Handle timeout or no data available
+                    return null;
+                }
             }
             return null;
         }

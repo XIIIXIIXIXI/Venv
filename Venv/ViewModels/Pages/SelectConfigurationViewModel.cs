@@ -36,7 +36,7 @@ namespace Venv.ViewModels.Pages
             _navigationService = navigationService;
             _shipDataService = shipDataService;
             _vmwareManager = vMwareManager;
-            //_ = StartVMasync();
+            _ = StartVMasync();
             SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
             NavigateToShell = new RelayCommand(NavigateToNewFrame);
             _windowHandleProvider = windowHandleProvider;
