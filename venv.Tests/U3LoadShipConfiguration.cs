@@ -78,13 +78,18 @@ namespace venv.Tests
         {   // Work pc
             //ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
             // Home pc
-            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\MaerskTank - 2.1.16.06\MaerskTank - 2.1.16.06");
+            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\MaerskTank - 2.1.16.06");
             ShipDataService shipData = factory.Create();
             Assert.AreEqual("2161v2", shipData.DatabaseVersion);
-            Assert.AreEqual("2.1.16.04", shipData.DPUVersion);
-            Assert.AreEqual(4, shipData.NumberOfMFD);
-            Assert.AreEqual("Demo System", shipData.VesselName);
-            Assert.AreEqual("123456", shipData.IMO);
+            Assert.AreEqual("2.1.16.05", shipData.DPUVersion);
+            Assert.AreEqual(6, shipData.NumberOfMFD);
+            Assert.AreEqual("Dalian P110K", shipData.VesselName);
+            Assert.AreEqual("?", shipData.IMO);
+            Assert.AreEqual("P110K", shipData.YardBuildNumber);
+            Assert.AreEqual(283, shipData.SequenceNumber);
+            Assert.AreEqual("Dalian", shipData.Yard);
+            Assert.AreEqual("2.1.16.05", shipData.FicVersion);
+            Assert.AreEqual(20, shipData.SwitchesNumber);
         }
     }
 }

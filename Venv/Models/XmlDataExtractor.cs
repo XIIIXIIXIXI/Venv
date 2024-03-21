@@ -199,6 +199,49 @@ namespace Venv.Models
             XmlNode node = _xmlDocument.SelectSingleNode("//ImoNumber");
             return node?.InnerText ?? string.Empty;
         }
+        public string GetYardBuildNumber()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//YardBuildNo");
+            return node?.InnerText ?? string.Empty;
+        }
+        public string GetYardName()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//Yard");
+            return node?.InnerText ?? string.Empty;
+        }
+        public int GetSwitchesNumber()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "EthSwitchConfiguration.xml");
+            LoadXml(xmlFilePath);
+            XmlNodeList node = _xmlDocument.GetElementsByTagName("Switch");
+            if (node != null)
+            {
+                return node.Count;
+            }
+            return 0;
+        }
+        public int GetSequenceNumber()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//SequenceNumber");
+            if (node != null && int.TryParse(node.InnerText, out int amount))
+            {
+                return amount;
+            }
+            return 0;
+        }
+        public string GetFicVersion()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//FicVersion");
+            return node?.InnerText ?? string.Empty;
+        }
 
     }
 }

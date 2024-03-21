@@ -17,6 +17,14 @@ namespace Venv.Services
         public int NumberOfMFD { get; private set; }
         public string VesselName { get; private set; }
         public string IMO { get; private set; }
+        //new
+        public string YardBuildNumber { get; private set; }
+        public int SequenceNumber { get; private set; }
+        public string GenerationDate { get; private set; }
+        public string ShipOwner { get; private set; }
+        public string Yard {  get; private set; }
+        public string FicVersion { get; private set; }
+        public int SwitchesNumber { get; private set; }
         public event Action DataUpdated;
         private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
@@ -29,7 +37,19 @@ namespace Venv.Services
         }
 
 
-        public void  UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus, List<MachineryGroup> machineryGroups)
+        public void  UpdateShipData(
+            string databaseVersion,
+            string dpuVersion, 
+            int numberOfMfd, 
+            string vesselName, 
+            string imo, List<DPU> dpus, 
+            List<MachineryGroup> machineryGroups,
+            string yardBuildNumber,
+            int sequenceNumber,
+            string yardName,
+            string ficVersion,
+            int switchesNumber
+            )
         {
             DatabaseVersion = databaseVersion;
             DPUVersion = dpuVersion;
@@ -38,6 +58,11 @@ namespace Venv.Services
             IMO = imo;
             DPUs = dpus;
             MachineryGroup = machineryGroups;
+            YardBuildNumber = yardBuildNumber;
+            SequenceNumber = sequenceNumber;
+            Yard = yardName;
+            FicVersion = ficVersion;
+            SwitchesNumber = switchesNumber;
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
@@ -108,9 +133,25 @@ namespace Venv.Services
             var numberOfMFD = _dataExtractor.GetMFDsAmount();
             var vesselName = _dataExtractor.GetVesselName();
             var imo = _dataExtractor.GetIMONumber();
+            var yardBuildNumber = _dataExtractor.GetYardBuildNumber();
+            var sequenceNumber = _dataExtractor.GetSequenceNumber();
+            var yardName = _dataExtractor.GetYardName();
+            var ficVersion = _dataExtractor.GetFicVersion();
+            var switchesNumber = _dataExtractor.GetSwitchesNumber();
 
             var shipDataService = new ShipDataService();
-            shipDataService.UpdateShipData(databaseVersion, dpuVersion, numberOfMFD, vesselName, imo, dpus, machineryGroups);
+
+            shipDataService.UpdateShipData(databaseVersion,
+                dpuVersion, numberOfMFD,
+                vesselName,
+                imo, dpus,
+                machineryGroups,
+                yardBuildNumber,
+                 sequenceNumber,
+                 yardName,
+                ficVersion,
+                switchesNumber);
+
             return shipDataService;
         }
     }
