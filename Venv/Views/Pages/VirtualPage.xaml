@@ -3,21 +3,21 @@
     x:Class="Venv.Views.Pages.VirtualPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dataGrid="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:local="using:Venv.Views.Pages"
     xmlns:local2="using:Venv.Common.Converters"
     xmlns:local3="using:Venv.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:dataGrid="using:CommunityToolkit.WinUI.UI.Controls"
     Background="{ThemeResource AncNormalLinearBackground}"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <!-- Cell Style to increase font size -->
+        <!--  Cell Style to increase font size  -->
         <Style x:Key="DataGridCellStyle" TargetType="dataGrid:DataGridCell">
-            <Setter Property="FontSize" Value="18"/>
-            <!-- You can adjust more properties here as needed -->
+            <Setter Property="FontSize" Value="18" />
+            <!--  You can adjust more properties here as needed  -->
         </Style>
         <SolidColorBrush x:Key="VmRunningBrush" Color="Green" />
 
@@ -27,86 +27,140 @@
 
         <SolidColorBrush x:Key="DpuStoppedBrush" Color="Red" />
 
-        <local2:BoolToBrushConverter 
-
-        x:Key="BoolToBrushConverter" 
-
-        FalseBrush="{StaticResource VmStoppedBrush}" 
-
-        TrueBrush="{StaticResource VmRunningBrush}" />
+        <local2:BoolToBrushConverter
+            x:Key="BoolToBrushConverter"
+            FalseBrush="{StaticResource VmStoppedBrush}"
+            TrueBrush="{StaticResource VmRunningBrush}" />
 
         <local2:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter" />
 
-        <local2:DpuStatusToBrushConverter 
-
-        x:Key="DpuStatusToBrushConverter" 
-
-        FalseBrush="{StaticResource VmStoppedBrush}" 
-
-        TrueBrush="{StaticResource VmRunningBrush}" />
+        <local2:DpuStatusToBrushConverter
+            x:Key="DpuStatusToBrushConverter"
+            FalseBrush="{StaticResource VmStoppedBrush}"
+            TrueBrush="{StaticResource VmRunningBrush}" />
 
         <local2:IsSelectedToOpacityConverter x:Key="IsSelectedToOpacityConverter" />
+        <Style x:Key="IBM" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="IBM Plex Mono" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource AncCnTextForeground}" />
+        </Style>
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource AncKeypadButtonBackground}" />
+        </Style>
+
     </Page.Resources>
-    <StackPanel Margin="12">
-        <controls:DataGrid x:Name="DpusDataGrid"
-               ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}"
-               AutoGenerateColumns="False"
-               RowHeight="40"
-               SelectionMode="Single"
-                       
-               SelectedItem="{x:Bind ViewModel.SelectedDpu, Mode=TwoWay}"
-               IsReadOnly="True">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="DPU Number" Binding="{Binding Number}"/>
-                <controls:DataGridTemplateColumn Header="Status">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Ellipse 
-                        Grid.Column="1" 
-                        Width="7" 
-                        Height="7" 
-                        Margin="5,0,0,0" 
-                         Fill="{Binding Status, Converter={StaticResource DpuStatusToBrushConverter}, Mode=OneWay}"
-                         Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, Mode=OneWay}"
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="12">
+            <controls:DataGrid
+        x:Name="DpusDataGrid"
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}"
+        RowHeight="40"
+        SelectedItem="{x:Bind ViewModel.SelectedDpu, Mode=TwoWay}"
+        SelectionMode="Single">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTemplateColumn Header="DPU Number">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding Number}" />
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                    <controls:DataGridTemplateColumn Header="Status">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                            HorizontalAlignment="Center"
+                            Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}"
+                            Orientation="Horizontal">
+                                    <Ellipse
+                                Grid.Column="1"
+                                Width="7"
+                                Height="7"
+                                Margin="5,0,0,0"
+                                Fill="{Binding Status, Converter={StaticResource DpuStatusToBrushConverter}, Mode=OneWay}"
+                                Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, Mode=OneWay}" />
+                                    <ProgressRing
+                                Grid.Column="1"
+                                Width="10"
+                                Height="10"
+                                IsActive="True"
+                                Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, ConverterParameter='invert', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                    <controls:DataGridTemplateColumn Header="SioModuleID">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding SioModuleID}" />
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
 
- />
-                                <ProgressRing 
+            <controls:DataGrid
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        ItemsSource="{x:Bind ViewModel.SelectedDpu.LineSetups, Mode=OneWay}">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Binding="{Binding SioChannelNumber}" Header="Channel Number" />
+                    <controls:DataGridTextColumn Binding="{Binding ChannelInfo}" Header="Channel Info" />
+                    <controls:DataGridTextColumn Binding="{Binding BaudRate}" Header="Baud Rate" />
+                    <controls:DataGridTextColumn Binding="{Binding LineFormat}" Header="Line Format" />
+                    <controls:DataGridTextColumn Binding="{Binding Handshake}" Header="Handshake" />
+                    <controls:DataGridTextColumn Binding="{Binding RsSpecification}" Header="RS Specification" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+        </StackPanel>
+        <Grid
+        Grid.Row="2"
+        Grid.ColumnSpan="2"
+        Margin="50"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Bottom">
+            <Button
+            HorizontalAlignment="Center"
+            Command="{x:Bind ViewModel.StartStopVirtualizationCommand}"
+            Content="{x:Bind ViewModel.ButtonText, Mode=OneWay}"
+            IsEnabled="{x:Bind ViewModel.IsButtonEnabled, Mode=OneWay}"
+            Style="{StaticResource Button}" />
+        </Grid>
 
-             Grid.Column="1" 
-
-                        Width="10" 
-
-                        Height="10" 
-
-                        IsActive="True" 
-
-                        Visibility="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}, ConverterParameter='invert', Mode=OneWay}" />
-
-
-                            </StackPanel>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
-                <controls:DataGridTextColumn Header="SioModuleID" Binding="{Binding SioModuleID}"/>
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
-
-        <controls:DataGrid ItemsSource="{x:Bind ViewModel.SelectedDpu.LineSetups, Mode=OneWay}"
-               AutoGenerateColumns="False"
-               IsReadOnly="True">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Channel Number" Binding="{Binding SioChannelNumber}"/>
-                <controls:DataGridTextColumn Header="Channel Info" Binding="{Binding ChannelInfo}"/>
-                <controls:DataGridTextColumn Header="Baud Rate" Binding="{Binding BaudRate}"/>
-                <controls:DataGridTextColumn Header="Line Format" Binding="{Binding LineFormat}"/>
-                <controls:DataGridTextColumn Header="Handshake" Binding="{Binding Handshake}"/>
-                <controls:DataGridTextColumn Header="RS Specification" Binding="{Binding RsSpecification}"/>
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
-    </StackPanel>
-    
-
+        <Grid
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="10"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            Style="{StaticResource IBM}"
+            Text="VM status:" />
+            <Ellipse
+            Grid.Column="1"
+            Width="10"
+            Height="10"
+            Fill="{x:Bind ViewModel.IsVMRunning, Converter={StaticResource BoolToBrushConverter}, Mode=OneWay}" />
+        </Grid>
+    </Grid>
 </Page>
 
 

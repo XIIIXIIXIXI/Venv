@@ -13,12 +13,12 @@ namespace Venv.Common.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (bool)value ? 1.0 : 0.5; // Fully opaque if selected, otherwise half opaque.
+            return (bool)value ? 1.0 : 0.3; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException(); // Not needed
+            throw new NotImplementedException(); 
         }
     }
 }
