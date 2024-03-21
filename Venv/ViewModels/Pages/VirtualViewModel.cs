@@ -31,7 +31,7 @@ namespace Venv.ViewModels.Pages
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;
-            //_vmwareManager.StartHeartBeat();
+            _vmwareManager.StartHeartBeat();
         }
 
         [ObservableProperty]
