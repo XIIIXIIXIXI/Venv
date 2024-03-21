@@ -15,6 +15,7 @@ namespace Venv.ViewModels.Pages
     public partial class VirtualViewModel : ObservableObject
     {
         public ObservableCollection<DPU> Dpus { get; } = new();
+
         // it is only possible to update the UI with the main thread in WinUi that is why we need the dispatcher queue. 
         private readonly DispatcherQueue _dispatcherQueue;
 
@@ -39,6 +40,9 @@ namespace Venv.ViewModels.Pages
         private string _buttonText = "Start Virtualization";
         [ObservableProperty]
         private bool isButtonEnabled = true;
+        //For gridview
+        [ObservableProperty]
+        private DPU _selectedDpu;
 
         public List<DPU> DpuList => _shipDataService.GetDpus();
 

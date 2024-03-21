@@ -55,6 +55,41 @@ namespace Venv.Models
             }
             return plcNumbers;
         }
+        public void EnrichDpusWithLineSetups(List<DPU> dpus)
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+
+            XmlNodeList serialObjectDataNodes = _xmlDocument.GetElementsByTagName("SerialObjectData");
+            foreach (XmlNode node in serialObjectDataNodes)
+            {
+                int plcNumber = int.Parse(node["PlcNumber"].InnerText);
+                var dpu = dpus.FirstOrDefault(d => d.Number == plcNumber);
+                
+                //not all dpus have serialLines
+                if (dpu != null)
+                {
+                    int sioChannelNumber = int.Parse(node["SioChannelNumber"].InnerText);
+                    // If the sioChannelNumber has already been saved, then skip the entry. 
+                    bool alreadyExists = dpu.LineSetups.Any(ls => ls.SioChannelNumber == sioChannelNumber);
+                    if (!alreadyExists)
+                    {
+                        dpu.SioModuleID = node["SioModuleID"].InnerText;
+                        var lineSetupNode = node["LineSetup"];
+                        var lineSetup = new LineSetup
+                        {
+                            SioChannelNumber = int.Parse(node["SioChannelNumber"].InnerText),
+                            ChannelInfo = lineSetupNode["ChannelInfo"].InnerText,
+                            BaudRate = int.Parse(lineSetupNode["BaudRate"].InnerText),
+                            LineFormat = lineSetupNode["LineFormat"].InnerText,
+                            Handshake = lineSetupNode["Handshake"].InnerText,
+                            RsSpecification = lineSetupNode["RSSpecification"].InnerText
+                        };
+                        dpu.LineSetups.Add(lineSetup);
+                    }     
+                }
+            }
+        }
         private Dictionary<int, MachineryGroup> ExtractMachineryGroups()
         {
             var machineryGroups = new Dictionary<int, MachineryGroup>();
@@ -81,6 +116,9 @@ namespace Venv.Models
         public (List<DPU>, List<MachineryGroup>) AssociateDpusWithMachineryGorups()
         {
             List<DPU> dpus = ExtractDpus();
+            EnrichDpusWithLineSetups(dpus);
+
+
             Dictionary<int, MachineryGroup> machineryGroups = ExtractMachineryGroups();
 
             string xmlFilePath = Path.Combine(_xmlFolderPath, "ObjectConfig.xml");
@@ -161,5 +199,6 @@ namespace Venv.Models
             XmlNode node = _xmlDocument.SelectSingleNode("//ImoNumber");
             return node?.InnerText ?? string.Empty;
         }
+
     }
 }

@@ -75,8 +75,10 @@ namespace venv.Tests
         }
         [TestMethod]
         public void CreateShipData()
-        {
-            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
+        {   // Work pc
+            //ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
+            // Home pc
+            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\MaerskTank - 2.1.16.06\MaerskTank - 2.1.16.06");
             ShipDataService shipData = factory.Create();
             Assert.AreEqual("2161v2", shipData.DatabaseVersion);
             Assert.AreEqual("2.1.16.04", shipData.DPUVersion);

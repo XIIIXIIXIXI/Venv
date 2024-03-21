@@ -61,8 +61,8 @@ namespace Venv
                 return frame;
             });
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddTransient<VirtualPage>();
-            services.AddTransient<VirtualViewModel>();
+            services.AddSingleton<VirtualPage>();
+            services.AddSingleton<VirtualViewModel>();
             services.AddSingleton<SelectConfigurationPage>();
             services.AddSingleton<DpuSelectionPage>();
             services.AddSingleton<DpuSelectionViewModel>();
