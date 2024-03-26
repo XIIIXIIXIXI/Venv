@@ -16,6 +16,7 @@
 		<None Remove="Resources\DuskColors.xaml" />
 		<None Remove="Resources\NightColors.xaml" />
 		<None Remove="Views\Pages\DpuSelectionPage.xaml" />
+		<None Remove="Views\Pages\MonitoringPage.xaml" />
 		<None Remove="Views\Pages\NavigationViewPage.xaml" />
 		<None Remove="Views\Pages\SelectConfigurationPage.xaml" />
 		<None Remove="Views\Pages\SettingsPage.xaml" />
@@ -60,6 +61,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Common\Helper\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\Pages\MonitoringPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\Pages\DpuSelectionPage.xaml">

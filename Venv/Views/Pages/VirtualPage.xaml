@@ -60,7 +60,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="12">
+        <StackPanel Margin="12" Grid.ColumnSpan="2">
             <controls:DataGrid
         x:Name="DpusDataGrid"
         AutoGenerateColumns="False"
@@ -70,14 +70,14 @@
         SelectedItem="{x:Bind ViewModel.SelectedDpu, Mode=TwoWay}"
         SelectionMode="Single">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="DPU Number">
+                    <controls:DataGridTemplateColumn Header="DPU Number" >
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding Number}" />
+                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding Number}"  />
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
-                    <controls:DataGridTemplateColumn Header="Status">
+                    <controls:DataGridTemplateColumn Header="Status" >
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel
@@ -104,7 +104,7 @@
                     <controls:DataGridTemplateColumn Header="SioModuleID">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding SioModuleID}" />
+                                <TextBlock Opacity="{Binding IsSelected, Converter={StaticResource IsSelectedToOpacityConverter}, Mode=OneWay}" Text="{Binding SioModuleID}" HorizontalAlignment="Center" />
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>

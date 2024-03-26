@@ -46,6 +46,9 @@ namespace Venv.Views.Pages
                 case "Page2":
                     _navigationService.NavigateTo<DpuSelectionPage>();
                     break;
+                case "Page3":
+                    _navigationService.NavigateTo<MonitoringPage>();
+                    break;
                 default:
                     break;
             }

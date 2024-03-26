@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Venv.Views.Pages.MonitoringPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Venv.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+   
+
+    <StackPanel Margin="20">
+        <!-- CPU Usage -->
+        <TextBlock Text="CPU" FontWeight="SemiBold"/>
+        <ProgressBar Value="{x:Bind ViewModel.CpuUsage, Mode=OneWay}" 
+                     Maximum="100"
+                     Foreground="Green" 
+                     Height="20" 
+                     Margin="0,5"/>
+        <TextBlock Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" Margin="0,5"/>
+
+        <!-- Cores Usage -->
+        <TextBlock Text="Cores" FontWeight="SemiBold"/>
+        <ProgressBar Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" 
+                     Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}" 
+                     Foreground="Green" 
+                     Height="10" 
+                     Margin="0,5"/>
+        <TextBlock Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" Margin="0,5"/>
+
+        <!-- Memory Usage -->
+        <TextBlock Text="Memory" FontWeight="SemiBold"/>
+        <ProgressBar Value="{x:Bind ViewModel.MemoryUsagePercentage, Mode=OneWay}" 
+                     Maximum="100" 
+                     Foreground="Green" 
+                     Height="20" 
+                     Margin="0,5"/>
+        <TextBlock Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" Margin="0,5"/>
+
+        <TextBlock Text="Vm1" FontWeight="SemiBold" Margin="0,10"/>
+    </StackPanel>
+</Page>

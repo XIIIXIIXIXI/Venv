@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler.Interfaces;
 
@@ -34,7 +35,7 @@ namespace Venv.Models.DockerHandler
                     StartInfo = new ProcessStartInfo
                     {
                         FileName = "cmd.exe",
-                        Arguments = $"/c ssh -tt {_username}@{_host}",
+                        Arguments = $"/c ssh -tt {_username}@{_host} ",
                         UseShellExecute = false,
                         RedirectStandardInput = true,
                         RedirectStandardOutput = true,
@@ -44,6 +45,7 @@ namespace Venv.Models.DockerHandler
                 _sshProcess.Start();
                 //TODO check if connection valid
                 _isConnected = true;
+                var trash = GetStandardOutput();
             }
             else
             {
@@ -65,6 +67,7 @@ namespace Venv.Models.DockerHandler
             if (_isConnected && _sshProcess != null && !_sshProcess.HasExited)
             {
                 _sshProcess.StandardInput.Write(command + "\n");
+                _sshProcess.StandardInput.Flush();
             }
             else
             {

@@ -21,6 +21,11 @@
                     <FontIcon Glyph="&#xE764;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItem Content="Monitor" Tag="Page3" >
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xEC4A;"  />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <NavigationView.Content>
             <Frame x:Name="ContentFrame"/>

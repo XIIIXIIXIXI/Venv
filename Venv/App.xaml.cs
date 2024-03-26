@@ -67,6 +67,8 @@ namespace Venv
             services.AddSingleton<DpuSelectionPage>();
             services.AddSingleton<DpuSelectionViewModel>();
             services.AddTransient<NavigationViewPage>();
+            services.AddSingleton<MonitoringPage>();
+            services.AddSingleton<MonitoringViewModel>();
             services.AddSingleton<Mediator>();
 
             services.AddSingleton<VMwareManager>();
