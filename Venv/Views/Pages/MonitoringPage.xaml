@@ -1,43 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="Venv.Views.Pages.MonitoringPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Venv.Views.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Venv.Views.Pages"
+    xmlns:local2="using:Venv.Common.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-   
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <local2:ProgressBarScaleConverter x:Key="ProgressBarScaleConverter" />
+    </Page.Resources>
 
-    <StackPanel Margin="20">
-        <!-- CPU Usage -->
-        <TextBlock Text="CPU" FontWeight="SemiBold"/>
-        <ProgressBar Value="{x:Bind ViewModel.CpuUsage, Mode=OneWay}" 
-                     Maximum="100"
-                     Foreground="Green" 
-                     Height="20" 
-                     Margin="0,5"/>
-        <TextBlock Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" Margin="0,5"/>
+    <StackPanel x:Name="MainStackPanel" Margin="20">
+        <!-- Title and Graph Description -->
+        <TextBlock Text="CPU Utilization % | 1s granularity"
+               FontWeight="Bold"
+               Margin="0,0,0,10"/>
 
-        <!-- Cores Usage -->
-        <TextBlock Text="Cores" FontWeight="SemiBold"/>
-        <ProgressBar Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" 
-                     Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}" 
-                     Foreground="Green" 
-                     Height="10" 
-                     Margin="0,5"/>
-        <TextBlock Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" Margin="0,5"/>
+        <!-- Placeholder for Graph -->
+        <Canvas x:Name="CpuUsageGraphCanvas" Width="400" Height="200" Margin="0,10">
+            
+        </Canvas>
 
-        <!-- Memory Usage -->
-        <TextBlock Text="Memory" FontWeight="SemiBold"/>
-        <ProgressBar Value="{x:Bind ViewModel.MemoryUsagePercentage, Mode=OneWay}" 
-                     Maximum="100" 
-                     Foreground="Green" 
-                     Height="20" 
-                     Margin="0,5"/>
-        <TextBlock Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" Margin="0,5"/>
+        <!-- X Axis Labels for Minutes -->
+        <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20">
+            <TextBlock Text="10m" Margin="5"/>
+            <TextBlock Text="5m" Margin="5"/>
+            <TextBlock Text="0" Margin="5"/>
+        </StackPanel>
 
-        <TextBlock Text="Vm1" FontWeight="SemiBold" Margin="0,10"/>
+        <!-- Y Axis (Vertical) Labels for CPU Usage -->
+        <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,10">
+            <TextBlock Text="100%" Margin="5"/>
+            <TextBlock Text="50%" Margin="5"/>
+            <TextBlock Text="0%" Margin="5"/>
+        </StackPanel>
+
+        <!-- CPU Utilization Indicators -->
+        <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,10">
+            <Rectangle Fill="Blue" Width="20" Height="20" Margin="5"/>
+            <TextBlock Text="VM1: [CPU%]" VerticalAlignment="Center"/>
+            <Rectangle Fill="Purple" Width="20" Height="20" Margin="5"/>
+            <TextBlock Text="VM2: [CPU%]" VerticalAlignment="Center"/>
+            <!-- Additional VM indicators can be added here -->
+        </StackPanel>
+        <Border Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
+            <StackPanel Margin="10">
+                <!-- CPU Usage -->
+                <TextBlock FontWeight="SemiBold" Text="CPU" />
+                <Grid x:Name="ProgressBarContainer"
+          Height="20"
+          Margin="0,5"
+          Background="LightGray"
+          CornerRadius="10"
+          SizeChanged="ProgressBarContainer_SizeChanged">
+                    <Rectangle x:Name="FillRectangle"
+                   Width="{x:Bind ViewModel.FillWidth, Mode=OneWay}"
+                   HorizontalAlignment="Left"
+                   Fill="Green"
+                   RadiusX="10"
+                   RadiusY="10" />
+                </Grid>
+                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
+
+                <!-- Cores Usage -->
+                <TextBlock FontWeight="SemiBold" Text="Cores" />
+                <ProgressBar Height="10"
+                 Margin="0,5"
+                 Foreground="Green"
+                 Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}"
+                 Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" />
+                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
+
+                <!-- Memory Usage -->
+                <TextBlock FontWeight="SemiBold" Text="Memory" />
+                <ProgressBar Height="20"
+                 Margin="0,5"
+                 Foreground="Green"
+                 Maximum="100"
+                 Value="{x:Bind ViewModel.MemoryUsagePercentage, Mode=OneWay}" />
+                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
+
+                <TextBlock Margin="0,10" FontWeight="SemiBold" Text="Vm1" />
+            </StackPanel>
+        </Border>
     </StackPanel>
 </Page>
