@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxc="using:DevExpress.WinUI.Charts"
     xmlns:local="using:Venv.Views.Pages"
     xmlns:local2="using:Venv.Common.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,44 +15,32 @@
     </Page.Resources>
 
     <StackPanel x:Name="MainStackPanel" Margin="20">
-        <!-- Title and Graph Description -->
-        <TextBlock Text="CPU Utilization % | 1s granularity"
-               FontWeight="Bold"
-               Margin="0,0,0,10"/>
+        <Grid>
+            <Border Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
+                <StackPanel Margin="10">
+                    <TextBlock Text="CPU Utilization % | VM1 | 1s granularity" FontWeight="Bold"/>
 
-        <!-- Placeholder for Graph -->
-        <Canvas x:Name="CpuUsageGraphCanvas" Width="400" Height="200" Margin="0,10">
-            
-        </Canvas>
-
-        <!-- X Axis Labels for Minutes -->
-        <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Margin="0,0,0,20">
-            <TextBlock Text="10m" Margin="5"/>
-            <TextBlock Text="5m" Margin="5"/>
-            <TextBlock Text="0" Margin="5"/>
-        </StackPanel>
-
-        <!-- Y Axis (Vertical) Labels for CPU Usage -->
-        <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Left"
-                Margin="0,0,0,10">
-            <TextBlock Text="100%" Margin="5"/>
-            <TextBlock Text="50%" Margin="5"/>
-            <TextBlock Text="0%" Margin="5"/>
-        </StackPanel>
-
-        <!-- CPU Utilization Indicators -->
-        <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Margin="0,10">
-            <Rectangle Fill="Blue" Width="20" Height="20" Margin="5"/>
-            <TextBlock Text="VM1: [CPU%]" VerticalAlignment="Center"/>
-            <Rectangle Fill="Purple" Width="20" Height="20" Margin="5"/>
-            <TextBlock Text="VM2: [CPU%]" VerticalAlignment="Center"/>
-            <!-- Additional VM indicators can be added here -->
-        </StackPanel>
+                    <dxc:CartesianChart Margin="30,0,30,25" SelectionMode="None" ToolTipEnabled="False">
+                        <dxc:CartesianChart.AxisX>
+                            <dxc:AxisX ShowLabels="True" ShowMajorGridlines="True" ShowMinorGridlines="True"
+                               DateTimeMeasureUnit="Millisecond" DateTimeGridAlignment="Millisecond"
+                               SideMargins="0" />
+                        </dxc:CartesianChart.AxisX>
+                        <dxc:CartesianChart.AxisY>
+                            <dxc:AxisY ShowMajorGridlines="True" ShowMinorGridlines="True" VisualRangeStartValue="0" VisualRangeEndValue="100" />
+                        </dxc:CartesianChart.AxisY>
+                        <dxc:CartesianChart.Series>
+                            <dxc:Series Data="{x:Bind ViewModel.CpuUsageChartDataSource}">
+                                <dxc:Series.View>
+                                    <dxc:LineSeriesView/>
+                                </dxc:Series.View>
+                            </dxc:Series>
+                            <!-- Include additional series as needed -->
+                        </dxc:CartesianChart.Series>
+                    </dxc:CartesianChart>
+                </StackPanel>
+            </Border>
+        </Grid>
         <Border Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
             <StackPanel Margin="10">
                 <!-- CPU Usage -->

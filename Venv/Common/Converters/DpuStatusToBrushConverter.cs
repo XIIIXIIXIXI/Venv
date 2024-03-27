@@ -13,8 +13,8 @@ namespace Venv.Common.Converters
 {
     public class DpuStatusToBrushConverter : IValueConverter
     {
-        public Brush TrueBrush { get; set; }
-        public Brush FalseBrush { get; set; }
+        public Microsoft.UI.Xaml.Media.Brush TrueBrush { get; set; }
+        public Microsoft.UI.Xaml.Media.Brush FalseBrush { get; set; }
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             

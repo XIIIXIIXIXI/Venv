@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DevExpress.WinUI.Charts.Internal;
+using DevExpress.WinUI.Charts;
+using DevExpress.WinUI.Grid;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -13,6 +16,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Venv.Models;
 using Venv.Models.DockerHandler;
+using System.Threading;
+using Microsoft.UI.Dispatching;
+using Windows.System;
 
 namespace Venv.ViewModels.Pages
 {
@@ -28,6 +34,13 @@ namespace Venv.ViewModels.Pages
         private double fillWidth;
         [ObservableProperty]
         private double progressBarWidth;
+
+        //private CpuUsageDataGenerator _cpuUsageDataGenerator;
+
+        public CpuUsageDataSource CpuUsageChartDataSource { get; }
+
+        [ObservableProperty]
+        private ObservableCollection<CpuUsageDataItem> _cpuUsagePoints;
 
 
         partial void OnProgressBarWidthChanged(double value)
@@ -52,10 +65,25 @@ namespace Venv.ViewModels.Pages
         [ObservableProperty]
         private string _memoryUsageText;
 
+        private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
+
         public MonitoringViewModel(VMwareManager vmWareManager) 
         {
-             _monitoringService = new VmMonitoringService(vmWareManager.IP);
+            _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            _monitoringService = new VmMonitoringService(vmWareManager.IP);
+            _cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
+
+            CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
+            /*
+            var cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
+            _cpuUsageDataGenerator = new CpuUsageDataGenerator();
+
+            cpuUsagePoints = _cpuUsageDataGenerator.CpuUsageData;
+            CpuUsageChartDataSource = new CpuUsageDataSource(cpuUsagePoints);
+
+            // Start generating data
+            _cpuUsageDataGenerator.Start();*/
         }
 
          
@@ -67,8 +95,81 @@ namespace Venv.ViewModels.Pages
                 CpuUsage = data.CpuUsage;
                 MemoryUsagePercentage = data.memoryPercent;
                 MemoryUsageText = $"{data.usedMemory}/{data.freeMemory}";
+                var timestamp = DateTime.Now;
+
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    _cpuUsagePoints.Add(new CpuUsageDataItem
+                    {
+                        Timestamp = timestamp,
+                        CpuUsage = CpuUsage
+                    }) ;
+
+                    // Optionally, limit the number of data points
+                    if (_cpuUsagePoints.Count > 100)
+                    {
+                        _cpuUsagePoints.RemoveAt(0);
+                    }
+                });
                 await Task.Delay(1000);
             }      
+        }
+
+    }
+    public struct CpuUsageDataItem
+    {
+        public DateTime Timestamp { get; set; }
+        public double CpuUsage { get; set; }
+    }
+   
+    public class CpuUsageDataSource : DataSourceBase
+    {
+        private ObservableCollection<CpuUsageDataItem> _data;
+
+        public CpuUsageDataSource(ObservableCollection<CpuUsageDataItem> data)
+        {
+            _data = data;
+            _data.CollectionChanged += (s, e) => OnDataChanged(ChartDataUpdateType.Reset, -1);
+        }
+
+        protected override int RowsCount => _data.Count;
+
+        protected override object GetKey(int index) => _data[index].Timestamp;
+
+        protected override double GetNumericalValue(int index, ChartDataMemberType dataMemberType)
+        {
+            if (dataMemberType == ChartDataMemberType.Value)
+            {
+                return _data[index].CpuUsage;
+            }
+            return 0;
+        }
+
+        protected override DateTime GetDateTimeValue(int index, ChartDataMemberType dataMemberType)
+        {
+            if (dataMemberType == ChartDataMemberType.Argument)
+            {
+                return _data[index].Timestamp;
+            }
+            return DateTime.MinValue;
+        }
+
+        protected override ActualScaleType GetScaleType(ChartDataMemberType dataMember)
+        {
+            switch (dataMember)
+            {
+                case ChartDataMemberType.Argument:
+                    return ActualScaleType.DateTime; // X-axis is DateTime
+                case ChartDataMemberType.Value:
+                    return ActualScaleType.Numerical; // Y-axis is Numerical
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dataMember), "Unsupported data member type.");
+            }
+        }
+
+        protected override string GetQualitativeValue(int index, ChartDataMemberType dataMember)
+        {
+            return string.Empty;
         }
     }
 }
