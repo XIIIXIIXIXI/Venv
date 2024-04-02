@@ -79,7 +79,7 @@ namespace Venv.Views.Pages
             {
                 if (item is NavigationViewItem nvi)
                 {
-                    if (nvi.Tag.ToString() == "Page2" || nvi.Tag.ToString() == "Page3")
+                    if (nvi.Tag.ToString() == "Page2" || nvi.Tag.ToString() == "Page3" || nvi.Tag.ToString() == "Page4")
                     {
                         nvi.IsEnabled = isConfigSelected;
                     }

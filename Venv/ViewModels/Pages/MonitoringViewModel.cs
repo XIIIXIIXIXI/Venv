@@ -27,6 +27,11 @@ namespace Venv.ViewModels.Pages
         private readonly VmMonitoringService _monitoringService;
 
         [ObservableProperty]
+        private double yAxisStartValue  = 0;
+        [ObservableProperty]
+        private double yAxisEndValue  = 100;
+
+        [ObservableProperty]
         private double _cpuUsage;
         [ObservableProperty]
         private string _cpuUsageText;

@@ -52,8 +52,8 @@
                             <dxc:AxisY
                                 ShowMajorGridlines="True"
                                 ShowMinorGridlines="True"
-                                VisualRangeEndValue="100"
-                                VisualRangeStartValue="0"
+                                VisualRangeEndValue="{x:Bind ViewModel.YAxisEndValue}"
+                                VisualRangeStartValue="{x:Bind ViewModel.YAxisStartValue}"
                                 WholeRangeAutoCorrect="False" />
                         </dxc:CartesianChart.AxisY>
                         <dxc:CartesianChart.Series>
