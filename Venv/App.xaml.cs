@@ -97,7 +97,7 @@ namespace Venv
             windowHandleProvider.SetWindowHandle(() => mainWindowHandle);
 
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<SelectConfigurationPage>();
+            navigationService.NavigateTo<NavigationViewPage>();
 
             ChangeWindowSize(mainWindowHandle, 1450, 850);
         }

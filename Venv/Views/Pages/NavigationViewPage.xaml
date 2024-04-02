@@ -7,21 +7,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="NavigationViewPage_Loaded">
 
     <NavigationView x:Name="NavigationView" PaneDisplayMode="LeftCompact" >
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Vírtualization" Tag="Page1" >
                 <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE896;"  />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Vírtualization" Tag="Page2" IsEnabled="False" >
+                <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE7E3;"  />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Hardware Selection" Tag="Page2">
+            <NavigationViewItem Content="Hardware Selection" Tag="Page3" IsEnabled="False">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE764;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Monitor" Tag="Page3" >
+            <NavigationViewItem Content="Monitor" Tag="Page4" IsEnabled='True' >
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xEC4A;"  />
                 </NavigationViewItem.Icon>

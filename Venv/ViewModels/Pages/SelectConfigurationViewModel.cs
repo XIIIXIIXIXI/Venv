@@ -27,18 +27,15 @@ namespace Venv.ViewModels.Pages
     public partial class SelectConfigurationViewModel : ObservableObject
     {
         private readonly IWindowHandleProvider _windowHandleProvider;
-        private readonly INavigationService _navigationService;
         private readonly ShipDataService _shipDataService;
         private readonly IVMwareManager _vmwareManager;
         private string _folderPath;
-        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, INavigationService navigationService, ShipDataService shipDataService, VMwareManager vMwareManager)
+        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, ShipDataService shipDataService, VMwareManager vMwareManager)
         {
-            _navigationService = navigationService;
             _shipDataService = shipDataService;
             _vmwareManager = vMwareManager;
             _ = StartVMasync();
-            SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);
-            NavigateToShell = new RelayCommand(NavigateToNewFrame);
+            SelectFolderCommand = new AsyncRelayCommand(SelectFolderAsync);          
             _windowHandleProvider = windowHandleProvider;
             Task.Run(LoadRecentConfigurationsAsync);
         }
@@ -50,22 +47,38 @@ namespace Venv.ViewModels.Pages
         private string infoBarMessage;
         [ObservableProperty]
         private bool isInfoBarOpen;
+
+        public event Action<bool> ConfigurationSelectionChanged;
         [ObservableProperty]
         private bool isConfigurationSelected = false;
+        partial void OnIsConfigurationSelectedChanged(bool value)
+        {
+            ConfigurationSelectionChanged?.Invoke(value);
+        }
+
         [ObservableProperty] //only used to update the listview when selecting from file explorer
         private ConfigurationModel selectedConfiguration;
         [ObservableProperty]
         private ObservableCollection<ConfigurationModel> recentConfigurations = new();
 
         public IAsyncRelayCommand SelectFolderCommand { get; }
-        public IRelayCommand NavigateToShell { get; }
+        
 
+        public void NavigateAwayFromFrame()
+        {
+            _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
+        }
+
+        //This is for button navigation instead of navigationview
+        /*
+         public IRelayCommand NavigateToShell { get; }
+        NavigateToShell = new RelayCommand(NavigateToNewFrame);
         private void NavigateToNewFrame()
         {
             _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
             _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
             _navigationService.NavigateTo<NavigationViewPage>();
-        }
+        }*/
         private async Task SelectFolderAsync()
         {
             var picker = new FolderPicker();
@@ -89,7 +102,9 @@ namespace Venv.ViewModels.Pages
                 _folderPath = folder.Path;
                 await SaveConfigurationAsync(service.VesselName, folder.Path);
                 SelectedConfiguration = RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(folder.Path, StringComparison.OrdinalIgnoreCase));
+                _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
             }
+
         }
 
         [RelayCommand]
@@ -104,6 +119,8 @@ namespace Venv.ViewModels.Pages
                     _folderPath = configuration.FilePath;
                     ShipData = service;
                     IsConfigurationSelected = true;
+                    //updating the ship singleton
+                    _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
                 }
             }
         }

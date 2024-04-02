@@ -16,70 +16,209 @@
 
     <StackPanel x:Name="MainStackPanel" Margin="20">
         <Grid>
-            <Border Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
+            <Border
+                Margin="20"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="10">
                 <StackPanel Margin="10">
-                    <TextBlock Text="CPU Utilization % | VM1 | 1s granularity" FontWeight="Bold"/>
+                    <Grid>
+                        <TextBlock FontWeight="Bold" Text="CPU Utilization % " />
+                        <TextBlock Margin="0,0,50,0" HorizontalAlignment="Right">
 
-                    <dxc:CartesianChart Margin="30,0,30,25" SelectionMode="None" ToolTipEnabled="False">
+                            <Run
+                                FontSize="30"
+                                FontWeight="ExtraBold"
+                                Foreground="#364c73"
+                                Text="|" />
+                            <Run FontSize="20" Text="Vm1" />
+                        </TextBlock>
+                    </Grid>
+
+                    <dxc:CartesianChart
+                        Margin="30,0,30,25"
+                        SelectionMode="None"
+                        ToolTipEnabled="False">
                         <dxc:CartesianChart.AxisX>
-                            <dxc:AxisX ShowLabels="True" ShowMajorGridlines="True" ShowMinorGridlines="True"
-                               DateTimeMeasureUnit="Millisecond" DateTimeGridAlignment="Millisecond"
-                               SideMargins="0" />
+                            <dxc:AxisX
+                                DateTimeGridAlignment="Second"
+                                DateTimeMeasureUnit="Second"
+                                ShowLabels="True"
+                                ShowMajorGridlines="True"
+                                ShowMinorGridlines="True"
+                                SideMargins="0" />
                         </dxc:CartesianChart.AxisX>
                         <dxc:CartesianChart.AxisY>
-                            <dxc:AxisY ShowMajorGridlines="True" ShowMinorGridlines="True" VisualRangeStartValue="0" VisualRangeEndValue="100" />
+                            <dxc:AxisY
+                                ShowMajorGridlines="True"
+                                ShowMinorGridlines="True"
+                                VisualRangeEndValue="100"
+                                VisualRangeStartValue="0"
+                                WholeRangeAutoCorrect="False" />
                         </dxc:CartesianChart.AxisY>
                         <dxc:CartesianChart.Series>
                             <dxc:Series Data="{x:Bind ViewModel.CpuUsageChartDataSource}">
                                 <dxc:Series.View>
-                                    <dxc:LineSeriesView/>
+                                    <dxc:LineSeriesView />
                                 </dxc:Series.View>
                             </dxc:Series>
-                            <!-- Include additional series as needed -->
+                            <!--  next  -->
                         </dxc:CartesianChart.Series>
                     </dxc:CartesianChart>
+
                 </StackPanel>
             </Border>
         </Grid>
-        <Border Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
-            <StackPanel Margin="10">
-                <!-- CPU Usage -->
-                <TextBlock FontWeight="SemiBold" Text="CPU" />
-                <Grid x:Name="ProgressBarContainer"
-          Height="20"
-          Margin="0,5"
-          Background="LightGray"
-          CornerRadius="10"
-          SizeChanged="ProgressBarContainer_SizeChanged">
-                    <Rectangle x:Name="FillRectangle"
-                   Width="{x:Bind ViewModel.FillWidth, Mode=OneWay}"
-                   HorizontalAlignment="Left"
-                   Fill="Green"
-                   RadiusX="10"
-                   RadiusY="10" />
-                </Grid>
-                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
 
-                <!-- Cores Usage -->
-                <TextBlock FontWeight="SemiBold" Text="Cores" />
-                <ProgressBar Height="10"
-                 Margin="0,5"
-                 Foreground="Green"
-                 Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}"
-                 Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" />
-                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
+        <Grid x:Name="MainGrid" Margin="20">
+            <Grid.ColumnDefinitions>
+                <!--  Define two columns of equal width  -->
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <!--  VM Status  -->
+            <Border
+                Grid.Column="0"
+                Margin="20"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="10">
+                <StackPanel Margin="10">
+                    <TextBlock
+                        Margin="0,10"
+                        HorizontalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="Vm1" />
+                    <!--  CPU Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="CPU" />
+                    <Grid
+                        x:Name="ProgressBarContainer"
+                        Height="20"
+                        Margin="0,5"
+                        Background="LightGray"
+                        CornerRadius="10"
+                        SizeChanged="ProgressBarContainer_SizeChanged">
+                        <Rectangle
+                            x:Name="FillRectangle"
+                            Width="{x:Bind ViewModel.FillCpuUsageWidth, Mode=OneWay}"
+                            HorizontalAlignment="Left"
+                            Fill="#364c73"
+                            RadiusX="10"
+                            RadiusY="10" />
+                    </Grid>
 
-                <!-- Memory Usage -->
-                <TextBlock FontWeight="SemiBold" Text="Memory" />
-                <ProgressBar Height="20"
-                 Margin="0,5"
-                 Foreground="Green"
-                 Maximum="100"
-                 Value="{x:Bind ViewModel.MemoryUsagePercentage, Mode=OneWay}" />
-                <TextBlock Margin="0,5" Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
+                    <TextBlock
+                        Margin="10,0"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
 
-                <TextBlock Margin="0,10" FontWeight="SemiBold" Text="Vm1" />
-            </StackPanel>
-        </Border>
+
+
+                    <!--  Cores Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="Cores" />
+                    <Grid
+                        Height="20"
+                        Margin="0,5"
+                        Background="LightGray"
+                        CornerRadius="10"
+                        SizeChanged="ProgressBarContainer_SizeChanged">
+                        <Rectangle
+                            Width="{x:Bind ViewModel.FillMemoryUsageWidth, Mode=OneWay}"
+                            HorizontalAlignment="Left"
+                            Fill="#364c73"
+                            RadiusX="10"
+                            RadiusY="10" />
+                    </Grid>
+                    <TextBlock
+                        Margin="10,0"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
+
+                    <!--  Memory Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="Memory" />
+                    <Grid
+                        Height="20"
+                        Margin="0,5"
+                        Background="LightGray"
+                        CornerRadius="10"
+                        SizeChanged="ProgressBarContainer_SizeChanged">
+                        <Rectangle
+                            Width="{x:Bind ViewModel.FillMemoryUsageWidth, Mode=OneWay}"
+                            HorizontalAlignment="Left"
+                            Fill="#364c73"
+                            RadiusX="10"
+                            RadiusY="10" />
+                    </Grid>
+                    <TextBlock
+                        Margin="0,5"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
+
+
+                </StackPanel>
+            </Border>
+            <Border
+                Grid.Column="1"
+                Margin="20"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="10">
+                <StackPanel Margin="10">
+                    <TextBlock
+                        Margin="0,10"
+                        HorizontalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="Vm2" />
+                    <!--  CPU Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="CPU" />
+                    <ProgressBar
+                        Height="10"
+                        Margin="0,5"
+                        Foreground="Green"
+                        Value="{x:Bind ViewModel.CpuUsage, Mode=OneWay}" />
+
+                    <TextBlock
+                        Margin="10,0"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
+
+
+
+                    <!--  Cores Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="Cores" />
+                    <ProgressBar
+                        Height="10"
+                        Margin="0,5"
+                        Foreground="Green"
+                        Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}"
+                        Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" />
+                    <TextBlock
+                        Margin="10,0"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
+
+                    <!--  Memory Usage  -->
+                    <TextBlock FontWeight="SemiBold" Text="Memory" />
+                    <ProgressBar
+                        Height="20"
+                        Margin="0,5"
+                        Foreground="Green"
+                        Maximum="100"
+                        Value="{x:Bind ViewModel.MemoryUsagePercentage, Mode=OneWay}" />
+                    <TextBlock
+                        Margin="0,5"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
+
+
+                </StackPanel>
+            </Border>
+        </Grid>
     </StackPanel>
 </Page>

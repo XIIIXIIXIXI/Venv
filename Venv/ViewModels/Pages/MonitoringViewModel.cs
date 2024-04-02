@@ -31,11 +31,9 @@ namespace Venv.ViewModels.Pages
         [ObservableProperty]
         private string _cpuUsageText;
         [ObservableProperty]
-        private double fillWidth;
+        private double fillCpuUsageWidth;
         [ObservableProperty]
         private double progressBarWidth;
-
-        //private CpuUsageDataGenerator _cpuUsageDataGenerator;
 
         public CpuUsageDataSource CpuUsageChartDataSource { get; }
 
@@ -45,13 +43,14 @@ namespace Venv.ViewModels.Pages
 
         partial void OnProgressBarWidthChanged(double value)
         {
-            FillWidth = value * (CpuUsage / 100.0);
+            FillCpuUsageWidth = value * (CpuUsage / 100.0);
+            FillMemoryUsageWidth = value * (MemoryUsagePercentage / 100);
         }
 
         partial void OnCpuUsageChanged(double value)
         {
             CpuUsageText = $"{value}%";
-            FillWidth = progressBarWidth * (value / 100.0);
+            FillCpuUsageWidth = progressBarWidth * (value / 100.0);
         }
         [ObservableProperty]
         private int _activeCores = 8;
@@ -59,11 +58,19 @@ namespace Venv.ViewModels.Pages
         private int _totalCores = 24; //static for testing
 
         [ObservableProperty]
-        private string _coreUsageText =$"8/24";
+        private string _coreUsageText =$"8/24"; //TODO
         [ObservableProperty]
         private double _memoryUsagePercentage;
         [ObservableProperty]
         private string _memoryUsageText;
+        [ObservableProperty]
+        private double fillMemoryUsageWidth;
+        partial void OnMemoryUsagePercentageChanged(double value)
+        {
+            MemoryUsageText = $"{value}%";
+            FillMemoryUsageWidth = progressBarWidth * (value / 100.0);
+        }
+
 
         private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
@@ -75,15 +82,6 @@ namespace Venv.ViewModels.Pages
 
             CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
-            /*
-            var cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
-            _cpuUsageDataGenerator = new CpuUsageDataGenerator();
-
-            cpuUsagePoints = _cpuUsageDataGenerator.CpuUsageData;
-            CpuUsageChartDataSource = new CpuUsageDataSource(cpuUsagePoints);
-
-            // Start generating data
-            _cpuUsageDataGenerator.Start();*/
         }
 
          
@@ -94,7 +92,7 @@ namespace Venv.ViewModels.Pages
                 var data = await _monitoringService.GetPerformanceDataAsync();
                 CpuUsage = data.CpuUsage;
                 MemoryUsagePercentage = data.memoryPercent;
-                MemoryUsageText = $"{data.usedMemory}/{data.freeMemory}";
+                MemoryUsageText = $"{data.usedMemory}/{data.totalMemory}";
                 var timestamp = DateTime.Now;
 
                 _dispatcherQueue.TryEnqueue(() =>
@@ -104,8 +102,9 @@ namespace Venv.ViewModels.Pages
                         Timestamp = timestamp,
                         CpuUsage = CpuUsage
                     }) ;
+                    
 
-                    // Optionally, limit the number of data points
+                    // limit the number of data points
                     if (_cpuUsagePoints.Count > 100)
                     {
                         _cpuUsagePoints.RemoveAt(0);

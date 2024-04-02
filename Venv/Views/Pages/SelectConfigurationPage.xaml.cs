@@ -16,6 +16,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using CommunityToolkit.Mvvm.Messaging;
 using Venv.Models;
+using Venv.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,6 +42,10 @@ namespace Venv.Views.Pages
             {
                 ViewModel.LoadConfigurationCommand.Execute(clickedItem);
             }
+        }
+        private void Navigate_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.NavigateAwayFromFrame();
         }
     }
 }

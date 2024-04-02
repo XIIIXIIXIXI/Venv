@@ -35,6 +35,7 @@ namespace Venv.Views.Pages
             ViewModel = viewModel;
             this.InitializeComponent();
             this.DataContext = ViewModel;
+            
         }
         private void ProgressBarContainer_SizeChanged(object sender, SizeChangedEventArgs e)
         {
