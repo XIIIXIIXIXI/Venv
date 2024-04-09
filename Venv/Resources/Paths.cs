@@ -1,4 +1,7 @@
-﻿namespace Venv.Resources
+﻿using System;
+using System.IO;
+
+namespace Venv.Resources
 {
     public static class ThemePaths
     {
@@ -9,7 +12,8 @@
 
     public static class VMPaths
     {
-        public static string vmxPath => @"C:\Users\MKO091\OneDrive - Wärtsilä Corporation\Desktop\virtual_DPU_spawner\VM_virtualdpu_spawner\virtual_DPU_spawner.vmx";
+        //public static string vmxPath => @"C:\Users\MKO091\OneDrive - Wärtsilä Corporation\Desktop\virtual_DPU_spawner\VM_virtualdpu_spawner\virtual_DPU_spawner.vmx";
+        public static string vmxPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VM", "test.vmx");
         public static string vmrunPath => @"C:\Program Files (x86)\VMware\VMware VIX\vmrun";
     }
 }

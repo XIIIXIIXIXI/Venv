@@ -49,6 +49,7 @@
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 		<PackageReference Include="Syncfusion.Grid.WinUI" Version="24.2.8" />
+		<PackageReference Include="System.Management" Version="8.0.0" />
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
