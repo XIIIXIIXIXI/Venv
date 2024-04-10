@@ -72,6 +72,11 @@ namespace Venv.Views.Pages
                 var viewModel = configPage.DataContext as SelectConfigurationViewModel;
                 viewModel.ConfigurationSelectionChanged += UpdateNavigationItemsEnabledState;
             }
+            else if (ContentFrame.Content is  VirtualPage virtualPage)
+            {
+                var viewModel = virtualPage.DataContext as VirtualViewModel;
+                viewModel.VirtualizationRunningChanged += UpdateNavigationItemsEnabledStateEmulationRunning;
+            }
         }
         private void UpdateNavigationItemsEnabledState(bool isConfigSelected)
         {
@@ -82,6 +87,19 @@ namespace Venv.Views.Pages
                     if (nvi.Tag.ToString() == "Page2" || nvi.Tag.ToString() == "Page3" || nvi.Tag.ToString() == "Page4")
                     {
                         nvi.IsEnabled = isConfigSelected;
+                    }
+                }
+            }
+        }
+        private void UpdateNavigationItemsEnabledStateEmulationRunning(bool isEmulationRunning)
+        {
+            foreach (NavigationViewItemBase item in NavigationView.MenuItems)
+            {
+                if (item is NavigationViewItem nvi)
+                {
+                    if (nvi.Tag.ToString() == "Page1")
+                    {
+                        nvi.IsEnabled = !isEmulationRunning;
                     }
                 }
             }
@@ -100,5 +118,6 @@ namespace Venv.Views.Pages
 
             NavigateAndSetup("Page1");
         }
+
     }
 }

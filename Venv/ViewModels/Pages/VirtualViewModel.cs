@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -44,6 +45,15 @@ namespace Venv.ViewModels.Pages
         [ObservableProperty]
         private DPU _selectedDpu;
 
+        //notify navigation
+        public event Action<bool> VirtualizationRunningChanged;
+        [ObservableProperty]
+        private bool isVirtualizationRunning = false;
+        partial void OnIsVirtualizationRunningChanged(bool value)
+        {
+            VirtualizationRunningChanged?.Invoke(value);
+        }
+
         public List<DPU> DpuList => _shipDataService.GetDpus();
 
         private void OnDataUpdated()
@@ -69,12 +79,14 @@ namespace Venv.ViewModels.Pages
                 if (ButtonText == "Start Virtualization")
                 {
                     ButtonText = "Starting Containers..";
+                    IsVirtualizationRunning = true;
                     _shipDataService.IsVirtualizationStopping = false;
                     await _mediator.StartDockerContainersAsync();
                 }
                 else if (ButtonText == "Stop Virtualization")
                 {
                     ButtonText = "Stopping Containers..";
+                    IsVirtualizationRunning = false;
                     _shipDataService.IsVirtualizationStopping = true;
                     await _mediator.StopDockerContainersAsync();
                 }

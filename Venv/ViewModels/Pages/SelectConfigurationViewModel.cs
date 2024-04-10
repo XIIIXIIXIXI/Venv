@@ -164,7 +164,7 @@ namespace Venv.ViewModels.Pages
                         {
                             VesselName = parts[0],
                             FilePath = parts[1],
-                            LastUsed = DateTime.ParseExact(parts[2], "dd.MM.yyyy", CultureInfo.InvariantCulture)
+                            LastUsed = DateTime.ParseExact(parts[2], "dd/MM/yyyy", CultureInfo.InvariantCulture)
                         });
                     }
                 }
