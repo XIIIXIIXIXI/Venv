@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler.Interfaces;
+using Venv.Models.Network;
 using Venv.Resources;
 
 namespace Venv.Models.DockerHandler
@@ -15,6 +16,7 @@ namespace Venv.Models.DockerHandler
         public IPAddress IP { get; set; }
         public bool IsVMwareInstanceRunning => _isVMwareInstanceRunning;
         public readonly int HeartbeatInterval = 5000; //5 seconds 
+        private VmNetworkManager _vmNetwork;
 
         private CancellationTokenSource _heartbeatCancellationTokenSource;
 
@@ -44,6 +46,9 @@ namespace Venv.Models.DockerHandler
 
                 Process.Start(startInfo);
                 WaitingForVMToBeTurnedOn();
+                _vmNetwork = new VmNetworkManager(IP); //vmnetwork
+                //call vmNetwork functions here
+
             }
             else
             {

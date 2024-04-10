@@ -40,5 +40,37 @@ namespace Venv.Models.Network
             }
             return false; // Adapter not found
         }
+        public void Configure()
+        {
+            using (var managementClass = new ManagementClass("Win32_NetworkAdapterConfiguration"))
+            using (var networkAdapters = managementClass.GetInstances())
+            {
+                foreach (ManagementObject adapter in networkAdapters)
+                {
+                    var name = (string)adapter["Description"];
+                    if (name == AdapterName && (bool)adapter["IPEnabled"])
+                    {
+                        try
+                        {
+                            using (var newIP = adapter.GetMethodParameters("EnableStatic"))
+                            {
+                                newIP["IPAddress"] = new string[] { DesiredIPAddress };
+                                newIP["SubnetMask"] = new string[] { DesiredSubnetMask };
+
+                                adapter.InvokeMethod("EnableStatic", newIP, null);
+                            }
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                            
+                    }
+            }
+            }
+
+        }
     }
+    
 }
