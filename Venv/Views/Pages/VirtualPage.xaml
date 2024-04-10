@@ -33,6 +33,7 @@
             TrueBrush="{StaticResource VmRunningBrush}" />
 
         <local2:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter" />
+        <local2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
         <local2:DpuStatusToBrushConverter
             x:Key="DpuStatusToBrushConverter"
@@ -134,6 +135,7 @@
             <Button
             HorizontalAlignment="Center"
             Command="{x:Bind ViewModel.StartStopVirtualizationCommand}"
+            Visibility="{x:Bind ViewModel.IsVMRunning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}"
             Content="{x:Bind ViewModel.ButtonText, Mode=OneWay}"
             IsEnabled="{x:Bind ViewModel.IsButtonEnabled, Mode=OneWay}"
             Style="{StaticResource Button}" />

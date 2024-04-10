@@ -46,8 +46,10 @@ namespace Venv.Models.DockerHandler
 
                 Process.Start(startInfo);
                 WaitingForVMToBeTurnedOn();
-                _vmNetwork = new VmNetworkManager(IP); //vmnetwork
-                //call vmNetwork functions here
+                _vmNetwork = new VmNetworkManager(IP); 
+                _vmNetwork.CheckAndConfigureNetwork();
+                _isVMwareInstanceRunning = true;
+                VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
 
             }
             else
@@ -84,8 +86,7 @@ namespace Venv.Models.DockerHandler
                     }
                     else if (IPAddress.TryParse(output.Trim(), out var ip))
                     {
-                        _isVMwareInstanceRunning = true;
-                        VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
+                        
                         IP = ip;
                         return;
                     }

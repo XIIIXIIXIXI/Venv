@@ -15,7 +15,7 @@ namespace Venv.Resources
         //Work
         //public static string vmxPath => @"C:\Users\MKO091\OneDrive - Wärtsilä Corporation\Desktop\virtual_DPU_spawner\VM_virtualdpu_spawner\virtual_DPU_spawner.vmx";
         //home
-        public static string vmxPath => @"C:\Users\marti\Desktop\VM";
+        public static string vmxPath => @"C:\Users\marti\Desktop\VM\test.vmx";
         //for future:
         //public static string vmxPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VM", "test.vmx");
         public static string vmrunPath => @"C:\Program Files (x86)\VMware\VMware VIX\vmrun";
