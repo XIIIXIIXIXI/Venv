@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
-namespace Venv.Models.DockerHandler.Interfaces
+namespace Venv.Models.Interfaces
 {
     public interface IVMwareManager
     {

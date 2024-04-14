@@ -5,7 +5,7 @@ using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Venv.Models.Network
+namespace Venv.Models.Services
 {
     public class NetworkAdapterManager
     {
@@ -65,12 +65,12 @@ namespace Venv.Models.Network
                         {
                             Console.WriteLine(ex.ToString());
                         }
-                            
+
                     }
-            }
+                }
             }
 
         }
     }
-    
+
 }

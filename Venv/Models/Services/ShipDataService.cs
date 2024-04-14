@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Venv.Models;
 
-namespace Venv.Services
+namespace Venv.Models.Services
 {
     public class ShipDataService
     {
@@ -22,9 +22,10 @@ namespace Venv.Services
         public int SequenceNumber { get; private set; }
         public string GenerationDate { get; private set; }
         public string ShipOwner { get; private set; }
-        public string Yard {  get; private set; }
+        public string Yard { get; private set; }
         public string FicVersion { get; private set; }
         public int SwitchesNumber { get; private set; }
+        public int ShipType { get; private set; }
         public event Action DataUpdated;
         private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
@@ -37,18 +38,21 @@ namespace Venv.Services
         }
 
 
-        public void  UpdateShipData(
+        public void UpdateShipData(
             string databaseVersion,
-            string dpuVersion, 
-            int numberOfMfd, 
-            string vesselName, 
-            string imo, List<DPU> dpus, 
+            string dpuVersion,
+            int numberOfMfd,
+            string vesselName,
+            string imo, List<DPU> dpus,
             List<MachineryGroup> machineryGroups,
             string yardBuildNumber,
             int sequenceNumber,
             string yardName,
             string ficVersion,
-            int switchesNumber
+            int switchesNumber,
+            string shipOwner,
+            int shipType,
+            string generationDate
             )
         {
             DatabaseVersion = databaseVersion;
@@ -63,6 +67,9 @@ namespace Venv.Services
             Yard = yardName;
             FicVersion = ficVersion;
             SwitchesNumber = switchesNumber;
+            ShipOwner = shipOwner;
+            ShipType = shipType;
+            GenerationDate = generationDate;
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
@@ -75,7 +82,7 @@ namespace Venv.Services
                     dpu.Status = status;
                     DataUpdated?.Invoke();
                 });
-                
+
             }
         }
         public List<DPU> GetDpus()
@@ -138,6 +145,9 @@ namespace Venv.Services
             var yardName = _dataExtractor.GetYardName();
             var ficVersion = _dataExtractor.GetFicVersion();
             var switchesNumber = _dataExtractor.GetSwitchesNumber();
+            var shipOwner = _dataExtractor.GetShipOwner();
+            var shipType = _dataExtractor.GetShipType();
+            var generationDate = _dataExtractor.GetGenerationDate();
 
             var shipDataService = new ShipDataService();
 
@@ -150,7 +160,10 @@ namespace Venv.Services
                  sequenceNumber,
                  yardName,
                 ficVersion,
-                switchesNumber);
+                switchesNumber,
+                shipOwner,
+                shipType,
+                generationDate);
 
             return shipDataService;
         }

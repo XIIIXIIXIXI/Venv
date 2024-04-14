@@ -14,11 +14,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Venv.Models;
-using Venv.Models.DockerHandler;
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using Windows.System;
+using Venv.Models.Services;
 
 namespace Venv.ViewModels.Pages
 {

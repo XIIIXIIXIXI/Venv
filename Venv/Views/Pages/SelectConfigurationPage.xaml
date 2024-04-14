@@ -195,45 +195,60 @@
             Margin="10,60,0,0"
             Visibility="{x:Bind ViewModel.IsConfigurationSelected, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="Database Version:" />
-                <Run Text="{x:Bind ViewModel.ShipData.DatabaseVersion, Mode=OneWay}" />
+    <Run FontWeight="SemiBold" Text="Owner:" />
+    <Run Text="{x:Bind ViewModel.ShipData.ShipOwner, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+    <Run FontWeight="SemiBold" Text="Yard:" />
+    <Run Text="{x:Bind ViewModel.ShipData.Yard, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+    <Run FontWeight="SemiBold" Text="Yard Build:" />
+    <Run Text="{x:Bind ViewModel.ShipData.YardBuildNumber, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+<Run FontWeight="SemiBold" Text="Ship Type:" />
+<Run Text="{x:Bind ViewModel.ShipData.ShipType, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+    <Run FontWeight="SemiBold" Text="IMO:" />
+    <Run Text="{x:Bind ViewModel.ShipData.IMO, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+    <Run FontWeight="SemiBold" Text="Sequence Number:" />
+    <Run Text="{x:Bind ViewModel.ShipData.SequenceNumber, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
+    <Run FontWeight="SemiBold" Text="DPUs:" />
+    <Run Text="{x:Bind ViewModel.ShipData.DPUs.Count, Mode=OneWay}" />
             </TextBlock>
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
                 <Run FontWeight="SemiBold" Text="MFDs:" />
                 <Run Text="{x:Bind ViewModel.ShipData.NumberOfMFD, Mode=OneWay}" />
             </TextBlock>
+            
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="DPUs:" />
-                <Run Text="{x:Bind ViewModel.ShipData.DPUs.Count, Mode=OneWay}" />
+    <Run FontWeight="SemiBold" Text="Switches:" />
+    <Run Text="{x:Bind ViewModel.ShipData.SwitchesNumber, Mode=OneWay}" />
             </TextBlock>
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
                 <Run FontWeight="SemiBold" Text="DPU version:" />
                 <Run Text="{x:Bind ViewModel.ShipData.DPUVersion, Mode=OneWay}" />
             </TextBlock>
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="IMO:" />
-                <Run Text="{x:Bind ViewModel.ShipData.IMO, Mode=OneWay}" />
-            </TextBlock>
-            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="Yard:" />
-                <Run Text="{x:Bind ViewModel.ShipData.Yard, Mode=OneWay}" />
-            </TextBlock>
-            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="Yard Build:" />
-                <Run Text="{x:Bind ViewModel.ShipData.YardBuildNumber, Mode=OneWay}" />
-            </TextBlock>
-            <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="Sequence Number:" />
-                <Run Text="{x:Bind ViewModel.ShipData.SequenceNumber, Mode=OneWay}" />
+    <Run FontWeight="SemiBold" Text="Database Version:" />
+    <Run Text="{x:Bind ViewModel.ShipData.DatabaseVersion, Mode=OneWay}" />
             </TextBlock>
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
                 <Run FontWeight="SemiBold" Text="Fic Version:" />
                 <Run Text="{x:Bind ViewModel.ShipData.FicVersion, Mode=OneWay}" />
             </TextBlock>
             <TextBlock Margin="0,10,0,0" Style="{StaticResource IBM}">
-                <Run FontWeight="SemiBold" Text="Switches:" />
-                <Run Text="{x:Bind ViewModel.ShipData.SwitchesNumber, Mode=OneWay}" />
+<Run FontWeight="SemiBold" Text="Generation Date:" />
+<Run Text="{x:Bind ViewModel.ShipData.GenerationDate, Mode=OneWay}" />
             </TextBlock>
+
+
         </StackPanel>
         
         <InfoBar

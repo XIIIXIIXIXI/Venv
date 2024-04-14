@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Venv.Models.DockerHandler.Interfaces;
+using Venv.Models.Interfaces;
 
 namespace Venv.Models.DockerHandler
 {

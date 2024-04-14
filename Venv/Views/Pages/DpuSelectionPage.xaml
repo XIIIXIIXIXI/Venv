@@ -16,7 +16,11 @@
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <GridView Grid.Column="1" ItemsSource="{x:Bind ViewModel.MachineryGroups, Mode=OneWay}" Margin="10" SelectionMode="Multiple" IsItemClickEnabled="True" SelectionChanged="MachineryGroups_SelectionChanged">
+        <GridView Grid.Column="1" 
+                  ItemsSource="{x:Bind ViewModel.MachineryGroups, Mode=OneWay}" 
+                  Margin="10" SelectionMode="Multiple" 
+                  IsItemClickEnabled="True" 
+                  SelectionChanged="MachineryGroups_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:MachineryGroup">
                     <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 

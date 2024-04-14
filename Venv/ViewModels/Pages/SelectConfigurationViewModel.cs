@@ -18,9 +18,9 @@ using System.Collections.ObjectModel;
 using Venv.Models;
 using Microsoft.UI.Xaml.Controls;
 using Venv.Views.Pages;
-using Venv.Models.DockerHandler.Interfaces;
-using Venv.Models.DockerHandler;
 using System.Globalization;
+using Venv.Models.Services;
+using Venv.Models.Interfaces;
 
 namespace Venv.ViewModels.Pages
 {
@@ -102,7 +102,7 @@ namespace Venv.ViewModels.Pages
                 _folderPath = folder.Path;
                 await SaveConfigurationAsync(service.VesselName, folder.Path);
                 SelectedConfiguration = RecentConfigurations.FirstOrDefault(c => c.FilePath.Equals(folder.Path, StringComparison.OrdinalIgnoreCase));
-                _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
+                _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber, ShipData.ShipOwner, ShipData.ShipType, ShipData.GenerationDate);
             }
 
         }
@@ -120,7 +120,7 @@ namespace Venv.ViewModels.Pages
                     ShipData = service;
                     IsConfigurationSelected = true;
                     //updating the ship singleton
-                    _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
+                    _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber, ShipData.ShipOwner, ShipData.ShipType, ShipData.GenerationDate);
                 }
             }
         }

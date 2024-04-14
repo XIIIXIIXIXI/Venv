@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Venv.Models.DockerHandler;
+using Venv.Models.Services;
 using Venv.Services;
 using Venv.ViewModels.Pages;
 using Venv.Views.Pages;
@@ -26,6 +26,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Input.Inking;
+using Windows.UI.WindowManagement;
+using AppWindow = Microsoft.UI.Windowing.AppWindow;
 using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
 
 
@@ -99,7 +101,9 @@ namespace Venv
             var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.NavigateTo<NavigationViewPage>();
 
-            ChangeWindowSize(mainWindowHandle, 1450, 850);
+            //ChangeWindowSize(mainWindowHandle, 1450, 850);
+            //SetFullScreen(mainWindowHandle);
+            SetFullScreenWindowed(mainWindowHandle);
         }
 
         private void ChangeWindowSize(IntPtr windowHandle, int width, int height)
@@ -107,7 +111,7 @@ namespace Venv
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
             var appWindow = AppWindow.GetFromWindowId(windowId);
 
-            //resize
+            //resize for custom size
             var newSize = new Windows.Graphics.SizeInt32 { Width = width, Height = height };
             appWindow.Resize(newSize);
 
@@ -120,6 +124,38 @@ namespace Venv
 
             var newPosition = new Windows.Graphics.PointInt32(xPosition, yPosition);
             appWindow.Move(newPosition);
+        }
+        private void SetFullScreen(IntPtr windowHandle)
+        {
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            // Set full screen
+            appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+        }
+        private void SetFullScreenWindowed(IntPtr windowHandle)
+        {
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            // Set properties for borderless and maximized
+            appWindow.SetPresenter(AppWindowPresenterKind.Default);
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 0, Height = 0 });
+            appWindow.SetPresenter(AppWindowPresenterKind.Default);
+
+            var displayArea = DisplayArea.GetFromWindowId(appWindow.Id, DisplayAreaFallback.Primary);
+            var screenBounds = displayArea.WorkArea;
+            var newSize = new Windows.Graphics.SizeInt32 { Width = screenBounds.Width, Height = screenBounds.Height };
+
+            appWindow.Resize(newSize);
+            appWindow.Move(new Windows.Graphics.PointInt32(screenBounds.X, screenBounds.Y));
+
+            if (appWindow.TitleBar != null)
+            {
+                appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                appWindow.TitleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(00,00,00,00);
+                appWindow.TitleBar.ButtonInactiveBackgroundColor = Windows.UI.Color.FromArgb(00, 00, 00, 00);
+            }
         }
     }
 }

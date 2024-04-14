@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Venv.Models;
-using Venv.Services;
 using CommunityToolkit.Mvvm.Input;
+using Venv.Models.Services;
 
 namespace Venv.ViewModels.Pages
 {

@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
-using Venv.Models.DockerHandler.Interfaces;
+using Venv.Models.Interfaces;
 
-namespace Venv.Models
+namespace Venv.Models.Services
 {
     public class VmMonitoringService
     {
@@ -34,7 +34,7 @@ namespace Venv.Models
             _sshClient.ExecuteCommand(cpuUsageCommand);
 
             var reader = _sshClient.GetStandardOutput();
-            string? line;
+            string line;
 
             while ((line = await reader.ReadLineAsync()) != null)
             {
@@ -65,7 +65,7 @@ namespace Venv.Models
             {
                 return result;
             }
-            return 0; 
+            return 0;
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -242,6 +243,37 @@ namespace Venv.Models
             XmlNode node = _xmlDocument.SelectSingleNode("//FicVersion");
             return node?.InnerText ?? string.Empty;
         }
+        public string GetShipOwner()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//ShipOwner");
+            return node?.InnerText ?? string.Empty;
+        }
 
+        public int GetShipType()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//ShipType");
+            if (node != null && int.TryParse(node.InnerText, out int amount))
+            {
+                return amount;
+            }
+            return 0;
+        }
+
+        public string GetGenerationDate()
+        {
+            string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
+            LoadXml(xmlFilePath);
+            XmlNode node = _xmlDocument.SelectSingleNode("//GenerationDate");
+
+            if (node != null && DateTime.TryParseExact(node.InnerText, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+            {
+                return date.ToString("dd/MM/yyyy");
+            }
+            return string.Empty;
+        }
     }
 }

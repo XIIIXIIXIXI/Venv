@@ -6,9 +6,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
-using Venv.Models.DockerHandler.Interfaces;
+using Venv.Models.Interfaces;
 
-namespace Venv.Models.Network
+namespace Venv.Models.Services
 {
     public class VmNetworkManager
     {
@@ -43,7 +43,7 @@ namespace Venv.Models.Network
         $"ip addr show {_interfaceName} | grep 'inet ' | awk '{{print $2}}'; echo \"COMMAND_END\"";
             _sshClient.ExecuteCommand(checkCommand);
             var reader = _sshClient.GetStandardOutput();
-            string? line;       
+            string line;
             while ((line = reader.ReadLine()) != null)
             {
                 if (line.Equals("COMMAND_START"))

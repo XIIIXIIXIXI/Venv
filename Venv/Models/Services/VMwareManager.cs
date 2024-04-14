@@ -3,11 +3,10 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Venv.Models.DockerHandler.Interfaces;
-using Venv.Models.Network;
+using Venv.Models.Interfaces;
 using Venv.Resources;
 
-namespace Venv.Models.DockerHandler
+namespace Venv.Models.Services
 {
     public class VMwareManager : IVMwareManager
     {
@@ -20,7 +19,7 @@ namespace Venv.Models.DockerHandler
 
         private CancellationTokenSource _heartbeatCancellationTokenSource;
 
-        public VMwareManager() 
+        public VMwareManager()
         {
             _isVMwareInstanceRunning = false;
         }
@@ -46,7 +45,7 @@ namespace Venv.Models.DockerHandler
 
                 Process.Start(startInfo);
                 WaitingForVMToBeTurnedOn();
-                _vmNetwork = new VmNetworkManager(IP); 
+                _vmNetwork = new VmNetworkManager(IP);
                 _vmNetwork.CheckAndConfigureNetwork();
                 _isVMwareInstanceRunning = true;
                 VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
@@ -86,7 +85,6 @@ namespace Venv.Models.DockerHandler
                     }
                     else if (IPAddress.TryParse(output.Trim(), out var ip))
                     {
-                        
                         IP = ip;
                         return;
                     }
@@ -98,7 +96,7 @@ namespace Venv.Models.DockerHandler
         {
             _heartbeatCancellationTokenSource = new CancellationTokenSource();
             var token = _heartbeatCancellationTokenSource.Token;
-            
+
 
             Task.Run(async () =>
             {
@@ -118,7 +116,7 @@ namespace Venv.Models.DockerHandler
                     {
                         string output = process.StandardOutput.ReadToEnd();
                         //sometimes if the machine is not on it return 255.255.255.255 which is equal to broadcast. 
-                        if (IPAddress.TryParse(output.Trim(), out var ip ) && !ip.Equals(IPAddress.Broadcast))
+                        if (IPAddress.TryParse(output.Trim(), out var ip) && !ip.Equals(IPAddress.Broadcast))
                         {
                             _isVMwareInstanceRunning = true;
                         }
@@ -133,7 +131,7 @@ namespace Venv.Models.DockerHandler
                     }
                     try
                     {
-                        await Task.Delay(HeartbeatInterval, token); 
+                        await Task.Delay(HeartbeatInterval, token);
                     }
                     catch (TaskCanceledException)
                     {
@@ -160,7 +158,7 @@ namespace Venv.Models.DockerHandler
                 process.WaitForExit();
             }
             _isVMwareInstanceRunning = false;
-            
+
         }
     }
 }

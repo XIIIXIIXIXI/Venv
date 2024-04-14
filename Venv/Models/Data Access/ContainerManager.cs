@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Venv.Models.DockerHandler.Interfaces;
-using Venv.Services;
+using Venv.Models.Interfaces;
+using Venv.Models.Services;
 
 namespace Venv.Models.DockerHandler
 {

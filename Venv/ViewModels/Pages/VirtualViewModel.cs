@@ -7,8 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Venv.Models;
-using Venv.Models.DockerHandler;
-using Venv.Services;
+using Venv.Models.Services;
 
 
 namespace Venv.ViewModels.Pages

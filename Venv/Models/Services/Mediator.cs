@@ -5,10 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Venv.Models.DockerHandler.Interfaces;
-using Venv.Services;
+using Venv.Models.DockerHandler;
+using Venv.Models.Interfaces;
 
-namespace Venv.Models.DockerHandler
+namespace Venv.Models.Services
 {
     public class Mediator
     {
@@ -29,7 +29,7 @@ namespace Venv.Models.DockerHandler
             const int intervalMs = 1000;
             await Task.Run(async () =>
             {
-                while(!_vmwareManager.IsVMwareInstanceRunning)
+                while (!_vmwareManager.IsVMwareInstanceRunning)
                 {
                     await Task.Delay(intervalMs);
                 }
@@ -39,7 +39,7 @@ namespace Venv.Models.DockerHandler
                     _containerManager = new ContainerManager(_sshClient, _shipDataService);
                     _sshClient.Connect();
                 }
-            });  
+            });
         }
 
         public async Task StartDockerContainersAsync()
