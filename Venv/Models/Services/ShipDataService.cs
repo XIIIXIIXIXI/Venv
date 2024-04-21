@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Venv.Models;
+using Venv.Models.Interfaces;
 
 namespace Venv.Models.Services
 {
@@ -27,14 +28,13 @@ namespace Venv.Models.Services
         public int SwitchesNumber { get; private set; }
         public int ShipType { get; private set; }
         public event Action DataUpdated;
-        private readonly DispatcherQueue _dispatcherQueue;
+        //private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
 
         public List<MachineryGroup> MachineryGroup;
 
         public ShipDataService()
         {
-            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         }
 
 
@@ -77,12 +77,13 @@ namespace Venv.Models.Services
             var dpu = DPUs.Find(d => d.Number == dpuNumber);
             if (dpu != null)
             {
-                _dispatcherQueue.TryEnqueue(() =>
+                dpu.StatusHolder = status;
+                DataUpdated?.Invoke();
+                /*_dispatcherQueue.TryEnqueue(() =>
                 {
                     dpu.Status = status;
                     DataUpdated?.Invoke();
-                });
-
+                });*/
             }
         }
         public List<DPU> GetDpus()

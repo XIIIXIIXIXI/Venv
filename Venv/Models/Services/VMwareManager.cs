@@ -158,6 +158,7 @@ namespace Venv.Models.Services
                 process.WaitForExit();
             }
             _isVMwareInstanceRunning = false;
+            VMStatusChanged?.Invoke(this, _isVMwareInstanceRunning);
 
         }
     }

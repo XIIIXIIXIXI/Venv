@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Venv.Models;
+using Venv.Models.Interfaces;
 using Venv.Models.Services;
 
 
@@ -17,19 +18,20 @@ namespace Venv.ViewModels.Pages
         public ObservableCollection<DPU> Dpus { get; } = new();
 
         // it is only possible to update the UI with the main thread in WinUi that is why we need the dispatcher queue. 
-        private readonly DispatcherQueue _dispatcherQueue;
+        private readonly IDispatcherQueue _dispatcherQueue;
 
         private readonly VMwareManager _vmwareManager;
         private readonly ShipDataService _shipDataService;
         private readonly Mediator _mediator;
-        public VirtualViewModel(VMwareManager vmwareManager, ShipDataService shipDataService, Mediator mediator)
+        public VirtualViewModel(VMwareManager vmwareManager, ShipDataService shipDataService, Mediator mediator, IDispatcherQueue dispatcherQueue)
         {
             _shipDataService = shipDataService;
             _vmwareManager = vmwareManager;
             _mediator = mediator;
             _shipDataService.DataUpdated += OnDataUpdated;
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
-            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            //_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            _dispatcherQueue = dispatcherQueue;
             IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;
             _vmwareManager.StartHeartBeat();
         }
@@ -57,7 +59,18 @@ namespace Venv.ViewModels.Pages
 
         private void OnDataUpdated()
         {
-            OnPropertyChanged(nameof(DpuList));
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                foreach (var dpu in DpuList)
+                {
+                    if (dpu.Status != dpu.StatusHolder)
+                    {
+                        dpu.Status = dpu.StatusHolder;
+                    }
+                }
+                OnPropertyChanged(nameof(DpuList));
+            });
+            //OnPropertyChanged(nameof(DpuList));
         }
 
         private void OnVMStatusChanged(object sender, bool isRunning)

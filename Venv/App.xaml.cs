@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Venv.Models.Interfaces;
 using Venv.Models.Services;
 using Venv.Services;
 using Venv.ViewModels.Pages;
@@ -78,6 +79,8 @@ namespace Venv
             //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
             services.AddSingleton<ShipDataService>();
+            services.AddSingleton<IDispatcherQueue, DispatcherQueueWrapper>();
+
 
             // Register WindowHandleProvider as a singleton in the DI container. Throws exception if invoked before being initialized in the OnLaunched methode.
             services.AddSingleton<IWindowHandleProvider, WindowHandleProvider>((sp) =>

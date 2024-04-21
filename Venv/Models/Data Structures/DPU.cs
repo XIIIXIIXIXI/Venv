@@ -14,6 +14,10 @@ namespace Venv.Models
         [ObservableProperty]
         private int _number;
 
+        //This a hack that should be changed in the future. ShipDataService is updating the status, but the view can only reflect it
+        // if it is updated on the main thread using dispatcher que. ShipDataService don't want to use dispatcherQue since it 
+        //doesen't align with the MVVM-pattern. ShipDataService is now updating StatusHolder while the viewModel take care of the ObservaleProperty _status.
+        public string StatusHolder { get; set; }
         [ObservableProperty]
         private string _status = "Off";
 
