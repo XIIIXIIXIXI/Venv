@@ -72,7 +72,6 @@ namespace Venv.Models.DockerHandler
                 }
                 else
                 {
-                    // Handle timeout or no data available
                     return null;
                 }
             }

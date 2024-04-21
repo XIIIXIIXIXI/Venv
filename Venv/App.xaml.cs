@@ -111,7 +111,6 @@ namespace Venv
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
             var appWindow = AppWindow.GetFromWindowId(windowId);
 
-            //resize for custom size
             var newSize = new Windows.Graphics.SizeInt32 { Width = width, Height = height };
             appWindow.Resize(newSize);
 
@@ -138,7 +137,6 @@ namespace Venv
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
             var appWindow = AppWindow.GetFromWindowId(windowId);
 
-            // Set properties for borderless and maximized
             appWindow.SetPresenter(AppWindowPresenterKind.Default);
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 0, Height = 0 });
             appWindow.SetPresenter(AppWindowPresenterKind.Default);
@@ -150,6 +148,7 @@ namespace Venv
             appWindow.Resize(newSize);
             appWindow.Move(new Windows.Graphics.PointInt32(screenBounds.X, screenBounds.Y));
 
+            //remove the old ugly looking window bar in the top.
             if (appWindow.TitleBar != null)
             {
                 appWindow.TitleBar.ExtendsContentIntoTitleBar = true;

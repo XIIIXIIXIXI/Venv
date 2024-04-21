@@ -68,17 +68,6 @@ namespace Venv.ViewModels.Pages
         {
             _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
         }
-
-        //This is for button navigation instead of navigationview
-        /*
-         public IRelayCommand NavigateToShell { get; }
-        NavigateToShell = new RelayCommand(NavigateToNewFrame);
-        private void NavigateToNewFrame()
-        {
-            _ = SaveConfigurationAsync(ShipData.VesselName, _folderPath);
-            _shipDataService.UpdateShipData(ShipData.DatabaseVersion, ShipData.DPUVersion, ShipData.NumberOfMFD, ShipData.VesselName, ShipData.IMO, ShipData.GetDpus(), ShipData.MachineryGroup, ShipData.YardBuildNumber, ShipData.SequenceNumber, ShipData.Yard, ShipData.FicVersion, ShipData.SwitchesNumber);
-            _navigationService.NavigateTo<NavigationViewPage>();
-        }*/
         private async Task SelectFolderAsync()
         {
             var picker = new FolderPicker();
@@ -164,7 +153,7 @@ namespace Venv.ViewModels.Pages
                         {
                             VesselName = parts[0],
                             FilePath = parts[1],
-                            LastUsed = DateTime.ParseExact(parts[2], "dd/MM/yyyy", CultureInfo.InvariantCulture)
+                            LastUsed = DateTime.ParseExact(parts[2], "dd.MM.yyyy", CultureInfo.InvariantCulture)
                         });
                     }
                 }

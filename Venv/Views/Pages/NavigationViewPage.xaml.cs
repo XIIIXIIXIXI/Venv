@@ -97,7 +97,7 @@ namespace Venv.Views.Pages
             {
                 if (item is NavigationViewItem nvi)
                 {
-                    if (nvi.Tag.ToString() == "Page1")
+                    if (nvi.Tag.ToString() == "Page1" || nvi.Tag.ToString() == "Page3")
                     {
                         nvi.IsEnabled = !isEmulationRunning;
                     }

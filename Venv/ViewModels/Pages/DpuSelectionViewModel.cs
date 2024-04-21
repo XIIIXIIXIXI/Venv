@@ -23,6 +23,7 @@ namespace Venv.ViewModels.Pages
         {
             _shipDataService = shipDataService;
             MachineryGroups = _shipDataService.MachineryGroup;
+            _shipDataService.DataUpdated += RefreshData;
         }
 
         public List<DPU> DpuList => _shipDataService.GetDpus();
@@ -34,6 +35,11 @@ namespace Venv.ViewModels.Pages
             {
                 dpu.IsSelected = selectedGroups.Any(group => group.DPUs.Contains(dpu));
             }
+            OnPropertyChanged(nameof(DpuList));
+        }
+        public void RefreshData()
+        {
+            MachineryGroups = _shipDataService.MachineryGroup;
             OnPropertyChanged(nameof(DpuList));
         }
     }

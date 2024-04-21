@@ -14,10 +14,8 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <!--  Cell Style to increase font size  -->
         <Style x:Key="DataGridCellStyle" TargetType="dataGrid:DataGridCell">
             <Setter Property="FontSize" Value="18" />
-            <!--  You can adjust more properties here as needed  -->
         </Style>
         <SolidColorBrush x:Key="VmRunningBrush" Color="Green" />
 

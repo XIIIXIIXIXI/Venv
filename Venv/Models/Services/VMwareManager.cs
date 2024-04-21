@@ -115,7 +115,7 @@ namespace Venv.Models.Services
                     using (Process process = Process.Start(startInfo))
                     {
                         string output = process.StandardOutput.ReadToEnd();
-                        //sometimes if the machine is not on it return 255.255.255.255 which is equal to broadcast. 
+                        //sometimes if the machine is not on, it return 255.255.255.255 which is equal to broadcast. 
                         if (IPAddress.TryParse(output.Trim(), out var ip) && !ip.Equals(IPAddress.Broadcast))
                         {
                             _isVMwareInstanceRunning = true;

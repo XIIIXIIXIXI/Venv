@@ -62,7 +62,7 @@
                                     <dxc:LineSeriesView />
                                 </dxc:Series.View>
                             </dxc:Series>
-                            <!--  next  -->
+                            <!--  Add next VM  -->
                         </dxc:CartesianChart.Series>
                     </dxc:CartesianChart>
 
@@ -72,96 +72,13 @@
 
         <Grid x:Name="MainGrid" Margin="20">
             <Grid.ColumnDefinitions>
-                <!--  Define two columns of equal width  -->
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <!--  VM Status  -->
+            
             <Border
                 Grid.Column="0"
-                Margin="20"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                CornerRadius="10">
-                <StackPanel Margin="10">
-                    <TextBlock
-                        Margin="0,10"
-                        HorizontalAlignment="Center"
-                        FontWeight="SemiBold"
-                        Text="Vm1" />
-                    <!--  CPU Usage  -->
-                    <TextBlock FontWeight="SemiBold" Text="CPU" />
-                    <Grid
-                        x:Name="ProgressBarContainer"
-                        Height="20"
-                        Margin="0,5"
-                        Background="LightGray"
-                        CornerRadius="10"
-                        SizeChanged="ProgressBarContainer_SizeChanged">
-                        <Rectangle
-                            x:Name="FillRectangle"
-                            Width="{x:Bind ViewModel.FillCpuUsageWidth, Mode=OneWay}"
-                            HorizontalAlignment="Left"
-                            Fill="#364c73"
-                            RadiusX="10"
-                            RadiusY="10" />
-                    </Grid>
-
-                    <TextBlock
-                        Margin="10,0"
-                        HorizontalAlignment="Right"
-                        FontWeight="Bold"
-                        Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
-
-
-
-                    <!--  Cores Usage  -->
-                    <TextBlock FontWeight="SemiBold" Text="Cores" />
-                    <Grid
-                        Height="20"
-                        Margin="0,5"
-                        Background="LightGray"
-                        CornerRadius="10"
-                        SizeChanged="ProgressBarContainer_SizeChanged">
-                        <Rectangle
-                            Width="{x:Bind ViewModel.FillMemoryUsageWidth, Mode=OneWay}"
-                            HorizontalAlignment="Left"
-                            Fill="#364c73"
-                            RadiusX="10"
-                            RadiusY="10" />
-                    </Grid>
-                    <TextBlock
-                        Margin="10,0"
-                        HorizontalAlignment="Right"
-                        FontWeight="Bold"
-                        Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
-
-                    <!--  Memory Usage  -->
-                    <TextBlock FontWeight="SemiBold" Text="Memory" />
-                    <Grid
-                        Height="20"
-                        Margin="0,5"
-                        Background="LightGray"
-                        CornerRadius="10"
-                        SizeChanged="ProgressBarContainer_SizeChanged">
-                        <Rectangle
-                            Width="{x:Bind ViewModel.FillMemoryUsageWidth, Mode=OneWay}"
-                            HorizontalAlignment="Left"
-                            Fill="#364c73"
-                            RadiusX="10"
-                            RadiusY="10" />
-                    </Grid>
-                    <TextBlock
-                        Margin="0,5"
-                        HorizontalAlignment="Right"
-                        FontWeight="Bold"
-                        Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
-
-
-                </StackPanel>
-            </Border>
-            <Border
-                Grid.Column="1"
                 Margin="20"
                 BorderBrush="Gray"
                 BorderThickness="1"

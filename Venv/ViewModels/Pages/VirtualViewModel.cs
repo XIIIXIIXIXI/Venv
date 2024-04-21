@@ -84,10 +84,10 @@ namespace Venv.ViewModels.Pages
                 }
                 else if (ButtonText == "Stop Virtualization")
                 {
-                    ButtonText = "Stopping Containers..";
-                    IsVirtualizationRunning = false;
+                    ButtonText = "Stopping Containers..";                   
                     _shipDataService.IsVirtualizationStopping = true;
                     await _mediator.StopDockerContainersAsync();
+                    IsVirtualizationRunning = false;
                 }
             }
             catch

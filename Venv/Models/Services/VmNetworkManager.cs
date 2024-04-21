@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
 using Venv.Models.Interfaces;
@@ -14,7 +15,6 @@ namespace Venv.Models.Services
     {
         private readonly ISshClient _sshClient;
         private readonly string _desiredIP = "172.16.2.0";
-        private readonly string _desiredNetmask = "255.255.0.0";
         private readonly string _interfaceName = "ens34";
 
         public VmNetworkManager(IPAddress vmIP)
@@ -65,8 +65,15 @@ namespace Venv.Models.Services
         }
         private void ConfigureNetwork()
         {
-            string configureCommand = $"sudo ip addr flush dev {_interfaceName} && sudo ip addr add {_desiredIP}/16 dev {_interfaceName}";
+            string flushCommand = $"sudo ip addr flush dev {_interfaceName}";
+            _sshClient.ExecuteCommand(flushCommand);
+
+            string configureCommand = $"sudo ip link set dev {_interfaceName} mtu 1500 && " +
+                              $"sudo ip link set dev {_interfaceName} up && " +
+                              $"sudo ip addr add 172.16.2.0/16 brd 172.16.255.255 scope global noprefixroute dev {_interfaceName}";
             _sshClient.ExecuteCommand(configureCommand);
+
+            Thread.Sleep(1000);
         }
     }
 }
