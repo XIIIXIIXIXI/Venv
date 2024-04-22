@@ -74,11 +74,11 @@ namespace Venv
             services.AddSingleton<MonitoringViewModel>();
             services.AddSingleton<Mediator>();
 
-            services.AddSingleton<VMwareManager>();
+            services.AddSingleton<IVMwareManager, VMwareManager>();
 
             //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
-            services.AddSingleton<ShipDataService>();
+            services.AddSingleton<IShipDataService, ShipDataService>();
             services.AddSingleton<IDispatcherQueue, DispatcherQueueWrapper>();
 
 

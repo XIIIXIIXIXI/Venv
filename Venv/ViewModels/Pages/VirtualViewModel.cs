@@ -20,10 +20,10 @@ namespace Venv.ViewModels.Pages
         // it is only possible to update the UI with the main thread in WinUi that is why we need the dispatcher queue. 
         private readonly IDispatcherQueue _dispatcherQueue;
 
-        private readonly VMwareManager _vmwareManager;
-        private readonly ShipDataService _shipDataService;
+        private readonly IVMwareManager _vmwareManager;
+        private readonly IShipDataService _shipDataService;
         private readonly Mediator _mediator;
-        public VirtualViewModel(VMwareManager vmwareManager, ShipDataService shipDataService, Mediator mediator, IDispatcherQueue dispatcherQueue)
+        public VirtualViewModel(IVMwareManager vmwareManager, IShipDataService shipDataService, Mediator mediator, IDispatcherQueue dispatcherQueue)
         {
             _shipDataService = shipDataService;
             _vmwareManager = vmwareManager;

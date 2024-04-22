@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using Venv.Models;
 using CommunityToolkit.Mvvm.Input;
 using Venv.Models.Services;
+using Venv.Models.Interfaces;
 
 namespace Venv.ViewModels.Pages
 {
     public partial class DpuSelectionViewModel : ObservableObject
     {
 
-        private readonly ShipDataService _shipDataService;
+        private readonly IShipDataService _shipDataService;
         [ObservableProperty]
         private IEnumerable<MachineryGroup> _machineryGroups;
 
-        public DpuSelectionViewModel(ShipDataService shipDataService)
+        public DpuSelectionViewModel(IShipDataService shipDataService)
         {
             _shipDataService = shipDataService;
             MachineryGroups = _shipDataService.MachineryGroup;

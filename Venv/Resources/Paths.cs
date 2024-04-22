@@ -19,5 +19,8 @@ namespace Venv.Resources
         //for future:
         //public static string vmxPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VM", "test.vmx");
         public static string vmrunPath => @"C:\Program Files (x86)\VMware\VMware VIX\vmrun";
+
+        //Home
+        public static string confTestPath => @"C:\IM_DBs\MaerskTank - 2.1.16.06\MaerskTank - 2.1.16.06";
     }
 }

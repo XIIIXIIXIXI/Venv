@@ -14,10 +14,10 @@ namespace Venv.Models.Services
     {
         private readonly IVMwareManager _vmwareManager;
         private ISshClient _sshClient;
-        private readonly ShipDataService _shipDataService;
+        private readonly IShipDataService _shipDataService;
         ContainerManager _containerManager;
 
-        public Mediator(ShipDataService shipDataService, VMwareManager vMwareManager)
+        public Mediator(IShipDataService shipDataService, IVMwareManager vMwareManager)
         {
             _vmwareManager = vMwareManager;
             _shipDataService = shipDataService;

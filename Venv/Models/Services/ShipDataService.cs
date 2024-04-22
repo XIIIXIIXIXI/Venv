@@ -10,9 +10,9 @@ using Venv.Models.Interfaces;
 
 namespace Venv.Models.Services
 {
-    public class ShipDataService
+    public class ShipDataService : IShipDataService
     {
-        public List<DPU> DPUs;
+        public List<DPU> DPUs { get; set; }
         public string DatabaseVersion { get; private set; }
         public string DPUVersion { get; private set; }
         public int NumberOfMFD { get; private set; }
@@ -31,7 +31,7 @@ namespace Venv.Models.Services
         //private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
 
-        public List<MachineryGroup> MachineryGroup;
+        public List<MachineryGroup> MachineryGroup { get; set; }
 
         public ShipDataService()
         {

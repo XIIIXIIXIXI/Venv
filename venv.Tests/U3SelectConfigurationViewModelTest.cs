@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Venv.Models;
+using Venv.Models.Interfaces;
 using Venv.Models.Services;
+using Venv.Resources;
 using Venv.Services;
 using Venv.ViewModels.Pages;
 
@@ -13,30 +16,39 @@ namespace venv.Tests
     [TestClass]
     public class U3SelectConfigurationViewModelTest
     {
-        private SelectConfigurationViewModel _viewModel;
         private Mock<IWindowHandleProvider> _mockWindowHandleProvider;
         private Mock<ShipDataService> _mockShipDataService;
-        private Mock<VMwareManager> _mockVMwareManager;
+        private Mock<IVMwareManager> _mockVMwareManager;
+        private SelectConfigurationViewModel _viewModel;
+
         [TestInitialize]
         public void Setup()
         {
             _mockWindowHandleProvider = new Mock<IWindowHandleProvider>();
             _mockShipDataService = new Mock<ShipDataService>();
-            _mockVMwareManager = new Mock<VMwareManager>();
+            _mockVMwareManager = new Mock<IVMwareManager>();
             _viewModel = new SelectConfigurationViewModel(_mockWindowHandleProvider.Object, _mockShipDataService.Object, _mockVMwareManager.Object);
         }
         [TestMethod]
-        public void SelectFolderAsync_ValidFolder_UpdatesConfigurationSelected()
+        public void SelectFolderAsync_ValidFolder_SetsShipDataAndUpdatesRecentConfiguration()
         {
             // Arrange
-            var expectedFolderPath = @"C:\Valid\Path";
-            _mockWindowHandleProvider.Setup(m => m.GetWindowHandle()).Returns(IntPtr.Zero);  // Assume GetWindowHandle works
+            string validPath = VMPaths.confTestPath;
+            _viewModel.LoadConfigurationCommand.Execute(new ConfigurationModel { FilePath = validPath });
 
             // Act
-            _viewModel.SelectFolderCommand.Execute(null);
+            Assert.IsTrue(_viewModel.IsConfigurationSelected);
+            _mockShipDataService.Verify(x => x.UpdateShipData(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<DPU>>(), It.IsAny<List<MachineryGroup>>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+        }
+        [TestMethod]
+        public void ShouldUpdateViewModelWhenShipDataServiceChanges()
+        {
+            var newDpus = new List<DPU> { new DPU { Number = 1, Status = "Running" } };
+            _mockShipDataService.Setup(s => s.GetDpus()).Returns(newDpus);
 
-            // Assert
-            Assert.IsTrue(_viewModel.IsConfigurationSelected, "Configuration should be selected for a valid folder.");
+            _mockShipDataService.Raise(s => s.DataUpdated += null, EventArgs.Empty);
+
+            Assert.AreEqual(_viewModel.ShipData.DPUs[0], newDpus);
         }
     }
 }

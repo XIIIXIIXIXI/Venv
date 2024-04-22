@@ -27,10 +27,10 @@ namespace Venv.ViewModels.Pages
     public partial class SelectConfigurationViewModel : ObservableObject
     {
         private readonly IWindowHandleProvider _windowHandleProvider;
-        private readonly ShipDataService _shipDataService;
+        private readonly IShipDataService _shipDataService;
         private readonly IVMwareManager _vmwareManager;
         private string _folderPath;
-        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, ShipDataService shipDataService, VMwareManager vMwareManager)
+        public SelectConfigurationViewModel(IWindowHandleProvider windowHandleProvider, IShipDataService shipDataService, IVMwareManager vMwareManager)
         {
             _shipDataService = shipDataService;
             _vmwareManager = vMwareManager;

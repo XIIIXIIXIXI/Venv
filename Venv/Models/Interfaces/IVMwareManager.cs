@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Venv.Models.Interfaces
@@ -17,6 +18,9 @@ namespace Venv.Models.Interfaces
         bool IsVMwareInstanceRunning { get; }
 
         public IPAddress IP { get; set; }
+
+        public event EventHandler<bool> VMStatusChanged;
+        public void StartHeartBeat();
 
     }
 }

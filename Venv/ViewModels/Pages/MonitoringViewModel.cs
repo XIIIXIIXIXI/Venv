@@ -18,6 +18,7 @@ using System.Threading;
 using Microsoft.UI.Dispatching;
 using Windows.System;
 using Venv.Models.Services;
+using Venv.Models.Interfaces;
 
 namespace Venv.ViewModels.Pages
 {
@@ -78,7 +79,7 @@ namespace Venv.ViewModels.Pages
 
         private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
-        public MonitoringViewModel(VMwareManager vmWareManager) 
+        public MonitoringViewModel(IVMwareManager vmWareManager) 
         {
             _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
             _monitoringService = new VmMonitoringService(vmWareManager.IP);

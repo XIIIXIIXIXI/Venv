@@ -13,10 +13,10 @@ namespace Venv.Models.DockerHandler
     public class ContainerManager
     {
         private readonly ISshClient _sshClient;
-        private readonly ShipDataService _shipDataService;
+        private readonly IShipDataService _shipDataService;
         private readonly List<string> failedEvents = new List<string>();
 
-        public ContainerManager(ISshClient ssh, ShipDataService shipDataService)
+        public ContainerManager(ISshClient ssh, IShipDataService shipDataService)
         {
             _sshClient = ssh;
             _shipDataService = shipDataService;
