@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Venv.Models;
 using Newtonsoft.Json;
 using Venv.Models.Services;
+using Venv.Resources;
 
 namespace venv.Tests
 {
@@ -73,11 +74,11 @@ namespace venv.Tests
             Assert.AreEqual("123456", result);
         }
         [TestMethod]
-        public void CreateShipData()
+        public void CreateShipData_Success()
         {   // Work pc
             //ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
             // Home pc
-            ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\MaerskTank - 2.1.16.06");
+            ShipConfigurationFactory factory = new ShipConfigurationFactory(VMPaths.confTestPath);
             ShipDataService shipData = factory.Create();
             Assert.AreEqual("2161v2", shipData.DatabaseVersion);
             Assert.AreEqual("2.1.16.05", shipData.DPUVersion);
@@ -89,6 +90,11 @@ namespace venv.Tests
             Assert.AreEqual("Dalian", shipData.Yard);
             Assert.AreEqual("2.1.16.05", shipData.FicVersion);
             Assert.AreEqual(20, shipData.SwitchesNumber);
+        }
+        [TestMethod]
+        public void CreateShipData_Failure()
+        {
+
         }
     }
 }

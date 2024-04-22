@@ -55,7 +55,7 @@ namespace venv.Tests
 
         }
         [TestMethod]
-        public async Task StartStopVirtualization()
+        public async Task LaunchVirtualizationTest()
         {
             await _viewModel.OnStartStopVirtualization();
             for (int i = 0; i < _shipDataService.DPUs.Count; i++)
