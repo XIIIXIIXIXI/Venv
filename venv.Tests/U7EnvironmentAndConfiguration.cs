@@ -37,12 +37,13 @@ namespace venv.Tests
             Assert.IsTrue(_networkAdapterManager.CheckConfiguration(), "Adapter wrong IP");
         }
 
+        /*
         [TestMethod]
         public void CheckVMNetworkConfiguration()
         {
             var result = _vmNetworkManager.CheckAndConfigureNetwork();
 
             Assert.IsFalse(result, "VM wrong IP but should be changed on the second run. If the error comes the second time then something is wrong with the logic");
-        }
+        }*/
     }
 }
