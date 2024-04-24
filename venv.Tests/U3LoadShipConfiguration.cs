@@ -21,7 +21,7 @@ namespace venv.Tests
             string folderPath = VMPaths.confTestPath;
             _dataExtractor.SetFolderPath(folderPath);
         }
-        /*
+        
         [TestMethod]
         public void LoadDPUTest()
         {
@@ -30,6 +30,7 @@ namespace venv.Tests
                 new DPU {Number = 1, Status="Off" },
                 new DPU {Number = 11, Status="Off" },
                 new DPU {Number = 12, Status="Off"},
+                new DPU {Number = 21, Status="Off"},
                 new DPU {Number = 22, Status="Off"},
                 new DPU {Number = 31, Status="Off"},
                 new DPU {Number = 41, Status="Off"},
