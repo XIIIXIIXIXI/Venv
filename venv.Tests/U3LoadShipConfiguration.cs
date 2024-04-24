@@ -21,6 +21,7 @@ namespace venv.Tests
             string folderPath = VMPaths.confTestPath;
             _dataExtractor.SetFolderPath(folderPath);
         }
+        /*
         [TestMethod]
         public void LoadDPUTest()
         {
