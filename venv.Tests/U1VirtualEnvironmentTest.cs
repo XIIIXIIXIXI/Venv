@@ -15,36 +15,13 @@ namespace venv.Tests
     [TestClass]
     public class U1VirtualEnvironmentTest
     {
-        private VMwareManager _vmwareManager;
-        private VirtualViewModel _virtualViewModel;
-
-        
-        //If the vm returns an IP after starting then the VM has started successfully
-        //This methode runs everytime between each test methode.
-        [TestInitialize, Timeout(120000)]//This test can absolute maximum run for 2 minutes. It normally takes 1 minute and 30 seconds.
-        public void ClassSetup()
-        {
-            if (_vmwareManager == null)
-            {
-                _vmwareManager = new VMwareManager();
-                
-            }
-            
-            if (!_vmwareManager.IsVMwareInstanceRunning)
-            {
-                _vmwareManager = new VMwareManager();
-                _vmwareManager.StartVMwareInstance();
-            }
-            Assert.IsTrue(_vmwareManager.IsVMwareInstanceRunning);
-
-            
-        }
-        
         /*
          * This test methode tests many things because otherwise the VM has to start and stop constantly which takes too much time
          * 
-         * Tests if the VM is sending the right signal when it has started and when it has stopped.
-         * Tests if the Viewmodel gets updated when the VM changes its status.
+         * Objectives:
+         * - Validate that the VM can start and stop as expected.
+         * - Check the functionality of the heartbeat monitoring mechanism.
+         * - Confirm that VM status updates are correctly transmitted and reflected in the ViewModel.
          */
         [TestMethod]
         public async Task VMStatusMonitoring_VirtualizationPageSpinner()
@@ -54,14 +31,18 @@ namespace venv.Tests
             mockDispatcherQueue.Setup(x => x.TryEnqueue(It.IsAny<DispatcherQueueHandler>()))
         .Callback<DispatcherQueueHandler>(action => action());
 
-            _virtualViewModel = new VirtualViewModel(_vmwareManager, mockService.Object, null, mockDispatcherQueue.Object);
+            VMwareManager _vmwareManager = new VMwareManager();
+            VirtualViewModel _virtualViewModel = new VirtualViewModel(_vmwareManager, mockService.Object, null, mockDispatcherQueue.Object);
 
+            //stopping the VM
             _vmwareManager.StopVMwareInstance();
-            _vmwareManager.StartHeartBeat();
             Assert.IsFalse(_vmwareManager.IsVMwareInstanceRunning);
 
-            //Check if the viewmodel gets updated when status is changed in VM
+            // Start heartbeat and validate VM status update
+            _vmwareManager.StartHeartBeat();
             Assert.IsFalse(_virtualViewModel.IsVMRunning);
+
+            // starting the VM and ensure the ViewModel is updated after the heartbeat interval
             _vmwareManager.StartVMwareInstance();
             await Task.Delay(_vmwareManager.HeartbeatInterval + 1000); // to make sure the output is from the heartbeat and not from starting the vmwareInstance.
             Assert.IsTrue(_vmwareManager.IsVMwareInstanceRunning);

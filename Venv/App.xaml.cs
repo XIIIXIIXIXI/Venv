@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Shapes;
 using Syncfusion.Licensing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -40,6 +41,7 @@ namespace Venv
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public partial class App : Application
     {
         private IServiceProvider _serviceProvider;

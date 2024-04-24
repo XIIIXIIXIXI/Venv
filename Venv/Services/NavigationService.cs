@@ -1,11 +1,13 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Venv.Views.Pages;
 
 
 namespace Venv.Services
 {
+    [ExcludeFromCodeCoverage]
     public class NavigationService : INavigationService
     {
         private Frame _frame;

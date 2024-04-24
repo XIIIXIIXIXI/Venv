@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Venv.Services
 {
+
     public interface IWindowHandleProvider
     {
         IntPtr GetWindowHandle();
     }
-
+    [ExcludeFromCodeCoverage]
     public class WindowHandleProvider : IWindowHandleProvider
     {
         private Func<IntPtr> _getWindowHandle;

@@ -77,15 +77,15 @@ namespace Venv.ViewModels.Pages
         }
 
 
-        private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
-
-        public MonitoringViewModel(IVMwareManager vmWareManager) 
+        private readonly IDispatcherQueue _dispatcherQueue;
+       
+        public MonitoringViewModel(IVMwareManager vmWareManager, IDispatcherQueue dispatcherQueue) 
         {
-            _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            _dispatcherQueue = dispatcherQueue;
             _monitoringService = new VmMonitoringService(vmWareManager.IP);
             _cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
 
-            CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
+            //CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
         }
 
@@ -125,7 +125,7 @@ namespace Venv.ViewModels.Pages
         public DateTime Timestamp { get; set; }
         public double CpuUsage { get; set; }
     }
-   
+
     public class CpuUsageDataSource : DataSourceBase
     {
         private ObservableCollection<CpuUsageDataItem> _data;
@@ -176,4 +176,5 @@ namespace Venv.ViewModels.Pages
             return string.Empty;
         }
     }
+
 }
