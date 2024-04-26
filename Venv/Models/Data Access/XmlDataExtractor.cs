@@ -146,6 +146,20 @@ namespace Venv.Models
                 group.DPUs = group.DPUs.OrderBy(d => d.Number).ToList();
             }
 
+            List<int> keysToRemove = new List<int>();
+            foreach (var entry in machineryGroups)
+            {
+                if (entry.Value.Name == "Not used")
+                {
+                    keysToRemove.Add(entry.Key);
+                }
+            }
+
+            foreach (int key in keysToRemove)
+            {
+                machineryGroups.Remove(key);
+            }
+
             return (dpus, machineryGroups.Values.ToList());
         }
         public string GetDatabaseVersion()
