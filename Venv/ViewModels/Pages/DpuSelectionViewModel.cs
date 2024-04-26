@@ -10,6 +10,7 @@ using Venv.Models;
 using CommunityToolkit.Mvvm.Input;
 using Venv.Models.Services;
 using Venv.Models.Interfaces;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Venv.ViewModels.Pages
 {
@@ -20,12 +21,14 @@ namespace Venv.ViewModels.Pages
         private readonly IShipDataService _shipDataService;
         [ObservableProperty]
         private IEnumerable<MachineryGroup> _machineryGroups;
+        private readonly IDispatcherQueue _dispatcherQueue;
 
-        public DpuSelectionViewModel(IShipDataService shipDataService)
+        public DpuSelectionViewModel(IShipDataService shipDataService, IDispatcherQueue dispatcherQueue)
         {
             _shipDataService = shipDataService;
             MachineryGroups = _shipDataService.MachineryGroup;
             _shipDataService.DataUpdated += RefreshData;
+            _dispatcherQueue = dispatcherQueue;
         }
 
         public List<DPU> DpuList => _shipDataService.GetDpus();
@@ -35,14 +38,19 @@ namespace Venv.ViewModels.Pages
             var allDpus = DpuList;
             foreach (var dpu in allDpus)
             {
-                dpu.IsSelected = selectedGroups.Any(group => group.DPUs.Contains(dpu));
+                bool isSelected = selectedGroups.Any(group => group.DPUs.Contains(dpu));
+                dpu.IsSelected = isSelected;
             }
             OnPropertyChanged(nameof(DpuList));
         }
         public void RefreshData()
         {
             MachineryGroups = _shipDataService.MachineryGroup;
-            OnPropertyChanged(nameof(DpuList));
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                OnPropertyChanged(nameof(DpuList));
+            });
+            
         }
     }
 }

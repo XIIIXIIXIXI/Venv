@@ -19,6 +19,7 @@ using Microsoft.UI.Dispatching;
 using Windows.System;
 using Venv.Models.Services;
 using Venv.Models.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Venv.ViewModels.Pages
 {
@@ -85,7 +86,7 @@ namespace Venv.ViewModels.Pages
             _monitoringService = new VmMonitoringService(vmWareManager.IP);
             _cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
 
-            //CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
+            CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
         }
 
@@ -125,7 +126,7 @@ namespace Venv.ViewModels.Pages
         public DateTime Timestamp { get; set; }
         public double CpuUsage { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class CpuUsageDataSource : DataSourceBase
     {
         private ObservableCollection<CpuUsageDataItem> _data;

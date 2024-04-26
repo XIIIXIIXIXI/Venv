@@ -40,6 +40,7 @@ namespace Venv.Views.Pages
             {
                 var selectedGroups = gridView.SelectedItems.Cast<MachineryGroup>().ToList();
                 ViewModel.UpdateDpuSelectionBasedOnGroups(selectedGroups);
+
             }
         }
     }

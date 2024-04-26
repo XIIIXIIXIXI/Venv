@@ -11,7 +11,6 @@ namespace Venv.Models
 {
     public class XmlDataExtractor
     {
-        //private string _folderPath;
         private readonly XmlDocument _xmlDocument;
         private string _xmlFolderPath;
 
@@ -34,7 +33,6 @@ namespace Venv.Models
             string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             return File.Exists(xmlFilePath);
         }
-
         public List<DPU> ExtractDpus()
         {
             List<DPU> plcNumbers = new List<DPU>();

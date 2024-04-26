@@ -21,9 +21,11 @@ using Venv.Views.Pages;
 using System.Globalization;
 using Venv.Models.Services;
 using Venv.Models.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Venv.ViewModels.Pages
 {
+    
     public partial class SelectConfigurationViewModel : ObservableObject
     {
         private readonly IWindowHandleProvider _windowHandleProvider;
@@ -172,7 +174,7 @@ namespace Venv.ViewModels.Pages
             InfoBarMessage = message;
             IsInfoBarOpen = true;
 
-            await Task.Delay(30000);
+            await Task.Delay(8000);
             IsInfoBarOpen = false;
         }
 
