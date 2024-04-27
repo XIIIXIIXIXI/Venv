@@ -40,8 +40,15 @@ namespace Venv.Views.Pages
             {
                 var selectedGroups = gridView.SelectedItems.Cast<MachineryGroup>().ToList();
                 ViewModel.UpdateDpuSelectionBasedOnGroups(selectedGroups);
-
             }
+        }
+        private void SelectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectAllDPUs(true);
+        }
+        private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectAllDPUs(false);
         }
     }
 }

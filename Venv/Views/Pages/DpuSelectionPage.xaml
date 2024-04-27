@@ -65,9 +65,13 @@
             </GridView.ItemsPanel>
         </GridView>
 
-        <ListView Grid.Column="0" ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}" Margin="10">
+            <ListView Grid.Column="0" ItemsSource="{x:Bind ViewModel.DpuList, Mode=OneWay}" Margin="10">
             <ListView.Header>
-                <TextBlock Text="Select DPUs" FontWeight="Bold" FontSize="16"/>
+                <StackPanel>
+                    <TextBlock Text="Select DPUs" FontWeight="Bold" FontSize="16"/>
+                    <CheckBox Content="SelectAll" IsChecked="{x:Bind ViewModel.IsChecked, Mode=TwoWay}" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked" />
+                </StackPanel>
+                
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:DPU">
@@ -78,6 +82,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
     </Grid>
 
 

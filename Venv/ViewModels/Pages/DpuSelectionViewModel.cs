@@ -21,7 +21,11 @@ namespace Venv.ViewModels.Pages
         private readonly IShipDataService _shipDataService;
         [ObservableProperty]
         private IEnumerable<MachineryGroup> _machineryGroups;
+        [ObservableProperty]
+        private bool _isChecked =true;
         private readonly IDispatcherQueue _dispatcherQueue;
+
+        private bool _ignoreSelectAllTrigger = false;
 
         public DpuSelectionViewModel(IShipDataService shipDataService, IDispatcherQueue dispatcherQueue)
         {
@@ -35,10 +39,27 @@ namespace Venv.ViewModels.Pages
 
         public void UpdateDpuSelectionBasedOnGroups(List<MachineryGroup> selectedGroups)
         {
+            _ignoreSelectAllTrigger = true;
             var allDpus = DpuList;
             foreach (var dpu in allDpus)
             {
                 bool isSelected = selectedGroups.Any(group => group.DPUs.Contains(dpu));
+                dpu.IsSelected = isSelected;
+            }
+
+            IsChecked = false; // Update the IsChecked status based on the selection
+            OnPropertyChanged(nameof(DpuList));
+            _ignoreSelectAllTrigger = false;
+        }
+
+        public void SelectAllDPUs(bool isSelected)
+        {
+            if (_ignoreSelectAllTrigger)
+            {
+                return;
+            }
+            foreach (var dpu in DpuList)
+            {
                 dpu.IsSelected = isSelected;
             }
             OnPropertyChanged(nameof(DpuList));
