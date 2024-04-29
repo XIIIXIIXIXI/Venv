@@ -30,7 +30,6 @@ namespace Venv.ViewModels.Pages
             _mediator = mediator;
             _shipDataService.DataUpdated += OnDataUpdated;
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
-            //_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             _dispatcherQueue = dispatcherQueue;
             IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;
             _vmwareManager.StartHeartBeat();

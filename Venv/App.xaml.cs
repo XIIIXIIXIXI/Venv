@@ -77,14 +77,12 @@ namespace Venv
             services.AddSingleton<Mediator>();
 
             services.AddSingleton<IVMwareManager, VMwareManager>();
-
-            //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
             services.AddSingleton<IShipDataService, ShipDataService>();
             services.AddSingleton<IDispatcherQueue, DispatcherQueueWrapper>();
 
 
-            // Register WindowHandleProvider as a singleton in the DI container. Throws exception if invoked before being initialized in the OnLaunched methode.
+
             services.AddSingleton<IWindowHandleProvider, WindowHandleProvider>((sp) =>
             new WindowHandleProvider(() => throw new InvalidOperationException("Window handle not initialized yet.")));
         }

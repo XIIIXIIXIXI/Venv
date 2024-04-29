@@ -34,7 +34,6 @@ namespace Venv.Models.Services
 
             if (!_isVMwareInstanceRunning)
             {
-                //VM is starting
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = VMPaths.vmrunPath,
@@ -59,7 +58,7 @@ namespace Venv.Models.Services
 
         private void WaitingForVMToBeTurnedOn()
         {
-            const int maxRetries = 600; // Maximum number of retries
+            const int maxRetries = 600;
             int retryCount = 0;
 
             while (!_isVMwareInstanceRunning && retryCount < maxRetries)

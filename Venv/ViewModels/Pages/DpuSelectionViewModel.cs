@@ -47,7 +47,7 @@ namespace Venv.ViewModels.Pages
                 dpu.IsSelected = isSelected;
             }
 
-            IsChecked = false; // Update the IsChecked status based on the selection
+            IsChecked = false; 
             OnPropertyChanged(nameof(DpuList));
             _ignoreSelectAllTrigger = false;
         }

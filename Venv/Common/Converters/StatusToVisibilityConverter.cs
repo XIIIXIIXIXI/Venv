@@ -19,7 +19,7 @@ namespace Venv.Common.Converters
 
             var isVisible = status == "Stopped" || status == "Running" || status == "Started" || status == "Removed";
 
-            // If "invert" parameter is used, we flip the visibility logic for the ProgressRing.
+            //For progress ring
             if (invert) isVisible = !isVisible;
 
             return isVisible ? Visibility.Visible : Visibility.Collapsed;
