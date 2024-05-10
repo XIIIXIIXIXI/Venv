@@ -41,7 +41,6 @@ namespace venv.Tests
                 new DPU {Number = 71, Status="Off"},
             };
 
-            
             var actualDPUs = _dataExtractor.ExtractDpus();
 
             Assert.AreEqual(expectedDPUs.Count, actualDPUs.Count, "The number of extracted DPUs does not match the expected count.");
@@ -49,7 +48,7 @@ namespace venv.Tests
             string expectedJson = JsonConvert.SerializeObject(expectedDPUs, Formatting.Indented);
             string actualJson = JsonConvert.SerializeObject(actualDPUs, Formatting.Indented);
 
-            //Assert.AreEqual(expectedJson, actualJson, "The extracted DPUs do not match the expected.");
+            Assert.AreEqual(expectedJson, actualJson, "The extracted DPUs do not match the expected.");
         }
         [TestMethod]
         public void GetDatabaseVersion_ReturnsCorrectVersion()
@@ -84,9 +83,7 @@ namespace venv.Tests
         }
         [TestMethod]
         public void CreateShipData_Success()
-        {   // Work pc
-            //ShipConfigurationFactory factory = new ShipConfigurationFactory(@"C:\IM_DBs\Demo config 2.1.16.10 Seq 470 AUT NAV\Demo config 2.1.16.10 Seq 470 AUT NAV");
-            // Home pc
+        {   
             ShipConfigurationFactory factory = new ShipConfigurationFactory(VMPaths.confTestPath);
             ShipDataService shipData = factory.Create();
             Assert.AreEqual("2161v2", shipData.DatabaseVersion);
@@ -103,7 +100,9 @@ namespace venv.Tests
         [TestMethod]
         public void CreateShipData_Failure()
         {
-
+            ShipConfigurationFactory factory = new ShipConfigurationFactory("C/:Invalid folder");
+            ShipDataService shipData = factory.Create();
+            Assert.IsNull(shipData);
         }
     }
 }

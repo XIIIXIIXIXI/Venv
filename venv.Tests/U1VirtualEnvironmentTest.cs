@@ -55,14 +55,14 @@ namespace venv.Tests
         public class GeneralTests
         {
             [TestMethod]
-            [Ignore("Performance testing")]
+            //[Ignore("Performance testing")]
             public void StartVM10TimesAndTimeEach()
             {
                 var _VmwareManager = new VMwareManager();
                 List<long> timings = new List<long>();
                 _VmwareManager.StopVMwareInstance();
                 var stopwatch = Stopwatch.StartNew();
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     stopwatch.Start();
                     _VmwareManager.StartVMwareInstance();

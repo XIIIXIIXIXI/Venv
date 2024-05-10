@@ -63,6 +63,7 @@ namespace Venv.Models.Services
             }
             return false;
         }
+        
         private void ConfigureNetwork()
         {
             string flushCommand = $"sudo ip addr flush dev {_interfaceName}";

@@ -3,6 +3,7 @@ using Microsoft.UI.Dispatching;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,8 @@ namespace venv.Tests
         private  IShipDataService _shipDataService;
         private VirtualViewModel _viewModel;
 
-        private int nDpusInTest = 4;
+        private int nDpusInTest = 100;
+
         [TestInitialize]
         public void Setup()
         {
@@ -55,8 +57,10 @@ namespace venv.Tests
 
         }
         [TestMethod]
-        public async Task LaunchVirtualizationTest()
+        public async Task LaunchVirtualizationTest_PerformanceOverview()
         {
+            var stopwatch = Stopwatch.StartNew();
+            stopwatch.Start();
             await _viewModel.OnStartStopVirtualization();
             for (int i = 0; i < _shipDataService.DPUs.Count; i++)
             {
@@ -64,13 +68,28 @@ namespace venv.Tests
             }
             Assert.IsTrue(_viewModel.IsVirtualizationRunning);
             Assert.AreEqual(_viewModel.ButtonText, "Stop Virtualization");
+
+            stopwatch.Stop();
+            var startingDpusTime = stopwatch.Elapsed.TotalSeconds;
+            stopwatch.Reset();
+            stopwatch.Start();
+
             await _viewModel.OnStartStopVirtualization();
             for (int i = 0; i < _shipDataService.DPUs.Count; i++)
             {
-                Assert.AreEqual("Removed", _shipDataService.DPUs[i].Status, $"DPU at index {i} is not in the 'Stopped' status.");
+                Assert.AreEqual("Removed", _shipDataService.DPUs[i].Status, $"DPU at index {i} is not in the 'Removed' status.");
             }
             Assert.IsFalse(_viewModel.IsVirtualizationRunning);
             Assert.AreEqual(_viewModel.ButtonText, "Start Virtualization");
+
+            stopwatch.Stop();
+            var stopDpuTime = stopwatch.Elapsed.TotalSeconds;
+            Debug.WriteLine($"Cores: 8");
+            Debug.WriteLine($"DPU: {nDpusInTest}");
+
+            Debug.WriteLine($"Launch: {startingDpusTime}s");
+            Debug.WriteLine($"Stop: {stopDpuTime}s");
+            Debug.WriteLine($"total: {startingDpusTime +  stopDpuTime}s" );
         }
     }
 }
