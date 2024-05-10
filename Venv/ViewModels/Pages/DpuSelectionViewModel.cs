@@ -59,6 +59,8 @@ namespace Venv.ViewModels.Pages
         public void RefreshData()
         {
             MachineryGroups = _shipDataService.MachineryGroup;
+            SelectAllDPUs(true);
+            IsChecked = true;
             _dispatcherQueue.TryEnqueue(() =>
             {
                 OnPropertyChanged(nameof(DpuList));

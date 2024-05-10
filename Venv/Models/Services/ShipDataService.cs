@@ -65,6 +65,7 @@ namespace Venv.Models.Services
             ShipOwner = shipOwner;
             ShipType = shipType;
             GenerationDate = generationDate;
+            DataUpdated?.Invoke();
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)
