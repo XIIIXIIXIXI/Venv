@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Venv.Models;
 using Venv.Models.Interfaces;
@@ -30,7 +28,6 @@ namespace Venv.ViewModels.Pages
             _mediator = mediator;
             _shipDataService.DataUpdated += OnDataUpdated;
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
-            //_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             _dispatcherQueue = dispatcherQueue;
             IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;
             _vmwareManager.StartHeartBeat();

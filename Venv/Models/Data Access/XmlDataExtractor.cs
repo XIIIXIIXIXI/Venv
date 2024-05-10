@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Venv.Models
 {
     public class XmlDataExtractor
     {
-        //private string _folderPath;
         private readonly XmlDocument _xmlDocument;
         private string _xmlFolderPath;
 
@@ -34,7 +31,6 @@ namespace Venv.Models
             string xmlFilePath = Path.Combine(_xmlFolderPath, "ConfigIfSystem.xml");
             return File.Exists(xmlFilePath);
         }
-
         public List<DPU> ExtractDpus()
         {
             List<DPU> plcNumbers = new List<DPU>();
@@ -146,6 +142,20 @@ namespace Venv.Models
             foreach (var group in machineryGroups.Values)
             {
                 group.DPUs = group.DPUs.OrderBy(d => d.Number).ToList();
+            }
+
+            List<int> keysToRemove = new List<int>();
+            foreach (var entry in machineryGroups)
+            {
+                if (entry.Value.Name == "Not used")
+                {
+                    keysToRemove.Add(entry.Key);
+                }
+            }
+
+            foreach (int key in keysToRemove)
+            {
+                machineryGroups.Remove(key);
             }
 
             return (dpus, machineryGroups.Values.ToList());

@@ -1,11 +1,7 @@
-﻿using Microsoft.UI.Dispatching;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Venv.Models;
 using Venv.Models.Interfaces;
 
 namespace Venv.Models.Services
@@ -28,7 +24,6 @@ namespace Venv.Models.Services
         public int SwitchesNumber { get; private set; }
         public int ShipType { get; private set; }
         public event Action DataUpdated;
-        //private readonly DispatcherQueue _dispatcherQueue;
         public bool IsVirtualizationStopping { get; set; }
 
         public List<MachineryGroup> MachineryGroup { get; set; }
@@ -79,11 +74,6 @@ namespace Venv.Models.Services
             {
                 dpu.StatusHolder = status;
                 DataUpdated?.Invoke();
-                /*_dispatcherQueue.TryEnqueue(() =>
-                {
-                    dpu.Status = status;
-                    DataUpdated?.Invoke();
-                });*/
             }
         }
         public List<DPU> GetDpus()
@@ -108,8 +98,6 @@ namespace Venv.Models.Services
             {
                 return GetSelectedDpus().TrueForAll(dpu => dpu.Status == "Running" || dpu.Status == "Started");
             }
-            //return GetSelectedDpus().All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
-            //return _dpus.All(dpu => dpu.Status == "Running" || dpu.Status == "Removed" || dpu.Status == "Started");
         }
         public bool AnyDpuInState(string status)
         {

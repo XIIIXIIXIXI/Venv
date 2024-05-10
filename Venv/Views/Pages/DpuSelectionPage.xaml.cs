@@ -1,17 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Venv.ViewModels.Pages;
 using Venv.Models;
 using System.Diagnostics.CodeAnalysis;
@@ -41,6 +30,14 @@ namespace Venv.Views.Pages
                 var selectedGroups = gridView.SelectedItems.Cast<MachineryGroup>().ToList();
                 ViewModel.UpdateDpuSelectionBasedOnGroups(selectedGroups);
             }
+        }
+        private void SelectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectAllDPUs(true);
+        }
+        private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectAllDPUs(false);
         }
     }
 }

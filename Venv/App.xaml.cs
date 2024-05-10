@@ -1,34 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.UI;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using Syncfusion.Licensing;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Venv.Models.Interfaces;
 using Venv.Models.Services;
 using Venv.Services;
 using Venv.ViewModels.Pages;
 using Venv.Views.Pages;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Input.Inking;
-using Windows.UI.WindowManagement;
 using AppWindow = Microsoft.UI.Windowing.AppWindow;
 using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
 
@@ -77,14 +58,12 @@ namespace Venv
             services.AddSingleton<Mediator>();
 
             services.AddSingleton<IVMwareManager, VMwareManager>();
-
-            //services.AddSingleton<ShipConfigurationFactory>(sp => { return new ShipConfigurationFactory(""); });
             services.AddSingleton<SelectConfigurationViewModel>();
             services.AddSingleton<IShipDataService, ShipDataService>();
             services.AddSingleton<IDispatcherQueue, DispatcherQueueWrapper>();
 
 
-            // Register WindowHandleProvider as a singleton in the DI container. Throws exception if invoked before being initialized in the OnLaunched methode.
+
             services.AddSingleton<IWindowHandleProvider, WindowHandleProvider>((sp) =>
             new WindowHandleProvider(() => throw new InvalidOperationException("Window handle not initialized yet.")));
         }

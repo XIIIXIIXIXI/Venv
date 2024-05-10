@@ -1,24 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DevExpress.WinUI.Charts.Internal;
 using DevExpress.WinUI.Charts;
-using DevExpress.WinUI.Grid;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.UI.Dispatching;
-using Windows.System;
 using Venv.Models.Services;
 using Venv.Models.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Venv.ViewModels.Pages
 {
@@ -85,7 +73,7 @@ namespace Venv.ViewModels.Pages
             _monitoringService = new VmMonitoringService(vmWareManager.IP);
             _cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
 
-            //CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
+            CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
         }
 
@@ -125,7 +113,7 @@ namespace Venv.ViewModels.Pages
         public DateTime Timestamp { get; set; }
         public double CpuUsage { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class CpuUsageDataSource : DataSourceBase
     {
         private ObservableCollection<CpuUsageDataItem> _data;

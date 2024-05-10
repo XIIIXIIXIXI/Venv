@@ -12,9 +12,9 @@
     Unloaded="Navigate_Unloaded">
     <Page.Resources>
         <Style x:Key="CustomTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Comic Sans MS" />
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="Foreground" Value="{ThemeResource AncCnHBarBack}" />
+            <Setter Property="FontFamily" Value="Aharoni" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Foreground" Value="{ThemeResource AncCnTextForeground}" />
         </Style>
         <Style x:Key="IBM" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="IBM Plex Mono" />

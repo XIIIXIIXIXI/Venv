@@ -1,10 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Venv.Common.Converters
@@ -19,7 +15,7 @@ namespace Venv.Common.Converters
 
             var isVisible = status == "Stopped" || status == "Running" || status == "Started" || status == "Removed";
 
-            // If "invert" parameter is used, we flip the visibility logic for the ProgressRing.
+            //For progress ring
             if (invert) isVisible = !isVisible;
 
             return isVisible ? Visibility.Visible : Visibility.Collapsed;
