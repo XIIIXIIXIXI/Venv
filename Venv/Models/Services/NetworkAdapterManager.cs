@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Venv.Models.Services
 {
     public class NetworkAdapterManager
     {
         private const string AdapterName = "VMware Virtual Ethernet Adapter for VMnet1";
-        private const string DesiredIPAddress = "172.16.1.4";
-        private const string DesiredSubnetMask = "255.255.0.0";
+        private const string IP = "172.16.1.4";
+        private const string SubnetMask = "255.255.0.0";
 
         public bool CheckConfiguration()
         {
@@ -26,8 +23,8 @@ namespace Venv.Models.Services
                         var ipAddresses = (string[])queryObj["IPAddress"];
                         var subnetMasks = (string[])queryObj["IPSubnet"];
 
-                        if (ipAddresses != null && ipAddresses.Contains(DesiredIPAddress) &&
-                            subnetMasks != null && subnetMasks.Contains(DesiredSubnetMask))
+                        if (ipAddresses != null && ipAddresses.Contains(IP) &&
+                            subnetMasks != null && subnetMasks.Contains(SubnetMask))
                         {
                             return true; // Correct configuration
                         }
@@ -54,8 +51,8 @@ namespace Venv.Models.Services
                         {
                             using (var newIP = adapter.GetMethodParameters("EnableStatic"))
                             {
-                                newIP["IPAddress"] = new string[] { DesiredIPAddress };
-                                newIP["SubnetMask"] = new string[] { DesiredSubnetMask };
+                                newIP["IPAddress"] = new string[] { IP };
+                                newIP["SubnetMask"] = new string[] { SubnetMask };
 
                                 adapter.InvokeMethod("EnableStatic", newIP, null);
                             }

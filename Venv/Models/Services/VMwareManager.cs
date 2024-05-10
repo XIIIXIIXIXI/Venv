@@ -8,6 +8,7 @@ using Venv.Resources;
 
 namespace Venv.Models.Services
 {
+   
     public class VMwareManager : IVMwareManager
     {
         private bool _isVMwareInstanceRunning { get; set; }

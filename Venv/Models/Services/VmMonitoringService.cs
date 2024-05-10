@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.Globalization;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Venv.Models.DockerHandler;
@@ -26,9 +21,9 @@ namespace Venv.Models.Services
             {
                 _sshClient.Connect();
             }
+            // Sometimes trash is returned from the VM. Echo a COMMAND_START to filter useless information
             string cpuUsageCommand = "echo \"COMMAND_START\"; " +
                 "top -bn1 | grep \"Cpu(s)\" | awk '{print $2 + $4 \"%\"}'; " +
-                //"free -m | awk '/Mem:/ {used=$3; total=$2; free=$4; printf \"%d\\n%d\\nMemory Usage: %.2f%%\\n\", used, free, used/total * 100}';" +
                 "free -m | awk '/Mem:/ {used=$3; total=$2; printf \"%d\\n%dMB\\nMemory Usage: %.2f%%\\n\", used, total, used/total * 100}'";
 
             _sshClient.ExecuteCommand(cpuUsageCommand);

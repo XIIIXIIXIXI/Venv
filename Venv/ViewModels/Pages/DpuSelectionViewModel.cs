@@ -1,16 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Venv.Models;
-using CommunityToolkit.Mvvm.Input;
-using Venv.Models.Services;
 using Venv.Models.Interfaces;
-using Microsoft.UI.Xaml.Controls;
 
 namespace Venv.ViewModels.Pages
 {

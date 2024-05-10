@@ -1,10 +1,6 @@
 ﻿using Microsoft.UI.Dispatching;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
-using Venv.Models.DockerHandler;
 using Venv.Models.Interfaces;
 using Venv.Models.Services;
 using Venv.ViewModels.Pages;

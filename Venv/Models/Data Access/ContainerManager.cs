@@ -65,7 +65,7 @@ namespace Venv.Models.DockerHandler
             if (reader != null)
             {
                 Task<string?> readLineTask = Task.Run(() => reader.ReadLine());
-                bool completed = readLineTask.Wait(TimeSpan.FromSeconds(1)); // 5-second timeout
+                bool completed = readLineTask.Wait(TimeSpan.FromSeconds(1)); 
                 if (completed && readLineTask.Result != null )
                 {
                     return readLineTask.Result;
