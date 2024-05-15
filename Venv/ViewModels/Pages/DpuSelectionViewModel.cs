@@ -24,6 +24,7 @@ namespace Venv.ViewModels.Pages
             _shipDataService = shipDataService;
             MachineryGroups = _shipDataService.MachineryGroup;
             _shipDataService.DataUpdated += RefreshData;
+            _shipDataService.NewShipConfiguration += RefreshBecauseNewShipConfiguration;
             _dispatcherQueue = dispatcherQueue;
         }
 
@@ -59,13 +60,21 @@ namespace Venv.ViewModels.Pages
         public void RefreshData()
         {
             MachineryGroups = _shipDataService.MachineryGroup;
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                OnPropertyChanged(nameof(DpuList));
+            });
+
+        }
+        public void RefreshBecauseNewShipConfiguration()
+        {
+            MachineryGroups = _shipDataService.MachineryGroup;
             SelectAllDPUs(true);
             IsChecked = true;
             _dispatcherQueue.TryEnqueue(() =>
             {
                 OnPropertyChanged(nameof(DpuList));
             });
-            
         }
     }
 }

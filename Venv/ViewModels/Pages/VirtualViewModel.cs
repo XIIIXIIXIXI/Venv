@@ -27,6 +27,7 @@ namespace Venv.ViewModels.Pages
             _vmwareManager = vmwareManager;
             _mediator = mediator;
             _shipDataService.DataUpdated += OnDataUpdated;
+            _shipDataService.NewShipConfiguration += OnDataUpdated;
             _vmwareManager.VMStatusChanged += OnVMStatusChanged;
             _dispatcherQueue = dispatcherQueue;
             IsVMRunning = _vmwareManager.IsVMwareInstanceRunning;

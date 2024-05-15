@@ -130,15 +130,6 @@
             Width="1"
             VerticalAlignment="Stretch"
             Background="White" />
-        <TextBlock
-            Grid.Row="2"
-            Grid.Column="3"
-            Margin="10,10,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="20"
-            Style="{StaticResource IBM}"
-            Text="Get Started" />
         <Button
             Grid.Row="3"
             Grid.Column="3"
@@ -168,7 +159,7 @@
             Grid.Column="3"
             Grid.ColumnSpan="4"
             Height="1"
-            Margin="0,0,0,0"
+            Margin="0,40,0,0"
             HorizontalAlignment="Stretch"
             Background="White"
             Visibility="{x:Bind ViewModel.IsConfigurationSelected, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" />

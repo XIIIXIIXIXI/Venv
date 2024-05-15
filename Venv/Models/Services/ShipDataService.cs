@@ -24,6 +24,7 @@ namespace Venv.Models.Services
         public int SwitchesNumber { get; private set; }
         public int ShipType { get; private set; }
         public event Action DataUpdated;
+        public event Action NewShipConfiguration;
         public bool IsVirtualizationStopping { get; set; }
 
         public List<MachineryGroup> MachineryGroup { get; set; }
@@ -65,7 +66,7 @@ namespace Venv.Models.Services
             ShipOwner = shipOwner;
             ShipType = shipType;
             GenerationDate = generationDate;
-            DataUpdated?.Invoke();
+            NewShipConfiguration?.Invoke();
         }
 
         public void UpdateDpuStatus(int dpuNumber, string status)

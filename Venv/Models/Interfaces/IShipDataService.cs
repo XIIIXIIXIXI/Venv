@@ -23,6 +23,7 @@ namespace Venv.Models.Interfaces
         List<MachineryGroup> MachineryGroup { get; set; }
 
         event Action DataUpdated;
+        event Action NewShipConfiguration;
 
         void UpdateShipData(string databaseVersion, string dpuVersion, int numberOfMfd, string vesselName, string imo, List<DPU> dpus,
                             List<MachineryGroup> machineryGroups, string yardBuildNumber, int sequenceNumber, string yardName, string ficVersion,
