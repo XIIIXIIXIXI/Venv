@@ -63,6 +63,18 @@ namespace Venv.Models.Services
             return 0;
         }
 
+        public async Task StopMonitoringAsync()
+        {
+            if (_sshClient.IsConnected)
+            {
+               await _sshClient.DisconnectAsync();
+            }
+        }
+        public void StartMonitoring()
+        {
+            _sshClient.Connect();
+        }
+
     }
     public class VmPerformanceData
     {

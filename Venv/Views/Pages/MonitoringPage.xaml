@@ -71,6 +71,10 @@
         </Grid>
 
         <Grid x:Name="MainGrid" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -79,17 +83,19 @@
 
             <Border
                 Grid.Column="0"
-                Margin="20"
+                Margin="20, 0, 20, 20"
                 BorderBrush="Gray"
                 BorderThickness="1"
                 CornerRadius="10">
                 <StackPanel Margin="10">
-                   
-                        <TextBlock
-                            Margin="0,10"
-                            FontWeight="SemiBold"
-                            Text="Vm1" />
-                        
+
+                    <TextBlock
+                        Margin="0,10"
+                        HorizontalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="Vm1" />
+                    <TextBlock FontWeight="SemiBold" Text="CPU" />
+
                     <ProgressBar
                         Height="10"
                         Margin="0,5"
@@ -100,24 +106,11 @@
                         Margin="10,0"
                         HorizontalAlignment="Right"
                         FontWeight="Bold"
-                        
                         Text="{x:Bind ViewModel.CpuUsageText, Mode=OneWay}" />
 
 
 
-                    <!--  Cores Usage  -->
-                    <TextBlock FontWeight="SemiBold" Text="Cores" />
-                    <ProgressBar
-                        Height="10"
-                        Margin="0,5"
-                        Foreground="Turquoise"
-                        Maximum="{x:Bind ViewModel.TotalCores, Mode=OneWay}"
-                        Value="{x:Bind ViewModel.ActiveCores, Mode=OneWay}" />
-                    <TextBlock
-                        Margin="10,0"
-                        HorizontalAlignment="Right"
-                        FontWeight="Bold"
-                        Text="{x:Bind ViewModel.CoreUsageText, Mode=OneWay}" />
+
 
                     <!--  Memory Usage  -->
                     <TextBlock FontWeight="SemiBold" Text="Memory" />
@@ -133,9 +126,58 @@
                         FontWeight="Bold"
                         Text="{x:Bind ViewModel.MemoryUsageText, Mode=OneWay}" />
 
+                    <!--  Processors  -->
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,20,20"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
 
+                        <TextBlock
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            Text="Number of processors:" />
+
+                        <ComboBox
+                            x:Name="CoreSelector"
+                            Width="70"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.ProcessorOptions}"
+                            SelectedItem="{x:Bind ViewModel.SelectedProcessors, Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <Grid Margin="0,0,20,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                            <Run Text="Processors being used: " />
+                            <Run Text="{x:Bind ViewModel.ActiveProcessor, Mode=OneWay}" />
+                            <Run Text="/" />
+                            <Run Text="{x:Bind ViewModel.TotalProcessors, Mode=OneWay}" />
+                        </TextBlock>
+                        <Button
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Command="{x:Bind ViewModel.RestartButtonClickCommand}"
+                            Content="Restart Vm1"
+                            Visibility="{x:Bind ViewModel.RestartButtonVisibility, Mode=OneWay}" />
+                    </Grid>
                 </StackPanel>
             </Border>
+
         </Grid>
     </StackPanel>
 </Page>

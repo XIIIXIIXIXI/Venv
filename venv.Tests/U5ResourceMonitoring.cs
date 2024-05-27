@@ -1,7 +1,9 @@
 ﻿using Microsoft.UI.Dispatching;
 using Moq;
+using Venv.Models.Data_Access;
 using Venv.Models.Interfaces;
 using Venv.Models.Services;
+using Venv.Resources;
 using Venv.ViewModels.Pages;
 
 namespace venv.Tests
@@ -18,6 +20,11 @@ namespace venv.Tests
         [TestInitialize, Timeout(120000)]//The setup can absolute maximum run for 2 minutes. It normally takes 1 minute and 30 seconds to start the VM.
         public void ClassSetup()
         {
+            
+        }
+        [TestMethod]
+        public async Task LoadPerformanceDataAsync_UpdatedProperties()
+        {
             if (_vmwareManager == null)
             {
                 _vmwareManager = new VMwareManager();
@@ -28,10 +35,7 @@ namespace venv.Tests
                 _vmwareManager.StartVMwareInstance();
             }
             Assert.IsTrue(_vmwareManager.IsVMwareInstanceRunning);
-        }
-        [TestMethod]
-        public async Task LoadPerformanceDataAsync_UpdatedProperties()
-        {
+
             //Arrange
             _mockDispatcherQueue = new Mock<IDispatcherQueue>();
             _mockDispatcherQueue.Setup(x => x.TryEnqueue(It.IsAny<DispatcherQueueHandler>()))
@@ -46,6 +50,29 @@ namespace venv.Tests
             Assert.IsFalse(string.IsNullOrEmpty(_monitoringViewModel.MemoryUsageText), "Expected 'MemoryUsageText' to be not empty");
             Assert.IsTrue(_monitoringViewModel.CpuUsagePoints.Count > 0, "Data points not loaded");
 
+        }
+
+        [TestMethod]
+        public void ReadFromVMXFile_Get_totalProcesses_VmCurrentProcesses()
+        {
+            VmxConfig config = new VmxConfig();
+
+
+            (var hostTotalProcessors, var VMCurrentProcessors ) = config.ReadVmxConfiguration(VMPaths.vmxPath);
+
+            Assert.AreEqual(16, hostTotalProcessors);
+            Assert.AreEqual(4, VMCurrentProcessors);
+        }
+
+        //This test assumes the ReadFromVmxFileIsWorking properly
+        [TestMethod]
+        public void UpdateProcessorsInVmxFile()
+        {
+            var config = new VmxConfig();
+
+            config.UpdateVmxProcessors(VMPaths.vmxPath, 6);
+
+            Assert.AreEqual((16,6), config.ReadVmxConfiguration(VMPaths.vmxPath));
         }
     }
 }

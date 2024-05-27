@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using Venv.Models.Services;
 using Venv.Models.Interfaces;
 using System.Diagnostics.CodeAnalysis;
+using Venv.Models.Data_Access;
+using Venv.Resources;
+using CommunityToolkit.Mvvm.Input;
+using DevExpress.ClipboardSource.SpreadsheetML;
 
 namespace Venv.ViewModels.Pages
 {
@@ -45,13 +49,8 @@ namespace Venv.ViewModels.Pages
             CpuUsageText = $"{value}%";
             FillCpuUsageWidth = progressBarWidth * (value / 100.0);
         }
-        [ObservableProperty]
-        private int _activeCores = 8;
-        [ObservableProperty]
-        private int _totalCores = 24; //static for testing
+        
 
-        [ObservableProperty]
-        private string _coreUsageText =$"8/24"; //TODO
         [ObservableProperty]
         private double _memoryUsagePercentage;
         [ObservableProperty]
@@ -66,12 +65,20 @@ namespace Venv.ViewModels.Pages
 
 
         private readonly IDispatcherQueue _dispatcherQueue;
+        private VmxConfig _vmmxConfig;
+        private IVMwareManager _vmwareManger;
        
         public MonitoringViewModel(IVMwareManager vmWareManager, IDispatcherQueue dispatcherQueue) 
         {
             _dispatcherQueue = dispatcherQueue;
+            _vmwareManger = vmWareManager;
             _monitoringService = new VmMonitoringService(vmWareManager.IP);
             _cpuUsagePoints = new ObservableCollection<CpuUsageDataItem>();
+
+            _vmmxConfig = new VmxConfig();
+            (TotalProcessors, ActiveProcessor) = _vmmxConfig.ReadVmxConfiguration(VMPaths.vmxPath);
+            SelectedProcessors = ActiveProcessor;
+            UpdateProcessorOptions();
 
             CpuUsageChartDataSource = new CpuUsageDataSource(_cpuUsagePoints);
             _ = LoadPerformanceDataAsync();
@@ -80,7 +87,7 @@ namespace Venv.ViewModels.Pages
          
         public async Task LoadPerformanceDataAsync()
         {
-            while (true)
+            while (!IsRestarting)
             {
                 var data = await _monitoringService.GetPerformanceDataAsync();
                 CpuUsage = data.CpuUsage;
@@ -105,6 +112,77 @@ namespace Venv.ViewModels.Pages
                 });
                 await Task.Delay(1000);
             }      
+        }
+
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(RestartButtonVisibility))]
+        private int _activeProcessor = 8;
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(RestartButtonVisibility))]
+        private int _selectedProcessors;
+        [ObservableProperty]
+        private int _totalProcessors;
+        [ObservableProperty]
+        private bool _isRestarting;
+
+        public string RestartButtonVisibility => IsRestarting ? "Collapsed" : (SelectedProcessors != ActiveProcessor ? "Visible" : "Collapsed");
+        public ObservableCollection<int> ProcessorOptions { get; } = new ObservableCollection<int>();
+
+        public void UpdateProcessorOptions()
+        {
+            ProcessorOptions.Clear();
+
+            int[] predefinedOptions = { 1, 2, 3, 4, 6, 8, 12, 16, 24, 32 };
+            foreach (int option in predefinedOptions)
+            {
+                if (option <= _totalProcessors)
+                {
+                    ProcessorOptions.Add(option);
+                }
+                else
+                {
+                    break; //stop adding more option since the host limit is reached. 
+                }
+            }
+        }
+        [RelayCommand]
+        public async void OnRestartButtonClick()
+        {
+            IsRestarting = true;
+
+            await Task.Run(async () =>
+            {
+                await _monitoringService.StopMonitoringAsync();
+
+                _dispatcherQueue.TryEnqueue(() => {
+                    CpuUsage = 0;
+                    MemoryUsagePercentage = 0;
+                    MemoryUsageText = "0";
+                    ActiveProcessor = 0;
+                    var timestamp = DateTime.Now;
+                    _cpuUsagePoints.Add(new CpuUsageDataItem
+                    {
+                        Timestamp = timestamp,
+                        CpuUsage = 0
+                    });
+                });
+
+                _vmwareManger.StopVMwareInstance();
+                _vmmxConfig.UpdateVmxProcessors(VMPaths.vmxPath, SelectedProcessors);
+                _vmwareManger.StartVMwareInstance();
+
+                _monitoringService.StartMonitoring();
+
+                
+            });
+
+            _dispatcherQueue.TryEnqueue(() => {
+                (TotalProcessors, ActiveProcessor) = _vmmxConfig.ReadVmxConfiguration(VMPaths.vmxPath);
+                IsRestarting = false;
+                _ = LoadPerformanceDataAsync();
+            });
+
         }
 
     }
